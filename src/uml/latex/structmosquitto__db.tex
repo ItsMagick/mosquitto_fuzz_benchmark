@@ -1,0 +1,187 @@
+\hypertarget{structmosquitto__db}{}\doxysection{mosquitto\+\_\+db Struct Reference}
+\label{structmosquitto__db}\index{mosquitto\_db@{mosquitto\_db}}
+
+
+{\ttfamily \#include $<$mosquitto\+\_\+broker\+\_\+internal.\+h$>$}
+
+
+
+Collaboration diagram for mosquitto\+\_\+db\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structmosquitto__db__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\+\_\+t}} \mbox{\hyperlink{structmosquitto__db_a411d3ba9bf064853c3f89d606dc456be}{last\+\_\+db\+\_\+id}}
+\item 
+struct \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\+\_\+\+\_\+subhier}} $\ast$ \mbox{\hyperlink{structmosquitto__db_ab6408cc2a6d6efb6d283559c21002a3b}{subs}}
+\item 
+struct \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\+\_\+\+\_\+retainhier}} $\ast$ \mbox{\hyperlink{structmosquitto__db_aaf0c9d0689c4d33d75feb6556b3a7652}{retains}}
+\item 
+struct mosquitto $\ast$ \mbox{\hyperlink{structmosquitto__db_ac5b775be8b87233bb22f20b10bbac0bd}{contexts\+\_\+by\+\_\+id}}
+\item 
+struct mosquitto $\ast$ \mbox{\hyperlink{structmosquitto__db_acef8c251ec284f40de65517454659178}{contexts\+\_\+by\+\_\+sock}}
+\item 
+struct mosquitto $\ast$ \mbox{\hyperlink{structmosquitto__db_a17c32122ec7e4cb760ae241854a51073}{contexts\+\_\+for\+\_\+free}}
+\item 
+struct clientid\+\_\+\+\_\+index\+\_\+hash $\ast$ \mbox{\hyperlink{structmosquitto__db_a2e4937747aa8b0459c28079632b87b29}{clientid\+\_\+index\+\_\+hash}}
+\item 
+struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$ \mbox{\hyperlink{structmosquitto__db_abf110ad0dc01421cae84a539c80a1fb0}{msg\+\_\+store}}
+\item 
+struct \mbox{\hyperlink{structmosquitto__msg__store__load}{mosquitto\+\_\+msg\+\_\+store\+\_\+load}} $\ast$ \mbox{\hyperlink{structmosquitto__db_adf345ee58cf3f03e6af7d9ddf2dc8f05}{msg\+\_\+store\+\_\+load}}
+\item 
+time\+\_\+t \mbox{\hyperlink{structmosquitto__db_aacc524956ef58781b0ef567ba78303ff}{now\+\_\+s}}
+\item 
+time\+\_\+t \mbox{\hyperlink{structmosquitto__db_a2d2f905bb6f22a91290ac7472e45119f}{now\+\_\+real\+\_\+s}}
+\item 
+int \mbox{\hyperlink{structmosquitto__db_a9dbd28cac7509625e45df1563df9230a}{msg\+\_\+store\+\_\+count}}
+\item 
+unsigned long \mbox{\hyperlink{structmosquitto__db_ad30f1bd52c260c83dda2499d2c39278a}{msg\+\_\+store\+\_\+bytes}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto__db_a8e5c6dd822ab77ae7af9922c730a1c4c}{config\+\_\+file}}
+\item 
+struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}} $\ast$ \mbox{\hyperlink{structmosquitto__db_aca8a66f6ab5ba4d78958f7b0fa1bbecf}{config}}
+\item 
+int \mbox{\hyperlink{structmosquitto__db_a2314a0eb0dc48d704fcba90653b484c0}{auth\+\_\+plugin\+\_\+count}}
+\item 
+bool \mbox{\hyperlink{structmosquitto__db_a4564c61f52fced8dcd07cb2a54a1a384}{verbose}}
+\item 
+int \mbox{\hyperlink{structmosquitto__db_a85ea76e88408ef3a3c00129214782028}{persistence\+\_\+changes}}
+\item 
+struct mosquitto $\ast$ \mbox{\hyperlink{structmosquitto__db_add5e5f3f2a13b2ae5fc346f4171d904d}{ll\+\_\+for\+\_\+free}}
+\item 
+struct \mbox{\hyperlink{structmosquitto__message__v5}{mosquitto\+\_\+message\+\_\+v5}} $\ast$ \mbox{\hyperlink{structmosquitto__db_a1606d2bbc7fa6e884a782b4443688b07}{plugin\+\_\+msgs}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structmosquitto__db_a2314a0eb0dc48d704fcba90653b484c0}\label{structmosquitto__db_a2314a0eb0dc48d704fcba90653b484c0}} 
+\index{mosquitto\_db@{mosquitto\_db}!auth\_plugin\_count@{auth\_plugin\_count}}
+\index{auth\_plugin\_count@{auth\_plugin\_count}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{auth\_plugin\_count}{auth\_plugin\_count}}
+{\footnotesize\ttfamily int mosquitto\+\_\+db\+::auth\+\_\+plugin\+\_\+count}
+
+\mbox{\Hypertarget{structmosquitto__db_a2e4937747aa8b0459c28079632b87b29}\label{structmosquitto__db_a2e4937747aa8b0459c28079632b87b29}} 
+\index{mosquitto\_db@{mosquitto\_db}!clientid\_index\_hash@{clientid\_index\_hash}}
+\index{clientid\_index\_hash@{clientid\_index\_hash}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{clientid\_index\_hash}{clientid\_index\_hash}}
+{\footnotesize\ttfamily struct clientid\+\_\+\+\_\+index\+\_\+hash$\ast$ mosquitto\+\_\+db\+::clientid\+\_\+index\+\_\+hash}
+
+\mbox{\Hypertarget{structmosquitto__db_aca8a66f6ab5ba4d78958f7b0fa1bbecf}\label{structmosquitto__db_aca8a66f6ab5ba4d78958f7b0fa1bbecf}} 
+\index{mosquitto\_db@{mosquitto\_db}!config@{config}}
+\index{config@{config}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{config}{config}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}}$\ast$ mosquitto\+\_\+db\+::config}
+
+\mbox{\Hypertarget{structmosquitto__db_a8e5c6dd822ab77ae7af9922c730a1c4c}\label{structmosquitto__db_a8e5c6dd822ab77ae7af9922c730a1c4c}} 
+\index{mosquitto\_db@{mosquitto\_db}!config\_file@{config\_file}}
+\index{config\_file@{config\_file}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{config\_file}{config\_file}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+db\+::config\+\_\+file}
+
+\mbox{\Hypertarget{structmosquitto__db_ac5b775be8b87233bb22f20b10bbac0bd}\label{structmosquitto__db_ac5b775be8b87233bb22f20b10bbac0bd}} 
+\index{mosquitto\_db@{mosquitto\_db}!contexts\_by\_id@{contexts\_by\_id}}
+\index{contexts\_by\_id@{contexts\_by\_id}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{contexts\_by\_id}{contexts\_by\_id}}
+{\footnotesize\ttfamily struct mosquitto$\ast$ mosquitto\+\_\+db\+::contexts\+\_\+by\+\_\+id}
+
+\mbox{\Hypertarget{structmosquitto__db_acef8c251ec284f40de65517454659178}\label{structmosquitto__db_acef8c251ec284f40de65517454659178}} 
+\index{mosquitto\_db@{mosquitto\_db}!contexts\_by\_sock@{contexts\_by\_sock}}
+\index{contexts\_by\_sock@{contexts\_by\_sock}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{contexts\_by\_sock}{contexts\_by\_sock}}
+{\footnotesize\ttfamily struct mosquitto$\ast$ mosquitto\+\_\+db\+::contexts\+\_\+by\+\_\+sock}
+
+\mbox{\Hypertarget{structmosquitto__db_a17c32122ec7e4cb760ae241854a51073}\label{structmosquitto__db_a17c32122ec7e4cb760ae241854a51073}} 
+\index{mosquitto\_db@{mosquitto\_db}!contexts\_for\_free@{contexts\_for\_free}}
+\index{contexts\_for\_free@{contexts\_for\_free}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{contexts\_for\_free}{contexts\_for\_free}}
+{\footnotesize\ttfamily struct mosquitto$\ast$ mosquitto\+\_\+db\+::contexts\+\_\+for\+\_\+free}
+
+\mbox{\Hypertarget{structmosquitto__db_a411d3ba9bf064853c3f89d606dc456be}\label{structmosquitto__db_a411d3ba9bf064853c3f89d606dc456be}} 
+\index{mosquitto\_db@{mosquitto\_db}!last\_db\_id@{last\_db\_id}}
+\index{last\_db\_id@{last\_db\_id}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{last\_db\_id}{last\_db\_id}}
+{\footnotesize\ttfamily \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\+\_\+t}} mosquitto\+\_\+db\+::last\+\_\+db\+\_\+id}
+
+\mbox{\Hypertarget{structmosquitto__db_add5e5f3f2a13b2ae5fc346f4171d904d}\label{structmosquitto__db_add5e5f3f2a13b2ae5fc346f4171d904d}} 
+\index{mosquitto\_db@{mosquitto\_db}!ll\_for\_free@{ll\_for\_free}}
+\index{ll\_for\_free@{ll\_for\_free}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{ll\_for\_free}{ll\_for\_free}}
+{\footnotesize\ttfamily struct mosquitto$\ast$ mosquitto\+\_\+db\+::ll\+\_\+for\+\_\+free}
+
+\mbox{\Hypertarget{structmosquitto__db_abf110ad0dc01421cae84a539c80a1fb0}\label{structmosquitto__db_abf110ad0dc01421cae84a539c80a1fb0}} 
+\index{mosquitto\_db@{mosquitto\_db}!msg\_store@{msg\_store}}
+\index{msg\_store@{msg\_store}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{msg\_store}{msg\_store}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}}$\ast$ mosquitto\+\_\+db\+::msg\+\_\+store}
+
+\mbox{\Hypertarget{structmosquitto__db_ad30f1bd52c260c83dda2499d2c39278a}\label{structmosquitto__db_ad30f1bd52c260c83dda2499d2c39278a}} 
+\index{mosquitto\_db@{mosquitto\_db}!msg\_store\_bytes@{msg\_store\_bytes}}
+\index{msg\_store\_bytes@{msg\_store\_bytes}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{msg\_store\_bytes}{msg\_store\_bytes}}
+{\footnotesize\ttfamily unsigned long mosquitto\+\_\+db\+::msg\+\_\+store\+\_\+bytes}
+
+\mbox{\Hypertarget{structmosquitto__db_a9dbd28cac7509625e45df1563df9230a}\label{structmosquitto__db_a9dbd28cac7509625e45df1563df9230a}} 
+\index{mosquitto\_db@{mosquitto\_db}!msg\_store\_count@{msg\_store\_count}}
+\index{msg\_store\_count@{msg\_store\_count}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{msg\_store\_count}{msg\_store\_count}}
+{\footnotesize\ttfamily int mosquitto\+\_\+db\+::msg\+\_\+store\+\_\+count}
+
+\mbox{\Hypertarget{structmosquitto__db_adf345ee58cf3f03e6af7d9ddf2dc8f05}\label{structmosquitto__db_adf345ee58cf3f03e6af7d9ddf2dc8f05}} 
+\index{mosquitto\_db@{mosquitto\_db}!msg\_store\_load@{msg\_store\_load}}
+\index{msg\_store\_load@{msg\_store\_load}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{msg\_store\_load}{msg\_store\_load}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto__msg__store__load}{mosquitto\+\_\+msg\+\_\+store\+\_\+load}}$\ast$ mosquitto\+\_\+db\+::msg\+\_\+store\+\_\+load}
+
+\mbox{\Hypertarget{structmosquitto__db_a2d2f905bb6f22a91290ac7472e45119f}\label{structmosquitto__db_a2d2f905bb6f22a91290ac7472e45119f}} 
+\index{mosquitto\_db@{mosquitto\_db}!now\_real\_s@{now\_real\_s}}
+\index{now\_real\_s@{now\_real\_s}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{now\_real\_s}{now\_real\_s}}
+{\footnotesize\ttfamily time\+\_\+t mosquitto\+\_\+db\+::now\+\_\+real\+\_\+s}
+
+\mbox{\Hypertarget{structmosquitto__db_aacc524956ef58781b0ef567ba78303ff}\label{structmosquitto__db_aacc524956ef58781b0ef567ba78303ff}} 
+\index{mosquitto\_db@{mosquitto\_db}!now\_s@{now\_s}}
+\index{now\_s@{now\_s}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{now\_s}{now\_s}}
+{\footnotesize\ttfamily time\+\_\+t mosquitto\+\_\+db\+::now\+\_\+s}
+
+\mbox{\Hypertarget{structmosquitto__db_a85ea76e88408ef3a3c00129214782028}\label{structmosquitto__db_a85ea76e88408ef3a3c00129214782028}} 
+\index{mosquitto\_db@{mosquitto\_db}!persistence\_changes@{persistence\_changes}}
+\index{persistence\_changes@{persistence\_changes}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{persistence\_changes}{persistence\_changes}}
+{\footnotesize\ttfamily int mosquitto\+\_\+db\+::persistence\+\_\+changes}
+
+\mbox{\Hypertarget{structmosquitto__db_a1606d2bbc7fa6e884a782b4443688b07}\label{structmosquitto__db_a1606d2bbc7fa6e884a782b4443688b07}} 
+\index{mosquitto\_db@{mosquitto\_db}!plugin\_msgs@{plugin\_msgs}}
+\index{plugin\_msgs@{plugin\_msgs}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{plugin\_msgs}{plugin\_msgs}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto__message__v5}{mosquitto\+\_\+message\+\_\+v5}}$\ast$ mosquitto\+\_\+db\+::plugin\+\_\+msgs}
+
+\mbox{\Hypertarget{structmosquitto__db_aaf0c9d0689c4d33d75feb6556b3a7652}\label{structmosquitto__db_aaf0c9d0689c4d33d75feb6556b3a7652}} 
+\index{mosquitto\_db@{mosquitto\_db}!retains@{retains}}
+\index{retains@{retains}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{retains}{retains}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\+\_\+\+\_\+retainhier}}$\ast$ mosquitto\+\_\+db\+::retains}
+
+\mbox{\Hypertarget{structmosquitto__db_ab6408cc2a6d6efb6d283559c21002a3b}\label{structmosquitto__db_ab6408cc2a6d6efb6d283559c21002a3b}} 
+\index{mosquitto\_db@{mosquitto\_db}!subs@{subs}}
+\index{subs@{subs}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{subs}{subs}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\+\_\+\+\_\+subhier}}$\ast$ mosquitto\+\_\+db\+::subs}
+
+\mbox{\Hypertarget{structmosquitto__db_a4564c61f52fced8dcd07cb2a54a1a384}\label{structmosquitto__db_a4564c61f52fced8dcd07cb2a54a1a384}} 
+\index{mosquitto\_db@{mosquitto\_db}!verbose@{verbose}}
+\index{verbose@{verbose}!mosquitto\_db@{mosquitto\_db}}
+\doxysubsubsection{\texorpdfstring{verbose}{verbose}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+db\+::verbose}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{mosquitto__broker__internal_8h}{mosquitto\+\_\+broker\+\_\+internal.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,181 @@
+\hypertarget{persist_8h_source}{}\doxysection{persist.\+h}
+\mbox{\hyperlink{persist_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{Copyright (c) 2010-\/2020 Roger Light <roger@atchoo.org>}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{All rights reserved. This program and the accompanying materials}}
+\DoxyCodeLine{5 \textcolor{comment}{are made available under the terms of the Eclipse Public License 2.0}}
+\DoxyCodeLine{6 \textcolor{comment}{and Eclipse Distribution License v1.0 which accompany this distribution.}}
+\DoxyCodeLine{7 \textcolor{comment}{}}
+\DoxyCodeLine{8 \textcolor{comment}{The Eclipse Public License is available at}}
+\DoxyCodeLine{9 \textcolor{comment}{   https://www.eclipse.org/legal/epl-\/2.0/}}
+\DoxyCodeLine{10 \textcolor{comment}{and the Eclipse Distribution License is available at}}
+\DoxyCodeLine{11 \textcolor{comment}{  http://www.eclipse.org/org/documents/edl-\/v10.php.}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{SPDX-\/License-\/Identifier: EPL-\/2.0 OR BSD-\/3-\/Clause}}
+\DoxyCodeLine{14 \textcolor{comment}{}}
+\DoxyCodeLine{15 \textcolor{comment}{Contributors:}}
+\DoxyCodeLine{16 \textcolor{comment}{   Roger Light -\/ initial implementation and documentation.}}
+\DoxyCodeLine{17 \textcolor{comment}{*/}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{PERSIST\_H}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{PERSIST\_H}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \mbox{\hyperlink{mosquitto__broker__internal_8h}{"{}mosquitto\_broker\_internal.h"{}}}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MOSQ\_DB\_VERSION} 6}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{comment}{/* DB read/write */}}
+\DoxyCodeLine{27 \textcolor{keyword}{extern} \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \mbox{\hyperlink{persist_8h_ae4432ac25413e52d0496c4fd67bed777}{magic}}[15];}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{DB\_CHUNK\_CFG} 1}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{DB\_CHUNK\_MSG\_STORE} 2}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{DB\_CHUNK\_CLIENT\_MSG} 3}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{DB\_CHUNK\_RETAIN} 4}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{DB\_CHUNK\_SUB} 5}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{DB\_CHUNK\_CLIENT} 6}
+\DoxyCodeLine{34 \textcolor{comment}{/* End DB read/write */}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{read\_e}\textcolor{preprocessor}{(}\textcolor{preprocessor}{f}\textcolor{preprocessor}{,} \textcolor{preprocessor}{b}\textcolor{preprocessor}{,} \textcolor{preprocessor}{c}\textcolor{preprocessor}{)} \textcolor{keywordflow}{if}\textcolor{preprocessor}{(}\textcolor{preprocessor}{fread}\textcolor{preprocessor}{(}\textcolor{preprocessor}{b}\textcolor{preprocessor}{,} 1\textcolor{preprocessor}{,} \textcolor{preprocessor}{c}\textcolor{preprocessor}{,} \textcolor{preprocessor}{f}\textcolor{preprocessor}{)} \textcolor{preprocessor}{!=} \textcolor{preprocessor}{c}\textcolor{preprocessor}{)}\textcolor{preprocessor}{\{} \textcolor{keywordflow}{goto} \textcolor{preprocessor}{error}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{write\_e}\textcolor{preprocessor}{(}\textcolor{preprocessor}{f}\textcolor{preprocessor}{,} \textcolor{preprocessor}{b}\textcolor{preprocessor}{,} \textcolor{preprocessor}{c}\textcolor{preprocessor}{)} \textcolor{keywordflow}{if}\textcolor{preprocessor}{(}\textcolor{preprocessor}{fwrite}\textcolor{preprocessor}{(}\textcolor{preprocessor}{b}\textcolor{preprocessor}{,} 1\textcolor{preprocessor}{,} \textcolor{preprocessor}{c}\textcolor{preprocessor}{,} \textcolor{preprocessor}{f}\textcolor{preprocessor}{)} \textcolor{preprocessor}{!=} \textcolor{preprocessor}{c}\textcolor{preprocessor}{)}\textcolor{preprocessor}{\{} \textcolor{keywordflow}{goto} \textcolor{preprocessor}{error}\textcolor{preprocessor}{;} \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{comment}{/* COMPATIBILITY NOTES}}
+\DoxyCodeLine{40 \textcolor{comment}{ *}}
+\DoxyCodeLine{41 \textcolor{comment}{ * The P\_* structs (persist structs) contain all of the data for a particular}}
+\DoxyCodeLine{42 \textcolor{comment}{ * data chunk. They are loaded in multiple parts, so can be rearranged without}}
+\DoxyCodeLine{43 \textcolor{comment}{ * updating the db format version.}}
+\DoxyCodeLine{44 \textcolor{comment}{ *}}
+\DoxyCodeLine{45 \textcolor{comment}{ * The PF\_* structs (persist fixed structs) contain the fixed size data for a}}
+\DoxyCodeLine{46 \textcolor{comment}{ * particular data chunk. They are written to disk as is, so they must not be}}
+\DoxyCodeLine{47 \textcolor{comment}{ * rearranged without updating the db format version. When adding new members,}}
+\DoxyCodeLine{48 \textcolor{comment}{ * always use explicit sized datatypes ("{}uint32\_t"{}, not "{}long"{}), and check}}
+\DoxyCodeLine{49 \textcolor{comment}{ * whether what is being added can go in an existing hole in the struct.}}
+\DoxyCodeLine{50 \textcolor{comment}{ */}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__header}{PF\_header}}\{}
+\DoxyCodeLine{53     \mbox{\hyperlink{structPF__header_ac2c685d398bda34cea0e8fcbb33a94b5}{uint32\_t}} \mbox{\hyperlink{structPF__header_ac2c685d398bda34cea0e8fcbb33a94b5}{chunk}};}
+\DoxyCodeLine{54     \mbox{\hyperlink{structPF__header_a9e7bee3f778dd1a232a5530c7d6c6ec4}{uint32\_t}} \mbox{\hyperlink{structPF__header_a9e7bee3f778dd1a232a5530c7d6c6ec4}{length}};}
+\DoxyCodeLine{55 \};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__cfg}{PF\_cfg}}\{}
+\DoxyCodeLine{59     \mbox{\hyperlink{structPF__cfg_a2d84b25f8a4af76f1b4f604596f1788f}{uint64\_t}} \mbox{\hyperlink{structPF__cfg_a2d84b25f8a4af76f1b4f604596f1788f}{last\_db\_id}};}
+\DoxyCodeLine{60     \mbox{\hyperlink{structPF__cfg_a5335bfeca9585e8084d66eb4f5ee44a1}{uint8\_t}} \mbox{\hyperlink{structPF__cfg_a5335bfeca9585e8084d66eb4f5ee44a1}{shutdown}};}
+\DoxyCodeLine{61     \mbox{\hyperlink{structPF__cfg_a482eee3daade2c98f20e7d17b92a64b8}{uint8\_t}} \mbox{\hyperlink{structPF__cfg_a482eee3daade2c98f20e7d17b92a64b8}{dbid\_size}};}
+\DoxyCodeLine{62 \};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__client__v5}{PF\_client\_v5}}\{}
+\DoxyCodeLine{65     \mbox{\hyperlink{structPF__client__v5_a9be1eecb62c45d39d32df4635324ec28}{int64\_t}} \mbox{\hyperlink{structPF__client__v5_a9be1eecb62c45d39d32df4635324ec28}{session\_expiry\_time}};}
+\DoxyCodeLine{66     \mbox{\hyperlink{structPF__client__v5_a2178bd6a249b7fbab2d8bc1f4a4f96f2}{uint32\_t}} \mbox{\hyperlink{structPF__client__v5_a2178bd6a249b7fbab2d8bc1f4a4f96f2}{session\_expiry\_interval}};}
+\DoxyCodeLine{67     \mbox{\hyperlink{structPF__client__v5_a8f79b20abce47af55fcb940e5d938ff9}{uint16\_t}} \mbox{\hyperlink{structPF__client__v5_a8f79b20abce47af55fcb940e5d938ff9}{last\_mid}};}
+\DoxyCodeLine{68     \mbox{\hyperlink{structPF__client__v5_a14abb1e22fa2dd1e128a1d8e0015c112}{uint16\_t}} \mbox{\hyperlink{structPF__client__v5_a14abb1e22fa2dd1e128a1d8e0015c112}{id\_len}};}
+\DoxyCodeLine{69 \};}
+\DoxyCodeLine{70 \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__client}{PF\_client}}\{}
+\DoxyCodeLine{71     \textcolor{comment}{/* struct PF\_client\_v5; */}}
+\DoxyCodeLine{72     \mbox{\hyperlink{structPF__client_aa93175feabeb91666dbfc7bdcb090fac}{int64\_t}} \mbox{\hyperlink{structPF__client_aa93175feabeb91666dbfc7bdcb090fac}{session\_expiry\_time}};}
+\DoxyCodeLine{73     \mbox{\hyperlink{structPF__client_a7bc9f590e54cc7d9b2ad34fc138053de}{uint32\_t}} \mbox{\hyperlink{structPF__client_a7bc9f590e54cc7d9b2ad34fc138053de}{session\_expiry\_interval}};}
+\DoxyCodeLine{74     \mbox{\hyperlink{structPF__client_a08a95b0ca3b72ea3995b13715f2a8491}{uint16\_t}} \mbox{\hyperlink{structPF__client_a08a95b0ca3b72ea3995b13715f2a8491}{last\_mid}};}
+\DoxyCodeLine{75     \mbox{\hyperlink{structPF__client_afe32b8b088d7d8e0c8815b57721e5ee2}{uint16\_t}} \mbox{\hyperlink{structPF__client_afe32b8b088d7d8e0c8815b57721e5ee2}{id\_len}};}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \mbox{\hyperlink{structPF__client_a6d182d6f6e3672bc817b4ff2e6598721}{uint16\_t}} \mbox{\hyperlink{structPF__client_a6d182d6f6e3672bc817b4ff2e6598721}{listener\_port}};}
+\DoxyCodeLine{78     \mbox{\hyperlink{structPF__client_ae973e21e71ebb0aff16a33e2b3976f57}{uint16\_t}} \mbox{\hyperlink{structPF__client_ae973e21e71ebb0aff16a33e2b3976f57}{username\_len}};}
+\DoxyCodeLine{79     \textcolor{comment}{/* tail: 4 byte padding, because 64bit member}}
+\DoxyCodeLine{80 \textcolor{comment}{     * forces multiple of 8 for struct size */}}
+\DoxyCodeLine{81 \};}
+\DoxyCodeLine{82 \textcolor{keyword}{struct} \mbox{\hyperlink{structP__client}{P\_client}}\{}
+\DoxyCodeLine{83     \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__client}{PF\_client}} \mbox{\hyperlink{structP__client_a9cda2b6b8e03a5ba1ff7ac81998176d9}{F}};}
+\DoxyCodeLine{84     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structP__client_aeb4d904fc6c7aecb3ffdad183f5cbd14}{client\_id}};}
+\DoxyCodeLine{85     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structP__client_af0844455a1c912786cada0b2184d5da2}{username}};}
+\DoxyCodeLine{86 \};}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89 \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__client__msg}{PF\_client\_msg}}\{}
+\DoxyCodeLine{90     \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\_t}} \mbox{\hyperlink{structPF__client__msg_aea6192514cce79442dee4c913ab7874f}{store\_id}};}
+\DoxyCodeLine{91     \mbox{\hyperlink{structPF__client__msg_a5c0b6fb20a0bde052536076def1f5e0e}{uint16\_t}} \mbox{\hyperlink{structPF__client__msg_a5c0b6fb20a0bde052536076def1f5e0e}{mid}};}
+\DoxyCodeLine{92     \mbox{\hyperlink{structPF__client__msg_ac44801079bb06f04731e98c01ae95026}{uint16\_t}} \mbox{\hyperlink{structPF__client__msg_ac44801079bb06f04731e98c01ae95026}{id\_len}};}
+\DoxyCodeLine{93     \mbox{\hyperlink{structPF__client__msg_a8f128a62b3016bcd547305f824453a05}{uint8\_t}} \mbox{\hyperlink{structPF__client__msg_a8f128a62b3016bcd547305f824453a05}{qos}};}
+\DoxyCodeLine{94     \mbox{\hyperlink{structPF__client__msg_ab068e654b57219df7d0b29c9ae25df51}{uint8\_t}} \mbox{\hyperlink{structPF__client__msg_ab068e654b57219df7d0b29c9ae25df51}{state}};}
+\DoxyCodeLine{95     \mbox{\hyperlink{structPF__client__msg_ac178222b898369153b7f1cbb97d9538a}{uint8\_t}} \mbox{\hyperlink{structPF__client__msg_ac178222b898369153b7f1cbb97d9538a}{retain\_dup}};}
+\DoxyCodeLine{96     \mbox{\hyperlink{structPF__client__msg_a69f6eac86197a743904286aa1a53bca0}{uint8\_t}} \mbox{\hyperlink{structPF__client__msg_a69f6eac86197a743904286aa1a53bca0}{direction}};}
+\DoxyCodeLine{97 \};}
+\DoxyCodeLine{98 \textcolor{keyword}{struct} \mbox{\hyperlink{structP__client__msg}{P\_client\_msg}}\{}
+\DoxyCodeLine{99     \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__client__msg}{PF\_client\_msg}} \mbox{\hyperlink{structP__client__msg_ac7a572bf837cc84032ce79585b6ee941}{F}};}
+\DoxyCodeLine{100     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structP__client__msg_aa3566c8030687e9b65c06732d6e7313b}{client\_id}};}
+\DoxyCodeLine{101     \mbox{\hyperlink{structP__client__msg_abdd65208d0e664e48e415d7ec335ff38}{mosquitto\_property}} *\mbox{\hyperlink{structP__client__msg_abdd65208d0e664e48e415d7ec335ff38}{properties}};}
+\DoxyCodeLine{102 \};}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105 \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__msg__store}{PF\_msg\_store}}\{}
+\DoxyCodeLine{106     \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\_t}} \mbox{\hyperlink{structPF__msg__store_afa6629c330416dbad0d9cf59f8588c64}{store\_id}};}
+\DoxyCodeLine{107     \mbox{\hyperlink{structPF__msg__store_a611a134cef5bde91580e462aafed23e6}{int64\_t}} \mbox{\hyperlink{structPF__msg__store_a611a134cef5bde91580e462aafed23e6}{expiry\_time}};}
+\DoxyCodeLine{108     \mbox{\hyperlink{structPF__msg__store_af3b526dce9f53ee24a9ce011c74258fe}{uint32\_t}} \mbox{\hyperlink{structPF__msg__store_af3b526dce9f53ee24a9ce011c74258fe}{payloadlen}};}
+\DoxyCodeLine{109     \mbox{\hyperlink{structPF__msg__store_aed5590e797c85bd58aa5b7109ec460a2}{uint16\_t}} \mbox{\hyperlink{structPF__msg__store_aed5590e797c85bd58aa5b7109ec460a2}{source\_mid}};}
+\DoxyCodeLine{110     \mbox{\hyperlink{structPF__msg__store_acbf7d19e33b9ae42f04ebb258f485a25}{uint16\_t}} \mbox{\hyperlink{structPF__msg__store_acbf7d19e33b9ae42f04ebb258f485a25}{source\_id\_len}};}
+\DoxyCodeLine{111     \mbox{\hyperlink{structPF__msg__store_acedd60470bf07066909732cc3513c28c}{uint16\_t}} \mbox{\hyperlink{structPF__msg__store_acedd60470bf07066909732cc3513c28c}{source\_username\_len}};}
+\DoxyCodeLine{112     \mbox{\hyperlink{structPF__msg__store_a0c9b6433bef1ee2b2425e8cc44a4b2b2}{uint16\_t}} \mbox{\hyperlink{structPF__msg__store_a0c9b6433bef1ee2b2425e8cc44a4b2b2}{topic\_len}};}
+\DoxyCodeLine{113     \mbox{\hyperlink{structPF__msg__store_a27ee7823c45ff7765e71808442b97d12}{uint16\_t}} \mbox{\hyperlink{structPF__msg__store_a27ee7823c45ff7765e71808442b97d12}{source\_port}};}
+\DoxyCodeLine{114     \mbox{\hyperlink{structPF__msg__store_abd4d53a4aa1be32943639f779b5b657b}{uint8\_t}} \mbox{\hyperlink{structPF__msg__store_abd4d53a4aa1be32943639f779b5b657b}{qos}};}
+\DoxyCodeLine{115     \mbox{\hyperlink{structPF__msg__store_a0009ea506600749074fac43d91ee9796}{uint8\_t}} \mbox{\hyperlink{structPF__msg__store_a0009ea506600749074fac43d91ee9796}{retain}};}
+\DoxyCodeLine{116 \};}
+\DoxyCodeLine{117 \textcolor{keyword}{struct} \mbox{\hyperlink{structP__msg__store}{P\_msg\_store}}\{}
+\DoxyCodeLine{118     \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__msg__store}{PF\_msg\_store}} \mbox{\hyperlink{structP__msg__store_ac37481db56f7160b20729fc2b3127a0f}{F}};}
+\DoxyCodeLine{119     \textcolor{keywordtype}{void} *\mbox{\hyperlink{structP__msg__store_ab20417978cd79325014fbb58fe4ea4da}{payload}};}
+\DoxyCodeLine{120     \textcolor{keyword}{struct} mosquitto \mbox{\hyperlink{structP__msg__store_a3f5e1b1f98966b3ea35ab299ce6b8f4d}{source}};}
+\DoxyCodeLine{121     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structP__msg__store_a4ca0a8c6ed8e2037523a7dbe3a58b683}{topic}};}
+\DoxyCodeLine{122     \mbox{\hyperlink{structP__msg__store_aa4348e50cc2f658ed61519b59f6cb149}{mosquitto\_property}} *\mbox{\hyperlink{structP__msg__store_aa4348e50cc2f658ed61519b59f6cb149}{properties}};}
+\DoxyCodeLine{123 \};}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125 }
+\DoxyCodeLine{126 \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__sub}{PF\_sub}}\{}
+\DoxyCodeLine{127     \mbox{\hyperlink{structPF__sub_a78b1bc19ee61f0175f155a4f63d73aa7}{uint32\_t}} \mbox{\hyperlink{structPF__sub_a78b1bc19ee61f0175f155a4f63d73aa7}{identifier}};}
+\DoxyCodeLine{128     \mbox{\hyperlink{structPF__sub_a286a2c0342081cbd138501246306993b}{uint16\_t}} \mbox{\hyperlink{structPF__sub_a286a2c0342081cbd138501246306993b}{id\_len}};}
+\DoxyCodeLine{129     \mbox{\hyperlink{structPF__sub_aa727c785dd9b4c8dd106719a28388ece}{uint16\_t}} \mbox{\hyperlink{structPF__sub_aa727c785dd9b4c8dd106719a28388ece}{topic\_len}};}
+\DoxyCodeLine{130     \mbox{\hyperlink{structPF__sub_a4be2274737cbb039b1577564786bd3a3}{uint8\_t}} \mbox{\hyperlink{structPF__sub_a4be2274737cbb039b1577564786bd3a3}{qos}};}
+\DoxyCodeLine{131     \mbox{\hyperlink{structPF__sub_a41cd7be9c44d7e28f716be061150d670}{uint8\_t}} \mbox{\hyperlink{structPF__sub_a41cd7be9c44d7e28f716be061150d670}{options}};}
+\DoxyCodeLine{132 \};}
+\DoxyCodeLine{133 \textcolor{keyword}{struct} \mbox{\hyperlink{structP__sub}{P\_sub}}\{}
+\DoxyCodeLine{134     \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__sub}{PF\_sub}} \mbox{\hyperlink{structP__sub_a898d247b5b40ac1c305c4cfd40cc5de2}{F}};}
+\DoxyCodeLine{135     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structP__sub_a954a6a485a55fe35209fa2b3a7909170}{client\_id}};}
+\DoxyCodeLine{136     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structP__sub_afca506afd1f1429095c1d4d2909b615e}{topic}};}
+\DoxyCodeLine{137 \};}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140 \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__retain}{PF\_retain}}\{}
+\DoxyCodeLine{141     \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\_t}} \mbox{\hyperlink{structPF__retain_a31459e459925c75dbad1db5aabf0e7c6}{store\_id}};}
+\DoxyCodeLine{142 \};}
+\DoxyCodeLine{143 \textcolor{keyword}{struct} \mbox{\hyperlink{structP__retain}{P\_retain}}\{}
+\DoxyCodeLine{144     \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__retain}{PF\_retain}} \mbox{\hyperlink{structP__retain_a75c8419b4be53d162766b74bdd5a0eb4}{F}};}
+\DoxyCodeLine{145 \};}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_aed08a467dec926706596098d1c33a113}{persist\_\_read\_string\_len}}(FILE *db\_fptr, \textcolor{keywordtype}{char} **str, uint16\_t len);}
+\DoxyCodeLine{149 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a154ad39db26a5b7402f18d54a0281772}{persist\_\_read\_string}}(FILE *db\_fptr, \textcolor{keywordtype}{char} **str);}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{151 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_abb934a2778022242ec60aabefedcb287}{persist\_\_chunk\_header\_read}}(FILE *db\_fptr, uint32\_t *chunk, uint32\_t *length);}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a00e7345124cfb081a865ea3643e02b41}{persist\_\_chunk\_header\_read\_v234}}(FILE *db\_fptr, uint32\_t *chunk, uint32\_t *length);}
+\DoxyCodeLine{154 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a0175ef6aecbd7895e8c0bb8dae1cc897}{persist\_\_chunk\_cfg\_read\_v234}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__cfg}{PF\_cfg}} *chunk);}
+\DoxyCodeLine{155 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a9db68e75a54f213b0a24b01e841af43a}{persist\_\_chunk\_client\_read\_v234}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__client}{P\_client}} *chunk, uint32\_t db\_version);}
+\DoxyCodeLine{156 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a76e0ee6639afad6efc57075493b37a0e}{persist\_\_chunk\_client\_msg\_read\_v234}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__client__msg}{P\_client\_msg}} *chunk);}
+\DoxyCodeLine{157 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_acaaff73e4759c37dae71ef705f87926f}{persist\_\_chunk\_msg\_store\_read\_v234}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__msg__store}{P\_msg\_store}} *chunk, uint32\_t db\_version);}
+\DoxyCodeLine{158 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a4a54d0aff74ff8f15ff29fee9b978b53}{persist\_\_chunk\_retain\_read\_v234}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__retain}{P\_retain}} *chunk);}
+\DoxyCodeLine{159 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a478b896cd170ec896cdad0116d73dccf}{persist\_\_chunk\_sub\_read\_v234}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__sub}{P\_sub}} *chunk);}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_aa4e7f90e79dae08c1f438d077a05058f}{persist\_\_chunk\_header\_read\_v56}}(FILE *db\_fptr, uint32\_t *chunk, uint32\_t *length);}
+\DoxyCodeLine{162 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a18888d9d8137331083385ba10db51cc2}{persist\_\_chunk\_cfg\_read\_v56}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__cfg}{PF\_cfg}} *chunk);}
+\DoxyCodeLine{163 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a8e196341997192debfd4f21062704802}{persist\_\_chunk\_client\_read\_v56}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__client}{P\_client}} *chunk, uint32\_t db\_version);}
+\DoxyCodeLine{164 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_aa26b505a5f54cab7dfd923cffae22037}{persist\_\_chunk\_client\_msg\_read\_v56}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__client__msg}{P\_client\_msg}} *chunk, uint32\_t length);}
+\DoxyCodeLine{165 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a8df48ab0aa40cd577d1bac4d839a940e}{persist\_\_chunk\_msg\_store\_read\_v56}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__msg__store}{P\_msg\_store}} *chunk, uint32\_t length);}
+\DoxyCodeLine{166 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a31d156ee9df1a3a4790e8ccf101c60c1}{persist\_\_chunk\_retain\_read\_v56}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__retain}{P\_retain}} *chunk);}
+\DoxyCodeLine{167 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_ac6c37888a6d32dddb9efb4e6963b1574}{persist\_\_chunk\_sub\_read\_v56}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__sub}{P\_sub}} *chunk);}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a8c5ee394d2e30a0b84a4e6bc81c96e14}{persist\_\_chunk\_cfg\_write\_v6}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structPF__cfg}{PF\_cfg}} *chunk);}
+\DoxyCodeLine{170 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a95a14d55a4457367298f9c0505ea8836}{persist\_\_chunk\_client\_write\_v6}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__client}{P\_client}} *chunk);}
+\DoxyCodeLine{171 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a7501f41ab423f137e17ae44e067db3d6}{persist\_\_chunk\_client\_msg\_write\_v6}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__client__msg}{P\_client\_msg}} *chunk);}
+\DoxyCodeLine{172 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_aad772b7f143003d37bfa08ab0a67448a}{persist\_\_chunk\_message\_store\_write\_v6}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__msg__store}{P\_msg\_store}} *chunk);}
+\DoxyCodeLine{173 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_acdfb74411d97c4bf766ac9c35e301a75}{persist\_\_chunk\_retain\_write\_v6}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__retain}{P\_retain}} *chunk);}
+\DoxyCodeLine{174 \textcolor{keywordtype}{int} \mbox{\hyperlink{persist_8h_a21aa4b59887f0593aaa24d693095d6d9}{persist\_\_chunk\_sub\_write\_v6}}(FILE *db\_fptr, \textcolor{keyword}{struct} \mbox{\hyperlink{structP__sub}{P\_sub}} *chunk);}
+\DoxyCodeLine{175 }
+\DoxyCodeLine{176 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+
+\end{DoxyCode}

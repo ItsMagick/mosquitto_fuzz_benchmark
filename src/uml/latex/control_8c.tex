@@ -1,0 +1,38 @@
+\hypertarget{control_8c}{}\doxysection{control.\+c File Reference}
+\label{control_8c}\index{control.c@{control.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mqtt\+\_\+protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}send\+\_\+mosq.\+h\char`\"{}}\newline
+Include dependency graph for control.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{control_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{control_8c_a8bc588f10bb375e0672833a9995cb7fa}{control\+\_\+\+\_\+register\+\_\+callback}} (struct \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\+\_\+\+\_\+security\+\_\+options}} $\ast$opts, MOSQ\+\_\+\+FUNC\+\_\+generic\+\_\+callback cb\+\_\+func, const char $\ast$topic, void $\ast$userdata)
+\item 
+int \mbox{\hyperlink{control_8c_a95d096bd13a795d431d7348715dd39c7}{control\+\_\+\+\_\+unregister\+\_\+callback}} (struct \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\+\_\+\+\_\+security\+\_\+options}} $\ast$opts, MOSQ\+\_\+\+FUNC\+\_\+generic\+\_\+callback cb\+\_\+func, const char $\ast$topic)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{control_8c_a8bc588f10bb375e0672833a9995cb7fa}\label{control_8c_a8bc588f10bb375e0672833a9995cb7fa}} 
+\index{control.c@{control.c}!control\_\_register\_callback@{control\_\_register\_callback}}
+\index{control\_\_register\_callback@{control\_\_register\_callback}!control.c@{control.c}}
+\doxysubsubsection{\texorpdfstring{control\_\_register\_callback()}{control\_\_register\_callback()}}
+{\footnotesize\ttfamily int control\+\_\+\+\_\+register\+\_\+callback (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\+\_\+\+\_\+security\+\_\+options}} $\ast$}]{opts,  }\item[{MOSQ\+\_\+\+FUNC\+\_\+generic\+\_\+callback}]{cb\+\_\+func,  }\item[{const char $\ast$}]{topic,  }\item[{void $\ast$}]{userdata }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{control_8c_a95d096bd13a795d431d7348715dd39c7}\label{control_8c_a95d096bd13a795d431d7348715dd39c7}} 
+\index{control.c@{control.c}!control\_\_unregister\_callback@{control\_\_unregister\_callback}}
+\index{control\_\_unregister\_callback@{control\_\_unregister\_callback}!control.c@{control.c}}
+\doxysubsubsection{\texorpdfstring{control\_\_unregister\_callback()}{control\_\_unregister\_callback()}}
+{\footnotesize\ttfamily int control\+\_\+\+\_\+unregister\+\_\+callback (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\+\_\+\+\_\+security\+\_\+options}} $\ast$}]{opts,  }\item[{MOSQ\+\_\+\+FUNC\+\_\+generic\+\_\+callback}]{cb\+\_\+func,  }\item[{const char $\ast$}]{topic }\end{DoxyParamCaption})}
+

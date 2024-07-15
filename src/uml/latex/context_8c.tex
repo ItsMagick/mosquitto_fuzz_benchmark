@@ -1,0 +1,188 @@
+\hypertarget{context_8c}{}\doxysection{context.\+c File Reference}
+\label{context_8c}\index{context.c@{context.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}alias\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}packet\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}property\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}time\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}will\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}uthash.\+h\char`\"{}}\newline
+Include dependency graph for context.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct mosquitto $\ast$ \mbox{\hyperlink{context_8c_a1385833ee3638f7fe73f6aad6657c480}{context\+\_\+\+\_\+init}} (mosq\+\_\+sock\+\_\+t sock)
+\item 
+void \mbox{\hyperlink{context_8c_a7315015dcfcf8477759d566b85b7b9b1}{context\+\_\+\+\_\+cleanup}} (struct mosquitto $\ast$context, bool force\+\_\+free)
+\item 
+void \mbox{\hyperlink{context_8c_a8d5baec2dffaa72c7e07fc4ad6f8e992}{context\+\_\+\+\_\+send\+\_\+will}} (struct mosquitto $\ast$ctxt)
+\item 
+void \mbox{\hyperlink{context_8c_a23ceef03d4bbfee4cb48d74a512b00a2}{context\+\_\+\+\_\+disconnect}} (struct mosquitto $\ast$context)
+\item 
+void \mbox{\hyperlink{context_8c_a04cbc1aab17c1e05f2b3296aa9c78644}{context\+\_\+\+\_\+add\+\_\+to\+\_\+disused}} (struct mosquitto $\ast$context)
+\item 
+void \mbox{\hyperlink{context_8c_a5408b16e49614600a6a9734fce2f41f9}{context\+\_\+\+\_\+free\+\_\+disused}} (void)
+\item 
+void \mbox{\hyperlink{context_8c_a248d7de166535a20109e72205cbe7cd6}{context\+\_\+\+\_\+add\+\_\+to\+\_\+by\+\_\+id}} (struct mosquitto $\ast$context)
+\item 
+void \mbox{\hyperlink{context_8c_a2dcd0d62f06dc8398753d8d3fb780b7d}{context\+\_\+\+\_\+remove\+\_\+from\+\_\+by\+\_\+id}} (struct mosquitto $\ast$context)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{context_8c_a248d7de166535a20109e72205cbe7cd6}\label{context_8c_a248d7de166535a20109e72205cbe7cd6}} 
+\index{context.c@{context.c}!context\_\_add\_to\_by\_id@{context\_\_add\_to\_by\_id}}
+\index{context\_\_add\_to\_by\_id@{context\_\_add\_to\_by\_id}!context.c@{context.c}}
+\doxysubsubsection{\texorpdfstring{context\_\_add\_to\_by\_id()}{context\_\_add\_to\_by\_id()}}
+{\footnotesize\ttfamily void context\+\_\+\+\_\+add\+\_\+to\+\_\+by\+\_\+id (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a248d7de166535a20109e72205cbe7cd6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{context_8c_a04cbc1aab17c1e05f2b3296aa9c78644}\label{context_8c_a04cbc1aab17c1e05f2b3296aa9c78644}} 
+\index{context.c@{context.c}!context\_\_add\_to\_disused@{context\_\_add\_to\_disused}}
+\index{context\_\_add\_to\_disused@{context\_\_add\_to\_disused}!context.c@{context.c}}
+\doxysubsubsection{\texorpdfstring{context\_\_add\_to\_disused()}{context\_\_add\_to\_disused()}}
+{\footnotesize\ttfamily void context\+\_\+\+\_\+add\+\_\+to\+\_\+disused (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a04cbc1aab17c1e05f2b3296aa9c78644_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a04cbc1aab17c1e05f2b3296aa9c78644_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{context_8c_a7315015dcfcf8477759d566b85b7b9b1}\label{context_8c_a7315015dcfcf8477759d566b85b7b9b1}} 
+\index{context.c@{context.c}!context\_\_cleanup@{context\_\_cleanup}}
+\index{context\_\_cleanup@{context\_\_cleanup}!context.c@{context.c}}
+\doxysubsubsection{\texorpdfstring{context\_\_cleanup()}{context\_\_cleanup()}}
+{\footnotesize\ttfamily void context\+\_\+\+\_\+cleanup (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{bool}]{force\+\_\+free }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a7315015dcfcf8477759d566b85b7b9b1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a7315015dcfcf8477759d566b85b7b9b1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{context_8c_a23ceef03d4bbfee4cb48d74a512b00a2}\label{context_8c_a23ceef03d4bbfee4cb48d74a512b00a2}} 
+\index{context.c@{context.c}!context\_\_disconnect@{context\_\_disconnect}}
+\index{context\_\_disconnect@{context\_\_disconnect}!context.c@{context.c}}
+\doxysubsubsection{\texorpdfstring{context\_\_disconnect()}{context\_\_disconnect()}}
+{\footnotesize\ttfamily void context\+\_\+\+\_\+disconnect (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a23ceef03d4bbfee4cb48d74a512b00a2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a23ceef03d4bbfee4cb48d74a512b00a2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{context_8c_a5408b16e49614600a6a9734fce2f41f9}\label{context_8c_a5408b16e49614600a6a9734fce2f41f9}} 
+\index{context.c@{context.c}!context\_\_free\_disused@{context\_\_free\_disused}}
+\index{context\_\_free\_disused@{context\_\_free\_disused}!context.c@{context.c}}
+\doxysubsubsection{\texorpdfstring{context\_\_free\_disused()}{context\_\_free\_disused()}}
+{\footnotesize\ttfamily void context\+\_\+\+\_\+free\+\_\+disused (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a5408b16e49614600a6a9734fce2f41f9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a5408b16e49614600a6a9734fce2f41f9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{context_8c_a1385833ee3638f7fe73f6aad6657c480}\label{context_8c_a1385833ee3638f7fe73f6aad6657c480}} 
+\index{context.c@{context.c}!context\_\_init@{context\_\_init}}
+\index{context\_\_init@{context\_\_init}!context.c@{context.c}}
+\doxysubsubsection{\texorpdfstring{context\_\_init()}{context\_\_init()}}
+{\footnotesize\ttfamily struct mosquitto $\ast$ context\+\_\+\+\_\+init (\begin{DoxyParamCaption}\item[{mosq\+\_\+sock\+\_\+t}]{sock }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{context_8c_a2dcd0d62f06dc8398753d8d3fb780b7d}\label{context_8c_a2dcd0d62f06dc8398753d8d3fb780b7d}} 
+\index{context.c@{context.c}!context\_\_remove\_from\_by\_id@{context\_\_remove\_from\_by\_id}}
+\index{context\_\_remove\_from\_by\_id@{context\_\_remove\_from\_by\_id}!context.c@{context.c}}
+\doxysubsubsection{\texorpdfstring{context\_\_remove\_from\_by\_id()}{context\_\_remove\_from\_by\_id()}}
+{\footnotesize\ttfamily void context\+\_\+\+\_\+remove\+\_\+from\+\_\+by\+\_\+id (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a2dcd0d62f06dc8398753d8d3fb780b7d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{context_8c_a8d5baec2dffaa72c7e07fc4ad6f8e992}\label{context_8c_a8d5baec2dffaa72c7e07fc4ad6f8e992}} 
+\index{context.c@{context.c}!context\_\_send\_will@{context\_\_send\_will}}
+\index{context\_\_send\_will@{context\_\_send\_will}!context.c@{context.c}}
+\doxysubsubsection{\texorpdfstring{context\_\_send\_will()}{context\_\_send\_will()}}
+{\footnotesize\ttfamily void context\+\_\+\+\_\+send\+\_\+will (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{ctxt }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=321pt]{context_8c_a8d5baec2dffaa72c7e07fc4ad6f8e992_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{context_8c_a8d5baec2dffaa72c7e07fc4ad6f8e992_icgraph}
+\end{center}
+\end{figure}

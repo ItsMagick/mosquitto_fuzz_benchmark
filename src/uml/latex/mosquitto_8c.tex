@@ -1,0 +1,124 @@
+\hypertarget{mosquitto_8c}{}\doxysection{mosquitto.\+c File Reference}
+\label{mosquitto_8c}\index{mosquitto.c@{mosquitto.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$grp.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$pwd.\+h$>$}\newline
+{\ttfamily \#include $<$sys/time.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}misc\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util\+\_\+mosq.\+h\char`\"{}}\newline
+Include dependency graph for mosquitto.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mosquitto_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{mosquitto_8c_a42276474c5f145974bc99b10b91990d6}{drop\+\_\+privileges}} (struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}} $\ast$config)
+\item 
+void \mbox{\hyperlink{mosquitto_8c_a7df6a05e702af55c64d000e3ba4bff93}{listener\+\_\+\+\_\+set\+\_\+defaults}} (struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}} $\ast$listener)
+\item 
+void \mbox{\hyperlink{mosquitto_8c_a135e2b3dda2631d27f5fce0a38a0fb33}{listeners\+\_\+\+\_\+reload\+\_\+all\+\_\+certificates}} (void)
+\item 
+int \mbox{\hyperlink{mosquitto_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmosquitto__db}{mosquitto\+\_\+db}} \mbox{\hyperlink{mosquitto_8c_aa1bce74a2a746391e93e087c98e19ce5}{db}}
+\item 
+bool \mbox{\hyperlink{mosquitto_8c_a1c2245fafa57f7156b2961cdf4e3e4e6}{flag\+\_\+reload}} = false
+\item 
+bool \mbox{\hyperlink{mosquitto_8c_a228845d5196a999a02fbe670985318a9}{flag\+\_\+tree\+\_\+print}} = false
+\item 
+int \mbox{\hyperlink{mosquitto_8c_aecd587c4be6cba0dd6af4ea0b4d9c183}{run}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{mosquitto_8c_a42276474c5f145974bc99b10b91990d6}\label{mosquitto_8c_a42276474c5f145974bc99b10b91990d6}} 
+\index{mosquitto.c@{mosquitto.c}!drop\_privileges@{drop\_privileges}}
+\index{drop\_privileges@{drop\_privileges}!mosquitto.c@{mosquitto.c}}
+\doxysubsubsection{\texorpdfstring{drop\_privileges()}{drop\_privileges()}}
+{\footnotesize\ttfamily int drop\+\_\+privileges (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}} $\ast$}]{config }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{mosquitto_8c_a42276474c5f145974bc99b10b91990d6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{mosquitto_8c_a7df6a05e702af55c64d000e3ba4bff93}\label{mosquitto_8c_a7df6a05e702af55c64d000e3ba4bff93}} 
+\index{mosquitto.c@{mosquitto.c}!listener\_\_set\_defaults@{listener\_\_set\_defaults}}
+\index{listener\_\_set\_defaults@{listener\_\_set\_defaults}!mosquitto.c@{mosquitto.c}}
+\doxysubsubsection{\texorpdfstring{listener\_\_set\_defaults()}{listener\_\_set\_defaults()}}
+{\footnotesize\ttfamily void listener\+\_\+\+\_\+set\+\_\+defaults (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}} $\ast$}]{listener }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{mosquitto_8c_a135e2b3dda2631d27f5fce0a38a0fb33}\label{mosquitto_8c_a135e2b3dda2631d27f5fce0a38a0fb33}} 
+\index{mosquitto.c@{mosquitto.c}!listeners\_\_reload\_all\_certificates@{listeners\_\_reload\_all\_certificates}}
+\index{listeners\_\_reload\_all\_certificates@{listeners\_\_reload\_all\_certificates}!mosquitto.c@{mosquitto.c}}
+\doxysubsubsection{\texorpdfstring{listeners\_\_reload\_all\_certificates()}{listeners\_\_reload\_all\_certificates()}}
+{\footnotesize\ttfamily void listeners\+\_\+\+\_\+reload\+\_\+all\+\_\+certificates (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mosquitto_8c_a135e2b3dda2631d27f5fce0a38a0fb33_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{mosquitto_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{mosquitto_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{mosquitto.c@{mosquitto.c}!main@{main}}
+\index{main@{main}!mosquitto.c@{mosquitto.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mosquitto_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{mosquitto_8c_aa1bce74a2a746391e93e087c98e19ce5}\label{mosquitto_8c_aa1bce74a2a746391e93e087c98e19ce5}} 
+\index{mosquitto.c@{mosquitto.c}!db@{db}}
+\index{db@{db}!mosquitto.c@{mosquitto.c}}
+\doxysubsubsection{\texorpdfstring{db}{db}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto__db}{mosquitto\+\_\+db}} db}
+
+\mbox{\Hypertarget{mosquitto_8c_a1c2245fafa57f7156b2961cdf4e3e4e6}\label{mosquitto_8c_a1c2245fafa57f7156b2961cdf4e3e4e6}} 
+\index{mosquitto.c@{mosquitto.c}!flag\_reload@{flag\_reload}}
+\index{flag\_reload@{flag\_reload}!mosquitto.c@{mosquitto.c}}
+\doxysubsubsection{\texorpdfstring{flag\_reload}{flag\_reload}}
+{\footnotesize\ttfamily bool flag\+\_\+reload = false}
+
+\mbox{\Hypertarget{mosquitto_8c_a228845d5196a999a02fbe670985318a9}\label{mosquitto_8c_a228845d5196a999a02fbe670985318a9}} 
+\index{mosquitto.c@{mosquitto.c}!flag\_tree\_print@{flag\_tree\_print}}
+\index{flag\_tree\_print@{flag\_tree\_print}!mosquitto.c@{mosquitto.c}}
+\doxysubsubsection{\texorpdfstring{flag\_tree\_print}{flag\_tree\_print}}
+{\footnotesize\ttfamily bool flag\+\_\+tree\+\_\+print = false}
+
+\mbox{\Hypertarget{mosquitto_8c_aecd587c4be6cba0dd6af4ea0b4d9c183}\label{mosquitto_8c_aecd587c4be6cba0dd6af4ea0b4d9c183}} 
+\index{mosquitto.c@{mosquitto.c}!run@{run}}
+\index{run@{run}!mosquitto.c@{mosquitto.c}}
+\doxysubsubsection{\texorpdfstring{run}{run}}
+{\footnotesize\ttfamily int run}
+

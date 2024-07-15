@@ -1,0 +1,112 @@
+\hypertarget{session__expiry_8c}{}\doxysection{session\+\_\+expiry.\+c File Reference}
+\label{session__expiry_8c}\index{session\_expiry.c@{session\_expiry.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$utlist.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sys\+\_\+tree.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}time\+\_\+mosq.\+h\char`\"{}}\newline
+Include dependency graph for session\+\_\+expiry.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{session__expiry_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{session__expiry_8c_a11472679af9af53b8d3538ae34e02a5d}{session\+\_\+expiry\+\_\+\+\_\+add}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{session__expiry_8c_a9cad26865c7aaee113a5a44af13568da}{session\+\_\+expiry\+\_\+\+\_\+add\+\_\+from\+\_\+persistence}} (struct mosquitto $\ast$context, time\+\_\+t expiry\+\_\+time)
+\item 
+void \mbox{\hyperlink{session__expiry_8c_a2cdcd4347b70148889882126807025f1}{session\+\_\+expiry\+\_\+\+\_\+remove}} (struct mosquitto $\ast$context)
+\item 
+void \mbox{\hyperlink{session__expiry_8c_a697ded88bfba20186cba05258fb8bc0e}{session\+\_\+expiry\+\_\+\+\_\+remove\+\_\+all}} (void)
+\item 
+void \mbox{\hyperlink{session__expiry_8c_a616fed1840d1ea723de59e523079ce13}{session\+\_\+expiry\+\_\+\+\_\+check}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{session__expiry_8c_a11472679af9af53b8d3538ae34e02a5d}\label{session__expiry_8c_a11472679af9af53b8d3538ae34e02a5d}} 
+\index{session\_expiry.c@{session\_expiry.c}!session\_expiry\_\_add@{session\_expiry\_\_add}}
+\index{session\_expiry\_\_add@{session\_expiry\_\_add}!session\_expiry.c@{session\_expiry.c}}
+\doxysubsubsection{\texorpdfstring{session\_expiry\_\_add()}{session\_expiry\_\_add()}}
+{\footnotesize\ttfamily int session\+\_\+expiry\+\_\+\+\_\+add (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{session__expiry_8c_a11472679af9af53b8d3538ae34e02a5d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{session__expiry_8c_a9cad26865c7aaee113a5a44af13568da}\label{session__expiry_8c_a9cad26865c7aaee113a5a44af13568da}} 
+\index{session\_expiry.c@{session\_expiry.c}!session\_expiry\_\_add\_from\_persistence@{session\_expiry\_\_add\_from\_persistence}}
+\index{session\_expiry\_\_add\_from\_persistence@{session\_expiry\_\_add\_from\_persistence}!session\_expiry.c@{session\_expiry.c}}
+\doxysubsubsection{\texorpdfstring{session\_expiry\_\_add\_from\_persistence()}{session\_expiry\_\_add\_from\_persistence()}}
+{\footnotesize\ttfamily int session\+\_\+expiry\+\_\+\+\_\+add\+\_\+from\+\_\+persistence (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{time\+\_\+t}]{expiry\+\_\+time }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{session__expiry_8c_a616fed1840d1ea723de59e523079ce13}\label{session__expiry_8c_a616fed1840d1ea723de59e523079ce13}} 
+\index{session\_expiry.c@{session\_expiry.c}!session\_expiry\_\_check@{session\_expiry\_\_check}}
+\index{session\_expiry\_\_check@{session\_expiry\_\_check}!session\_expiry.c@{session\_expiry.c}}
+\doxysubsubsection{\texorpdfstring{session\_expiry\_\_check()}{session\_expiry\_\_check()}}
+{\footnotesize\ttfamily void session\+\_\+expiry\+\_\+\+\_\+check (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{session__expiry_8c_a616fed1840d1ea723de59e523079ce13_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{session__expiry_8c_a616fed1840d1ea723de59e523079ce13_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{session__expiry_8c_a2cdcd4347b70148889882126807025f1}\label{session__expiry_8c_a2cdcd4347b70148889882126807025f1}} 
+\index{session\_expiry.c@{session\_expiry.c}!session\_expiry\_\_remove@{session\_expiry\_\_remove}}
+\index{session\_expiry\_\_remove@{session\_expiry\_\_remove}!session\_expiry.c@{session\_expiry.c}}
+\doxysubsubsection{\texorpdfstring{session\_expiry\_\_remove()}{session\_expiry\_\_remove()}}
+{\footnotesize\ttfamily void session\+\_\+expiry\+\_\+\+\_\+remove (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{session__expiry_8c_a2cdcd4347b70148889882126807025f1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{session__expiry_8c_a697ded88bfba20186cba05258fb8bc0e}\label{session__expiry_8c_a697ded88bfba20186cba05258fb8bc0e}} 
+\index{session\_expiry.c@{session\_expiry.c}!session\_expiry\_\_remove\_all@{session\_expiry\_\_remove\_all}}
+\index{session\_expiry\_\_remove\_all@{session\_expiry\_\_remove\_all}!session\_expiry.c@{session\_expiry.c}}
+\doxysubsubsection{\texorpdfstring{session\_expiry\_\_remove\_all()}{session\_expiry\_\_remove\_all()}}
+{\footnotesize\ttfamily void session\+\_\+expiry\+\_\+\+\_\+remove\+\_\+all (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{session__expiry_8c_a697ded88bfba20186cba05258fb8bc0e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{session__expiry_8c_a697ded88bfba20186cba05258fb8bc0e_icgraph}
+\end{center}
+\end{figure}

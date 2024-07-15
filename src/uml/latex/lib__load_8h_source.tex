@@ -1,0 +1,44 @@
+\hypertarget{lib__load_8h_source}{}\doxysection{lib\+\_\+load.\+h}
+\mbox{\hyperlink{lib__load_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{Copyright (c) 2012-\/2020 Roger Light <roger@atchoo.org>}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{All rights reserved. This program and the accompanying materials}}
+\DoxyCodeLine{5 \textcolor{comment}{are made available under the terms of the Eclipse Public License 2.0}}
+\DoxyCodeLine{6 \textcolor{comment}{and Eclipse Distribution License v1.0 which accompany this distribution.}}
+\DoxyCodeLine{7 \textcolor{comment}{}}
+\DoxyCodeLine{8 \textcolor{comment}{The Eclipse Public License is available at}}
+\DoxyCodeLine{9 \textcolor{comment}{   https://www.eclipse.org/legal/epl-\/2.0/}}
+\DoxyCodeLine{10 \textcolor{comment}{and the Eclipse Distribution License is available at}}
+\DoxyCodeLine{11 \textcolor{comment}{  http://www.eclipse.org/org/documents/edl-\/v10.php.}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{SPDX-\/License-\/Identifier: EPL-\/2.0 OR BSD-\/3-\/Clause}}
+\DoxyCodeLine{14 \textcolor{comment}{}}
+\DoxyCodeLine{15 \textcolor{comment}{Contributors:}}
+\DoxyCodeLine{16 \textcolor{comment}{   Roger Light -\/ initial implementation and documentation.}}
+\DoxyCodeLine{17 \textcolor{comment}{*/}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{LIB\_LOAD\_H}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{LIB\_LOAD\_H}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WIN32}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{windows}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{else}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{dlfcn}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WIN32}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{LIB\_LOAD}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{LoadLibrary}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{LIB\_CLOSE}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{FreeLibrary}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{LIB\_SYM}\textcolor{preprocessor}{(}\textcolor{preprocessor}{HANDLE}\textcolor{preprocessor}{,} \textcolor{preprocessor}{SYM}\textcolor{preprocessor}{)} \textcolor{preprocessor}{GetProcAddress}\textcolor{preprocessor}{(}\textcolor{preprocessor}{HANDLE}\textcolor{preprocessor}{,} \textcolor{preprocessor}{SYM}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{else}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{LIB\_LOAD}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{dlopen}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{,} RTLD\_NOW\textcolor{preprocessor}{|}RTLD\_GLOBAL\textcolor{preprocessor}{)}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{LIB\_CLOSE}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{dlclose}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#}   \textcolor{preprocessor}{define} \textcolor{preprocessor}{LIB\_SYM}\textcolor{preprocessor}{(}\textcolor{preprocessor}{HANDLE}\textcolor{preprocessor}{,} \textcolor{preprocessor}{SYM}\textcolor{preprocessor}{)} \textcolor{preprocessor}{dlsym}\textcolor{preprocessor}{(}\textcolor{preprocessor}{HANDLE}\textcolor{preprocessor}{,} \textcolor{preprocessor}{SYM}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{LIB\_SYM\_EASY}\textcolor{preprocessor}{(}\textcolor{preprocessor}{MEMBER}\textcolor{preprocessor}{,} \textcolor{preprocessor}{HANDLE}\textcolor{preprocessor}{,} \textcolor{preprocessor}{SYM}\textcolor{preprocessor}{)} \textcolor{keywordflow}{if}\textcolor{preprocessor}{(}\textcolor{preprocessor}{!}\textcolor{preprocessor}{(}\textcolor{preprocessor}{MEMBER} \textcolor{preprocessor}{=} \mbox{\hyperlink{lib__load_8h_a1d463e49e3f39391e47ab5e041db44d0}{LIB\_SYM}}\textcolor{preprocessor}{(}\textcolor{preprocessor}{HANDLE}\textcolor{preprocessor}{,} \textcolor{preprocessor}{SYM}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)} \textcolor{keywordflow}{return} 1}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,113 @@
+\hypertarget{retain_8c}{}\doxysection{retain.\+c File Reference}
+\label{retain_8c}\index{retain.c@{retain.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mqtt\+\_\+protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utlist.\+h\char`\"{}}\newline
+Include dependency graph for retain.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{retain_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{retain_8c_a2e1c8e8d0e21c6ee12a1cb2e356a9fd4}{retain\+\_\+\+\_\+init}} (void)
+\item 
+void \mbox{\hyperlink{retain_8c_a7f3de08b42d93beff1559f81b2ca6772}{retain\+\_\+\+\_\+clean\+\_\+empty\+\_\+hierarchy}} (struct \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\+\_\+\+\_\+retainhier}} $\ast$retainhier)
+\item 
+int \mbox{\hyperlink{retain_8c_a76a30b9d9d60fa62b09252561d9a1f42}{retain\+\_\+\+\_\+store}} (const char $\ast$topic, struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$stored, char $\ast$$\ast$split\+\_\+topics)
+\item 
+int \mbox{\hyperlink{retain_8c_a96c92c982b5df215efe95e6561060bdd}{retain\+\_\+\+\_\+queue}} (struct mosquitto $\ast$context, const char $\ast$sub, uint8\+\_\+t sub\+\_\+qos, uint32\+\_\+t subscription\+\_\+identifier)
+\item 
+void \mbox{\hyperlink{retain_8c_aafa7ed48e0387477d71dd8bbdca5a62a}{retain\+\_\+\+\_\+clean}} (struct \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\+\_\+\+\_\+retainhier}} $\ast$$\ast$retainhier)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{retain_8c_aafa7ed48e0387477d71dd8bbdca5a62a}\label{retain_8c_aafa7ed48e0387477d71dd8bbdca5a62a}} 
+\index{retain.c@{retain.c}!retain\_\_clean@{retain\_\_clean}}
+\index{retain\_\_clean@{retain\_\_clean}!retain.c@{retain.c}}
+\doxysubsubsection{\texorpdfstring{retain\_\_clean()}{retain\_\_clean()}}
+{\footnotesize\ttfamily void retain\+\_\+\+\_\+clean (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\+\_\+\+\_\+retainhier}} $\ast$$\ast$}]{retainhier }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{retain_8c_aafa7ed48e0387477d71dd8bbdca5a62a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{retain_8c_a7f3de08b42d93beff1559f81b2ca6772}\label{retain_8c_a7f3de08b42d93beff1559f81b2ca6772}} 
+\index{retain.c@{retain.c}!retain\_\_clean\_empty\_hierarchy@{retain\_\_clean\_empty\_hierarchy}}
+\index{retain\_\_clean\_empty\_hierarchy@{retain\_\_clean\_empty\_hierarchy}!retain.c@{retain.c}}
+\doxysubsubsection{\texorpdfstring{retain\_\_clean\_empty\_hierarchy()}{retain\_\_clean\_empty\_hierarchy()}}
+{\footnotesize\ttfamily void retain\+\_\+\+\_\+clean\+\_\+empty\+\_\+hierarchy (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\+\_\+\+\_\+retainhier}} $\ast$}]{retainhier }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{retain_8c_a7f3de08b42d93beff1559f81b2ca6772_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{retain_8c_a2e1c8e8d0e21c6ee12a1cb2e356a9fd4}\label{retain_8c_a2e1c8e8d0e21c6ee12a1cb2e356a9fd4}} 
+\index{retain.c@{retain.c}!retain\_\_init@{retain\_\_init}}
+\index{retain\_\_init@{retain\_\_init}!retain.c@{retain.c}}
+\doxysubsubsection{\texorpdfstring{retain\_\_init()}{retain\_\_init()}}
+{\footnotesize\ttfamily int retain\+\_\+\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=327pt]{retain_8c_a2e1c8e8d0e21c6ee12a1cb2e356a9fd4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{retain_8c_a96c92c982b5df215efe95e6561060bdd}\label{retain_8c_a96c92c982b5df215efe95e6561060bdd}} 
+\index{retain.c@{retain.c}!retain\_\_queue@{retain\_\_queue}}
+\index{retain\_\_queue@{retain\_\_queue}!retain.c@{retain.c}}
+\doxysubsubsection{\texorpdfstring{retain\_\_queue()}{retain\_\_queue()}}
+{\footnotesize\ttfamily int retain\+\_\+\+\_\+queue (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{const char $\ast$}]{sub,  }\item[{uint8\+\_\+t}]{sub\+\_\+qos,  }\item[{uint32\+\_\+t}]{subscription\+\_\+identifier }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=317pt]{retain_8c_a96c92c982b5df215efe95e6561060bdd_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{retain_8c_a76a30b9d9d60fa62b09252561d9a1f42}\label{retain_8c_a76a30b9d9d60fa62b09252561d9a1f42}} 
+\index{retain.c@{retain.c}!retain\_\_store@{retain\_\_store}}
+\index{retain\_\_store@{retain\_\_store}!retain.c@{retain.c}}
+\doxysubsubsection{\texorpdfstring{retain\_\_store()}{retain\_\_store()}}
+{\footnotesize\ttfamily int retain\+\_\+\+\_\+store (\begin{DoxyParamCaption}\item[{const char $\ast$}]{topic,  }\item[{struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$}]{stored,  }\item[{char $\ast$$\ast$}]{split\+\_\+topics }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{retain_8c_a76a30b9d9d60fa62b09252561d9a1f42_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=325pt]{retain_8c_a76a30b9d9d60fa62b09252561d9a1f42_icgraph}
+\end{center}
+\end{figure}

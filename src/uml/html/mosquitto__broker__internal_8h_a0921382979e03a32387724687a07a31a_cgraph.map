@@ -1,0 +1,15 @@
+<map id="connect__on_authorised" name="connect__on_authorised">
+<area shape="rect" id="node1" title=" " alt="" coords="5,281,184,308"/>
+<area shape="rect" id="node2" href="$security__default_8c.html#a3c358c684e9151e623af5fea2ad3d0e3" title=" " alt="" coords="293,5,405,32"/>
+<area shape="rect" id="node3" href="$context_8c.html#a248d7de166535a20109e72205cbe7cd6" title=" " alt="" coords="264,56,435,83"/>
+<area shape="rect" id="node4" href="$context_8c.html#a8d5baec2dffaa72c7e07fc4ad6f8e992" title=" " alt="" coords="276,107,423,133"/>
+<area shape="rect" id="node6" href="$database_8c.html#a3f1b92a1177dd21226eaa8b4b3e49e96" title=" " alt="" coords="255,157,444,184"/>
+<area shape="rect" id="node7" href="$database_8c.html#aeb0e9392b9457432d0c1ceeadf5badcc" title=" " alt="" coords="258,209,441,250"/>
+<area shape="rect" id="node8" href="$database_8c.html#a8a1a6154b691c0ab5bc547cb3c3d43bd" title=" " alt="" coords="248,274,451,315"/>
+<area shape="rect" id="node9" href="$database_8c.html#a3c01cf8821046fc4fa15d41358ec5f57" title=" " alt="" coords="232,340,467,367"/>
+<area shape="rect" id="node10" href="$keepalive_8c.html#a9b725b7835e97729d15f449dc8792847" title=" " alt="" coords="288,391,411,417"/>
+<area shape="rect" id="node11" href="$session__expiry_8c.html#a2cdcd4347b70148889882126807025f1" title=" " alt="" coords="258,441,441,468"/>
+<area shape="rect" id="node12" href="$subs_8c.html#a22f49a8f3ecb22ff40a7e5fd4aa3dc62" title=" " alt="" coords="274,492,425,519"/>
+<area shape="rect" id="node13" href="$will__delay_8c.html#a41b1d3665f1030f0687ad9cd6f54a099" title=" " alt="" coords="273,543,425,569"/>
+<area shape="rect" id="node5" href="$will__delay_8c.html#a3764220e3540136c2e1ef2fb372cf149" title=" " alt="" coords="515,107,641,133"/>
+</map>

@@ -1,0 +1,231 @@
+\hypertarget{security_8c}{}\doxysection{security.\+c File Reference}
+\label{security_8c}\index{security.c@{security.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+plugin.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lib\+\_\+load.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utlist.\+h\char`\"{}}\newline
+Include dependency graph for security.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{security_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int($\ast$ \mbox{\hyperlink{security_8c_a0735e3e789149b66ad15544c639183e3}{FUNC\+\_\+auth\+\_\+plugin\+\_\+version}}) (void)
+\item 
+typedef int($\ast$ \mbox{\hyperlink{security_8c_a13e20d0214d893f0fea09968b6fd3496}{FUNC\+\_\+plugin\+\_\+version}}) (int, const int $\ast$)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{security_8c_a140fbba76cc7844400cc66fa24d034d7}{LIB\+\_\+\+ERROR}} (void)
+\item 
+int \mbox{\hyperlink{security_8c_a3032d314d0fd04d44de6b5bbab512768}{mosquitto\+\_\+security\+\_\+module\+\_\+init}} (void)
+\item 
+int \mbox{\hyperlink{security_8c_ad6edeeac8301f4ccabfdb559f58e7e59}{mosquitto\+\_\+security\+\_\+module\+\_\+cleanup}} (void)
+\item 
+int \mbox{\hyperlink{security_8c_a0e5cc1f4e4ff7bd1cd7dbe63dc262fbe}{mosquitto\+\_\+security\+\_\+init}} (bool reload)
+\item 
+int \mbox{\hyperlink{security_8c_ab9338090ac0c98f442b98eca631e2caa}{mosquitto\+\_\+security\+\_\+apply}} (void)
+\item 
+int \mbox{\hyperlink{security_8c_aad9751b75651d030b18be2abfbd999a7}{mosquitto\+\_\+security\+\_\+cleanup}} (bool reload)
+\item 
+int \mbox{\hyperlink{security_8c_a4ac9cf0001c1a5c4172cf96ddf4458d9}{mosquitto\+\_\+acl\+\_\+check}} (struct mosquitto $\ast$context, const char $\ast$topic, uint32\+\_\+t payloadlen, void $\ast$payload, uint8\+\_\+t qos, bool retain, int access)
+\item 
+int \mbox{\hyperlink{security_8c_a2cd45fa7f0dfc1159b9d87b25692eb61}{mosquitto\+\_\+unpwd\+\_\+check}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{security_8c_a61ceff913da66e6453fc5c0fcbcf679c}{mosquitto\+\_\+psk\+\_\+key\+\_\+get}} (struct mosquitto $\ast$context, const char $\ast$hint, const char $\ast$identity, char $\ast$key, int max\+\_\+key\+\_\+len)
+\item 
+int \mbox{\hyperlink{security_8c_aef1b014d8c7dde6ef838d7eb46a36a7c}{mosquitto\+\_\+security\+\_\+auth\+\_\+start}} (struct mosquitto $\ast$context, bool reauth, const void $\ast$data\+\_\+in, uint16\+\_\+t data\+\_\+in\+\_\+len, void $\ast$$\ast$data\+\_\+out, uint16\+\_\+t $\ast$data\+\_\+out\+\_\+len)
+\item 
+int \mbox{\hyperlink{security_8c_a97aa62ff22c7c7ab4ad54193e4b9352d}{mosquitto\+\_\+security\+\_\+auth\+\_\+continue}} (struct mosquitto $\ast$context, const void $\ast$data\+\_\+in, uint16\+\_\+t data\+\_\+in\+\_\+len, void $\ast$$\ast$data\+\_\+out, uint16\+\_\+t $\ast$data\+\_\+out\+\_\+len)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{security_8c_a0735e3e789149b66ad15544c639183e3}\label{security_8c_a0735e3e789149b66ad15544c639183e3}} 
+\index{security.c@{security.c}!FUNC\_auth\_plugin\_version@{FUNC\_auth\_plugin\_version}}
+\index{FUNC\_auth\_plugin\_version@{FUNC\_auth\_plugin\_version}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{FUNC\_auth\_plugin\_version}{FUNC\_auth\_plugin\_version}}
+{\footnotesize\ttfamily typedef int($\ast$ FUNC\+\_\+auth\+\_\+plugin\+\_\+version) (void)}
+
+\mbox{\Hypertarget{security_8c_a13e20d0214d893f0fea09968b6fd3496}\label{security_8c_a13e20d0214d893f0fea09968b6fd3496}} 
+\index{security.c@{security.c}!FUNC\_plugin\_version@{FUNC\_plugin\_version}}
+\index{FUNC\_plugin\_version@{FUNC\_plugin\_version}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{FUNC\_plugin\_version}{FUNC\_plugin\_version}}
+{\footnotesize\ttfamily typedef int($\ast$ FUNC\+\_\+plugin\+\_\+version) (int, const int $\ast$)}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{security_8c_a140fbba76cc7844400cc66fa24d034d7}\label{security_8c_a140fbba76cc7844400cc66fa24d034d7}} 
+\index{security.c@{security.c}!LIB\_ERROR@{LIB\_ERROR}}
+\index{LIB\_ERROR@{LIB\_ERROR}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{LIB\_ERROR()}{LIB\_ERROR()}}
+{\footnotesize\ttfamily void LIB\+\_\+\+ERROR (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{security_8c_a140fbba76cc7844400cc66fa24d034d7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{security_8c_a4ac9cf0001c1a5c4172cf96ddf4458d9}\label{security_8c_a4ac9cf0001c1a5c4172cf96ddf4458d9}} 
+\index{security.c@{security.c}!mosquitto\_acl\_check@{mosquitto\_acl\_check}}
+\index{mosquitto\_acl\_check@{mosquitto\_acl\_check}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_acl\_check()}{mosquitto\_acl\_check()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+acl\+\_\+check (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{const char $\ast$}]{topic,  }\item[{uint32\+\_\+t}]{payloadlen,  }\item[{void $\ast$}]{payload,  }\item[{uint8\+\_\+t}]{qos,  }\item[{bool}]{retain,  }\item[{int}]{access }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{security_8c_a61ceff913da66e6453fc5c0fcbcf679c}\label{security_8c_a61ceff913da66e6453fc5c0fcbcf679c}} 
+\index{security.c@{security.c}!mosquitto\_psk\_key\_get@{mosquitto\_psk\_key\_get}}
+\index{mosquitto\_psk\_key\_get@{mosquitto\_psk\_key\_get}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_psk\_key\_get()}{mosquitto\_psk\_key\_get()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+psk\+\_\+key\+\_\+get (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{const char $\ast$}]{hint,  }\item[{const char $\ast$}]{identity,  }\item[{char $\ast$}]{key,  }\item[{int}]{max\+\_\+key\+\_\+len }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{security_8c_a61ceff913da66e6453fc5c0fcbcf679c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{security_8c_ab9338090ac0c98f442b98eca631e2caa}\label{security_8c_ab9338090ac0c98f442b98eca631e2caa}} 
+\index{security.c@{security.c}!mosquitto\_security\_apply@{mosquitto\_security\_apply}}
+\index{mosquitto\_security\_apply@{mosquitto\_security\_apply}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_security\_apply()}{mosquitto\_security\_apply()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+security\+\_\+apply (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{security_8c_ab9338090ac0c98f442b98eca631e2caa_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{security_8c_ab9338090ac0c98f442b98eca631e2caa_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{security_8c_a97aa62ff22c7c7ab4ad54193e4b9352d}\label{security_8c_a97aa62ff22c7c7ab4ad54193e4b9352d}} 
+\index{security.c@{security.c}!mosquitto\_security\_auth\_continue@{mosquitto\_security\_auth\_continue}}
+\index{mosquitto\_security\_auth\_continue@{mosquitto\_security\_auth\_continue}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_security\_auth\_continue()}{mosquitto\_security\_auth\_continue()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+security\+\_\+auth\+\_\+continue (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{const void $\ast$}]{data\+\_\+in,  }\item[{uint16\+\_\+t}]{data\+\_\+in\+\_\+len,  }\item[{void $\ast$$\ast$}]{data\+\_\+out,  }\item[{uint16\+\_\+t $\ast$}]{data\+\_\+out\+\_\+len }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{security_8c_aef1b014d8c7dde6ef838d7eb46a36a7c}\label{security_8c_aef1b014d8c7dde6ef838d7eb46a36a7c}} 
+\index{security.c@{security.c}!mosquitto\_security\_auth\_start@{mosquitto\_security\_auth\_start}}
+\index{mosquitto\_security\_auth\_start@{mosquitto\_security\_auth\_start}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_security\_auth\_start()}{mosquitto\_security\_auth\_start()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+security\+\_\+auth\+\_\+start (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{bool}]{reauth,  }\item[{const void $\ast$}]{data\+\_\+in,  }\item[{uint16\+\_\+t}]{data\+\_\+in\+\_\+len,  }\item[{void $\ast$$\ast$}]{data\+\_\+out,  }\item[{uint16\+\_\+t $\ast$}]{data\+\_\+out\+\_\+len }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{security_8c_aad9751b75651d030b18be2abfbd999a7}\label{security_8c_aad9751b75651d030b18be2abfbd999a7}} 
+\index{security.c@{security.c}!mosquitto\_security\_cleanup@{mosquitto\_security\_cleanup}}
+\index{mosquitto\_security\_cleanup@{mosquitto\_security\_cleanup}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_security\_cleanup()}{mosquitto\_security\_cleanup()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+security\+\_\+cleanup (\begin{DoxyParamCaption}\item[{bool}]{reload }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{security_8c_aad9751b75651d030b18be2abfbd999a7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{security_8c_aad9751b75651d030b18be2abfbd999a7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{security_8c_a0e5cc1f4e4ff7bd1cd7dbe63dc262fbe}\label{security_8c_a0e5cc1f4e4ff7bd1cd7dbe63dc262fbe}} 
+\index{security.c@{security.c}!mosquitto\_security\_init@{mosquitto\_security\_init}}
+\index{mosquitto\_security\_init@{mosquitto\_security\_init}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_security\_init()}{mosquitto\_security\_init()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+security\+\_\+init (\begin{DoxyParamCaption}\item[{bool}]{reload }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{security_8c_a0e5cc1f4e4ff7bd1cd7dbe63dc262fbe_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{security_8c_a0e5cc1f4e4ff7bd1cd7dbe63dc262fbe_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{security_8c_ad6edeeac8301f4ccabfdb559f58e7e59}\label{security_8c_ad6edeeac8301f4ccabfdb559f58e7e59}} 
+\index{security.c@{security.c}!mosquitto\_security\_module\_cleanup@{mosquitto\_security\_module\_cleanup}}
+\index{mosquitto\_security\_module\_cleanup@{mosquitto\_security\_module\_cleanup}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_security\_module\_cleanup()}{mosquitto\_security\_module\_cleanup()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+security\+\_\+module\+\_\+cleanup (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{security_8c_ad6edeeac8301f4ccabfdb559f58e7e59_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=267pt]{security_8c_ad6edeeac8301f4ccabfdb559f58e7e59_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{security_8c_a3032d314d0fd04d44de6b5bbab512768}\label{security_8c_a3032d314d0fd04d44de6b5bbab512768}} 
+\index{security.c@{security.c}!mosquitto\_security\_module\_init@{mosquitto\_security\_module\_init}}
+\index{mosquitto\_security\_module\_init@{mosquitto\_security\_module\_init}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_security\_module\_init()}{mosquitto\_security\_module\_init()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+security\+\_\+module\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=267pt]{security_8c_a3032d314d0fd04d44de6b5bbab512768_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{security_8c_a2cd45fa7f0dfc1159b9d87b25692eb61}\label{security_8c_a2cd45fa7f0dfc1159b9d87b25692eb61}} 
+\index{security.c@{security.c}!mosquitto\_unpwd\_check@{mosquitto\_unpwd\_check}}
+\index{mosquitto\_unpwd\_check@{mosquitto\_unpwd\_check}!security.c@{security.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_unpwd\_check()}{mosquitto\_unpwd\_check()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+unpwd\+\_\+check (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{security_8c_a2cd45fa7f0dfc1159b9d87b25692eb61_icgraph}
+\end{center}
+\end{figure}

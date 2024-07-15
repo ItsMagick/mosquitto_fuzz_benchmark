@@ -1,0 +1,139 @@
+\hypertarget{structmosquitto____listener}{}\doxysection{mosquitto\+\_\+\+\_\+listener Struct Reference}
+\label{structmosquitto____listener}\index{mosquitto\_\_listener@{mosquitto\_\_listener}}
+
+
+{\ttfamily \#include $<$mosquitto\+\_\+broker\+\_\+internal.\+h$>$}
+
+
+
+Collaboration diagram for mosquitto\+\_\+\+\_\+listener\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structmosquitto____listener__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structmosquitto____listener_a9da2f56892558b10962811734817ff66}{port}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____listener_a8ba035e28a8732c1af2fb89c30f1b310}{host}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____listener_acb3833485cf6f201fb8445fcea8df122}{bind\+\_\+interface}}
+\item 
+int \mbox{\hyperlink{structmosquitto____listener_a84aed8146499a5878f2ef6cc75cdc12e}{max\+\_\+connections}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____listener_a2699d56e19f520fd5c6c98dea602647f}{mount\+\_\+point}}
+\item 
+mosq\+\_\+sock\+\_\+t $\ast$ \mbox{\hyperlink{structmosquitto____listener_a2158b596124e208bc669d851dd374e3c}{socks}}
+\item 
+int \mbox{\hyperlink{structmosquitto____listener_a2e6b37bad67dcc63647e760cc294a076}{sock\+\_\+count}}
+\item 
+int \mbox{\hyperlink{structmosquitto____listener_ac1583a6e958e8978118202b172cec5ee}{client\+\_\+count}}
+\item 
+enum mosquitto\+\_\+protocol \mbox{\hyperlink{structmosquitto____listener_abe0e1996fa6e1d03e3487d52c0997090}{protocol}}
+\item 
+int \mbox{\hyperlink{structmosquitto____listener_aab51364b3122b7a369bdcef1c6a2ca37}{socket\+\_\+domain}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____listener_ac69025b3c68794da88c5680140b523c5}{use\+\_\+username\+\_\+as\+\_\+clientid}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structmosquitto____listener_a39dfcd04b891aa1d4689b29b94510549}{max\+\_\+qos}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structmosquitto____listener_ad9eb8cf041696dc1388db292d8d1c5b3}{max\+\_\+topic\+\_\+alias}}
+\item 
+struct \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\+\_\+\+\_\+security\+\_\+options}} \mbox{\hyperlink{structmosquitto____listener_a6bc17e7a5969951f7cde05efe358dd27}{security\+\_\+options}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structmosquitto____listener_acb3833485cf6f201fb8445fcea8df122}\label{structmosquitto____listener_acb3833485cf6f201fb8445fcea8df122}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!bind\_interface@{bind\_interface}}
+\index{bind\_interface@{bind\_interface}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{bind\_interface}{bind\_interface}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+listener\+::bind\+\_\+interface}
+
+\mbox{\Hypertarget{structmosquitto____listener_ac1583a6e958e8978118202b172cec5ee}\label{structmosquitto____listener_ac1583a6e958e8978118202b172cec5ee}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!client\_count@{client\_count}}
+\index{client\_count@{client\_count}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{client\_count}{client\_count}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+listener\+::client\+\_\+count}
+
+\mbox{\Hypertarget{structmosquitto____listener_a8ba035e28a8732c1af2fb89c30f1b310}\label{structmosquitto____listener_a8ba035e28a8732c1af2fb89c30f1b310}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!host@{host}}
+\index{host@{host}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{host}{host}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+listener\+::host}
+
+\mbox{\Hypertarget{structmosquitto____listener_a84aed8146499a5878f2ef6cc75cdc12e}\label{structmosquitto____listener_a84aed8146499a5878f2ef6cc75cdc12e}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!max\_connections@{max\_connections}}
+\index{max\_connections@{max\_connections}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{max\_connections}{max\_connections}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+listener\+::max\+\_\+connections}
+
+\mbox{\Hypertarget{structmosquitto____listener_a39dfcd04b891aa1d4689b29b94510549}\label{structmosquitto____listener_a39dfcd04b891aa1d4689b29b94510549}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!max\_qos@{max\_qos}}
+\index{max\_qos@{max\_qos}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{max\_qos}{max\_qos}}
+{\footnotesize\ttfamily uint8\+\_\+t mosquitto\+\_\+\+\_\+listener\+::max\+\_\+qos}
+
+\mbox{\Hypertarget{structmosquitto____listener_ad9eb8cf041696dc1388db292d8d1c5b3}\label{structmosquitto____listener_ad9eb8cf041696dc1388db292d8d1c5b3}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!max\_topic\_alias@{max\_topic\_alias}}
+\index{max\_topic\_alias@{max\_topic\_alias}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{max\_topic\_alias}{max\_topic\_alias}}
+{\footnotesize\ttfamily uint16\+\_\+t mosquitto\+\_\+\+\_\+listener\+::max\+\_\+topic\+\_\+alias}
+
+\mbox{\Hypertarget{structmosquitto____listener_a2699d56e19f520fd5c6c98dea602647f}\label{structmosquitto____listener_a2699d56e19f520fd5c6c98dea602647f}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!mount\_point@{mount\_point}}
+\index{mount\_point@{mount\_point}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{mount\_point}{mount\_point}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+listener\+::mount\+\_\+point}
+
+\mbox{\Hypertarget{structmosquitto____listener_a9da2f56892558b10962811734817ff66}\label{structmosquitto____listener_a9da2f56892558b10962811734817ff66}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!port@{port}}
+\index{port@{port}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{port}{port}}
+{\footnotesize\ttfamily uint16\+\_\+t mosquitto\+\_\+\+\_\+listener\+::port}
+
+\mbox{\Hypertarget{structmosquitto____listener_abe0e1996fa6e1d03e3487d52c0997090}\label{structmosquitto____listener_abe0e1996fa6e1d03e3487d52c0997090}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!protocol@{protocol}}
+\index{protocol@{protocol}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{protocol}{protocol}}
+{\footnotesize\ttfamily enum mosquitto\+\_\+protocol mosquitto\+\_\+\+\_\+listener\+::protocol}
+
+\mbox{\Hypertarget{structmosquitto____listener_a6bc17e7a5969951f7cde05efe358dd27}\label{structmosquitto____listener_a6bc17e7a5969951f7cde05efe358dd27}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!security\_options@{security\_options}}
+\index{security\_options@{security\_options}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{security\_options}{security\_options}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\+\_\+\+\_\+security\+\_\+options}} mosquitto\+\_\+\+\_\+listener\+::security\+\_\+options}
+
+\mbox{\Hypertarget{structmosquitto____listener_a2e6b37bad67dcc63647e760cc294a076}\label{structmosquitto____listener_a2e6b37bad67dcc63647e760cc294a076}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!sock\_count@{sock\_count}}
+\index{sock\_count@{sock\_count}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{sock\_count}{sock\_count}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+listener\+::sock\+\_\+count}
+
+\mbox{\Hypertarget{structmosquitto____listener_aab51364b3122b7a369bdcef1c6a2ca37}\label{structmosquitto____listener_aab51364b3122b7a369bdcef1c6a2ca37}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!socket\_domain@{socket\_domain}}
+\index{socket\_domain@{socket\_domain}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{socket\_domain}{socket\_domain}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+listener\+::socket\+\_\+domain}
+
+\mbox{\Hypertarget{structmosquitto____listener_a2158b596124e208bc669d851dd374e3c}\label{structmosquitto____listener_a2158b596124e208bc669d851dd374e3c}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!socks@{socks}}
+\index{socks@{socks}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{socks}{socks}}
+{\footnotesize\ttfamily mosq\+\_\+sock\+\_\+t$\ast$ mosquitto\+\_\+\+\_\+listener\+::socks}
+
+\mbox{\Hypertarget{structmosquitto____listener_ac69025b3c68794da88c5680140b523c5}\label{structmosquitto____listener_ac69025b3c68794da88c5680140b523c5}} 
+\index{mosquitto\_\_listener@{mosquitto\_\_listener}!use\_username\_as\_clientid@{use\_username\_as\_clientid}}
+\index{use\_username\_as\_clientid@{use\_username\_as\_clientid}!mosquitto\_\_listener@{mosquitto\_\_listener}}
+\doxysubsubsection{\texorpdfstring{use\_username\_as\_clientid}{use\_username\_as\_clientid}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+listener\+::use\+\_\+username\+\_\+as\+\_\+clientid}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{mosquitto__broker__internal_8h}{mosquitto\+\_\+broker\+\_\+internal.\+h}}\end{DoxyCompactItemize}

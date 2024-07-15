@@ -1,0 +1,57 @@
+\hypertarget{lib__load_8h}{}\doxysection{lib\+\_\+load.\+h File Reference}
+\label{lib__load_8h}\index{lib\_load.h@{lib\_load.h}}
+{\ttfamily \#include $<$dlfcn.\+h$>$}\newline
+Include dependency graph for lib\+\_\+load.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=144pt]{lib__load_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{lib__load_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lib__load_8h_aedb7a56bd9d9828535b1bba84546df29}{LIB\+\_\+\+LOAD}}(A)~dlopen(A, RTLD\+\_\+\+NOW$\vert$RTLD\+\_\+\+GLOBAL)
+\item 
+\#define \mbox{\hyperlink{lib__load_8h_ae27dddb3d6bf5d5d0352b622830d6592}{LIB\+\_\+\+CLOSE}}(A)~dlclose(A)
+\item 
+\#define \mbox{\hyperlink{lib__load_8h_a1d463e49e3f39391e47ab5e041db44d0}{LIB\+\_\+\+SYM}}(HANDLE,  SYM)~dlsym(HANDLE, SYM)
+\item 
+\#define \mbox{\hyperlink{lib__load_8h_afe6a50247a8306bd34aff876b1c6d363}{LIB\+\_\+\+SYM\+\_\+\+EASY}}(MEMBER,  HANDLE,  SYM)~if(!(MEMBER = \mbox{\hyperlink{lib__load_8h_a1d463e49e3f39391e47ab5e041db44d0}{LIB\+\_\+\+SYM}}(HANDLE, SYM)) return 1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{lib__load_8h_ae27dddb3d6bf5d5d0352b622830d6592}\label{lib__load_8h_ae27dddb3d6bf5d5d0352b622830d6592}} 
+\index{lib\_load.h@{lib\_load.h}!LIB\_CLOSE@{LIB\_CLOSE}}
+\index{LIB\_CLOSE@{LIB\_CLOSE}!lib\_load.h@{lib\_load.h}}
+\doxysubsubsection{\texorpdfstring{LIB\_CLOSE}{LIB\_CLOSE}}
+{\footnotesize\ttfamily \#define LIB\+\_\+\+CLOSE(\begin{DoxyParamCaption}\item[{}]{A }\end{DoxyParamCaption})~dlclose(A)}
+
+\mbox{\Hypertarget{lib__load_8h_aedb7a56bd9d9828535b1bba84546df29}\label{lib__load_8h_aedb7a56bd9d9828535b1bba84546df29}} 
+\index{lib\_load.h@{lib\_load.h}!LIB\_LOAD@{LIB\_LOAD}}
+\index{LIB\_LOAD@{LIB\_LOAD}!lib\_load.h@{lib\_load.h}}
+\doxysubsubsection{\texorpdfstring{LIB\_LOAD}{LIB\_LOAD}}
+{\footnotesize\ttfamily \#define LIB\+\_\+\+LOAD(\begin{DoxyParamCaption}\item[{}]{A }\end{DoxyParamCaption})~dlopen(A, RTLD\+\_\+\+NOW$\vert$RTLD\+\_\+\+GLOBAL)}
+
+\mbox{\Hypertarget{lib__load_8h_a1d463e49e3f39391e47ab5e041db44d0}\label{lib__load_8h_a1d463e49e3f39391e47ab5e041db44d0}} 
+\index{lib\_load.h@{lib\_load.h}!LIB\_SYM@{LIB\_SYM}}
+\index{LIB\_SYM@{LIB\_SYM}!lib\_load.h@{lib\_load.h}}
+\doxysubsubsection{\texorpdfstring{LIB\_SYM}{LIB\_SYM}}
+{\footnotesize\ttfamily \#define LIB\+\_\+\+SYM(\begin{DoxyParamCaption}\item[{}]{HANDLE,  }\item[{}]{SYM }\end{DoxyParamCaption})~dlsym(HANDLE, SYM)}
+
+\mbox{\Hypertarget{lib__load_8h_afe6a50247a8306bd34aff876b1c6d363}\label{lib__load_8h_afe6a50247a8306bd34aff876b1c6d363}} 
+\index{lib\_load.h@{lib\_load.h}!LIB\_SYM\_EASY@{LIB\_SYM\_EASY}}
+\index{LIB\_SYM\_EASY@{LIB\_SYM\_EASY}!lib\_load.h@{lib\_load.h}}
+\doxysubsubsection{\texorpdfstring{LIB\_SYM\_EASY}{LIB\_SYM\_EASY}}
+{\footnotesize\ttfamily \#define LIB\+\_\+\+SYM\+\_\+\+EASY(\begin{DoxyParamCaption}\item[{}]{MEMBER,  }\item[{}]{HANDLE,  }\item[{}]{SYM }\end{DoxyParamCaption})~if(!(MEMBER = \mbox{\hyperlink{lib__load_8h_a1d463e49e3f39391e47ab5e041db44d0}{LIB\+\_\+\+SYM}}(HANDLE, SYM)) return 1}
+

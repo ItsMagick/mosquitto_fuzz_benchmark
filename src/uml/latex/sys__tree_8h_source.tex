@@ -1,0 +1,71 @@
+\hypertarget{sys__tree_8h_source}{}\doxysection{sys\+\_\+tree.\+h}
+\mbox{\hyperlink{sys__tree_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{Copyright (c) 2015-\/2020 Roger Light <roger@atchoo.org>}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{All rights reserved. This program and the accompanying materials}}
+\DoxyCodeLine{5 \textcolor{comment}{are made available under the terms of the Eclipse Public License 2.0}}
+\DoxyCodeLine{6 \textcolor{comment}{and Eclipse Distribution License v1.0 which accompany this distribution.}}
+\DoxyCodeLine{7 \textcolor{comment}{}}
+\DoxyCodeLine{8 \textcolor{comment}{The Eclipse Public License is available at}}
+\DoxyCodeLine{9 \textcolor{comment}{   https://www.eclipse.org/legal/epl-\/2.0/}}
+\DoxyCodeLine{10 \textcolor{comment}{and the Eclipse Distribution License is available at}}
+\DoxyCodeLine{11 \textcolor{comment}{  http://www.eclipse.org/org/documents/edl-\/v10.php.}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{SPDX-\/License-\/Identifier: EPL-\/2.0 OR BSD-\/3-\/Clause}}
+\DoxyCodeLine{14 \textcolor{comment}{}}
+\DoxyCodeLine{15 \textcolor{comment}{Contributors:}}
+\DoxyCodeLine{16 \textcolor{comment}{   Roger Light -\/ initial implementation and documentation.}}
+\DoxyCodeLine{17 \textcolor{comment}{*/}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{SYS\_TREE\_H}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{SYS\_TREE\_H}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{if} \textcolor{preprocessor}{defined}\textcolor{preprocessor}{(}\textcolor{preprocessor}{WITH\_SYS\_TREE}\textcolor{preprocessor}{)} \textcolor{preprocessor}{\&\&} \textcolor{preprocessor}{defined}\textcolor{preprocessor}{(}\textcolor{preprocessor}{WITH\_BROKER}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{23 \textcolor{keyword}{extern} uint64\_t g\_bytes\_received;}
+\DoxyCodeLine{24 \textcolor{keyword}{extern} uint64\_t g\_bytes\_sent;}
+\DoxyCodeLine{25 \textcolor{keyword}{extern} uint64\_t g\_pub\_bytes\_received;}
+\DoxyCodeLine{26 \textcolor{keyword}{extern} uint64\_t g\_pub\_bytes\_sent;}
+\DoxyCodeLine{27 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} g\_msgs\_received;}
+\DoxyCodeLine{28 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} g\_msgs\_sent;}
+\DoxyCodeLine{29 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} g\_pub\_msgs\_received;}
+\DoxyCodeLine{30 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} g\_pub\_msgs\_sent;}
+\DoxyCodeLine{31 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} g\_msgs\_dropped;}
+\DoxyCodeLine{32 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} g\_clients\_expired;}
+\DoxyCodeLine{33 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} g\_socket\_connections;}
+\DoxyCodeLine{34 \textcolor{keyword}{extern} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} g\_connection\_count;}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_BYTES\_RECEIVED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_bytes\_received}\textcolor{preprocessor}{+=}\textcolor{preprocessor}{(}\textcolor{preprocessor}{uint64\_t}\textcolor{preprocessor}{)}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_BYTES\_SENT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_bytes\_sent}\textcolor{preprocessor}{+=}\textcolor{preprocessor}{(}\textcolor{preprocessor}{uint64\_t}\textcolor{preprocessor}{)}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_PUB\_BYTES\_RECEIVED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_pub\_bytes\_received}\textcolor{preprocessor}{+=}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_PUB\_BYTES\_SENT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_pub\_bytes\_sent}\textcolor{preprocessor}{+=}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_MSGS\_RECEIVED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_msgs\_received}\textcolor{preprocessor}{+=}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_MSGS\_SENT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_msgs\_sent}\textcolor{preprocessor}{+=}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_PUB\_MSGS\_RECEIVED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_pub\_msgs\_received}\textcolor{preprocessor}{+=}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_PUB\_MSGS\_SENT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_pub\_msgs\_sent}\textcolor{preprocessor}{+=}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_MSGS\_DROPPED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_msgs\_dropped}\textcolor{preprocessor}{++}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_CLIENTS\_EXPIRED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_clients\_expired}\textcolor{preprocessor}{++}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_SOCKET\_CONNECTIONS\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_socket\_connections}\textcolor{preprocessor}{++}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_CONNECTION\_COUNT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)} \textcolor{preprocessor}{(}\textcolor{preprocessor}{g\_connection\_count}\textcolor{preprocessor}{++}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{else}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_BYTES\_RECEIVED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_BYTES\_SENT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_PUB\_BYTES\_RECEIVED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_PUB\_BYTES\_SENT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{55 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_MSGS\_RECEIVED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_MSGS\_SENT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{57 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_PUB\_MSGS\_RECEIVED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_PUB\_MSGS\_SENT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{A}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_MSGS\_DROPPED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{60 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_CLIENTS\_EXPIRED\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{61 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_SOCKET\_CONNECTIONS\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{62 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{G\_CONNECTION\_COUNT\_INC}\textcolor{preprocessor}{(}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+
+\end{DoxyCode}

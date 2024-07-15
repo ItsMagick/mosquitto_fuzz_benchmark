@@ -1,0 +1,145 @@
+\hypertarget{plugin__public_8c}{}\doxysection{plugin\+\_\+public.\+c File Reference}
+\label{plugin__public_8c}\index{plugin\_public.c@{plugin\_public.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mqtt\+\_\+protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}send\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utlist.\+h\char`\"{}}\newline
+Include dependency graph for plugin\+\_\+public.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{plugin__public_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \mbox{\hyperlink{plugin__public_8c_ab800165eea260ffc535c42c170038e9a}{mosquitto\+\_\+client\+\_\+address}} (const struct mosquitto $\ast$client)
+\item 
+bool \mbox{\hyperlink{plugin__public_8c_a6cfa6bcd3bc2ffaa7d8b3ac7db6314bd}{mosquitto\+\_\+client\+\_\+clean\+\_\+session}} (const struct mosquitto $\ast$client)
+\item 
+const char $\ast$ \mbox{\hyperlink{plugin__public_8c_a2a2f5527f92a5415c2745111693819c8}{mosquitto\+\_\+client\+\_\+id}} (const struct mosquitto $\ast$client)
+\item 
+int \mbox{\hyperlink{plugin__public_8c_a50a79e39eb668ecc46d04211e166a14f}{mosquitto\+\_\+client\+\_\+keepalive}} (const struct mosquitto $\ast$client)
+\item 
+void $\ast$ \mbox{\hyperlink{plugin__public_8c_a8232620749d6fb8c029a982889d79864}{mosquitto\+\_\+client\+\_\+certificate}} (const struct mosquitto $\ast$client)
+\item 
+int \mbox{\hyperlink{plugin__public_8c_ae940a3ef78f8ccd71b79e6e7b499f396}{mosquitto\+\_\+client\+\_\+protocol}} (const struct mosquitto $\ast$client)
+\item 
+int \mbox{\hyperlink{plugin__public_8c_a2a28e7a6729e8e94221f9224a64e1538}{mosquitto\+\_\+client\+\_\+protocol\+\_\+version}} (const struct mosquitto $\ast$client)
+\item 
+int \mbox{\hyperlink{plugin__public_8c_a09d8707d42ec84ffd022f90d3462de9a}{mosquitto\+\_\+client\+\_\+sub\+\_\+count}} (const struct mosquitto $\ast$client)
+\item 
+const char $\ast$ \mbox{\hyperlink{plugin__public_8c_a2661776588ca1460efcfcd62c2b05fb7}{mosquitto\+\_\+client\+\_\+username}} (const struct mosquitto $\ast$client)
+\item 
+int \mbox{\hyperlink{plugin__public_8c_a4e70e5a4b2cbbdc33d0bbb56d3c78e2d}{mosquitto\+\_\+broker\+\_\+publish}} (const char $\ast$clientid, const char $\ast$topic, int payloadlen, void $\ast$payload, int qos, bool retain, mosquitto\+\_\+property $\ast$properties)
+\item 
+int \mbox{\hyperlink{plugin__public_8c_a8b6f833a38f5849069ce4641d522aa54}{mosquitto\+\_\+broker\+\_\+publish\+\_\+copy}} (const char $\ast$clientid, const char $\ast$topic, int payloadlen, const void $\ast$payload, int qos, bool retain, mosquitto\+\_\+property $\ast$properties)
+\item 
+int \mbox{\hyperlink{plugin__public_8c_a83d17435ab9ea3eff71e4715f29ad740}{mosquitto\+\_\+set\+\_\+username}} (struct mosquitto $\ast$client, const char $\ast$username)
+\item 
+int \mbox{\hyperlink{plugin__public_8c_a826e51dea757eb66a3f0fe8719bbc80d}{mosquitto\+\_\+kick\+\_\+client\+\_\+by\+\_\+clientid}} (const char $\ast$clientid, bool with\+\_\+will)
+\item 
+int \mbox{\hyperlink{plugin__public_8c_ae86f0a6ca0e3511f1de835788071373f}{mosquitto\+\_\+kick\+\_\+client\+\_\+by\+\_\+username}} (const char $\ast$username, bool with\+\_\+will)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{plugin__public_8c_a4e70e5a4b2cbbdc33d0bbb56d3c78e2d}\label{plugin__public_8c_a4e70e5a4b2cbbdc33d0bbb56d3c78e2d}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_broker\_publish@{mosquitto\_broker\_publish}}
+\index{mosquitto\_broker\_publish@{mosquitto\_broker\_publish}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_broker\_publish()}{mosquitto\_broker\_publish()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+broker\+\_\+publish (\begin{DoxyParamCaption}\item[{const char $\ast$}]{clientid,  }\item[{const char $\ast$}]{topic,  }\item[{int}]{payloadlen,  }\item[{void $\ast$}]{payload,  }\item[{int}]{qos,  }\item[{bool}]{retain,  }\item[{mosquitto\+\_\+property $\ast$}]{properties }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a8b6f833a38f5849069ce4641d522aa54}\label{plugin__public_8c_a8b6f833a38f5849069ce4641d522aa54}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_broker\_publish\_copy@{mosquitto\_broker\_publish\_copy}}
+\index{mosquitto\_broker\_publish\_copy@{mosquitto\_broker\_publish\_copy}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_broker\_publish\_copy()}{mosquitto\_broker\_publish\_copy()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+broker\+\_\+publish\+\_\+copy (\begin{DoxyParamCaption}\item[{const char $\ast$}]{clientid,  }\item[{const char $\ast$}]{topic,  }\item[{int}]{payloadlen,  }\item[{const void $\ast$}]{payload,  }\item[{int}]{qos,  }\item[{bool}]{retain,  }\item[{mosquitto\+\_\+property $\ast$}]{properties }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_ab800165eea260ffc535c42c170038e9a}\label{plugin__public_8c_ab800165eea260ffc535c42c170038e9a}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_client\_address@{mosquitto\_client\_address}}
+\index{mosquitto\_client\_address@{mosquitto\_client\_address}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_client\_address()}{mosquitto\_client\_address()}}
+{\footnotesize\ttfamily const char $\ast$ mosquitto\+\_\+client\+\_\+address (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a8232620749d6fb8c029a982889d79864}\label{plugin__public_8c_a8232620749d6fb8c029a982889d79864}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_client\_certificate@{mosquitto\_client\_certificate}}
+\index{mosquitto\_client\_certificate@{mosquitto\_client\_certificate}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_client\_certificate()}{mosquitto\_client\_certificate()}}
+{\footnotesize\ttfamily void $\ast$ mosquitto\+\_\+client\+\_\+certificate (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a6cfa6bcd3bc2ffaa7d8b3ac7db6314bd}\label{plugin__public_8c_a6cfa6bcd3bc2ffaa7d8b3ac7db6314bd}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_client\_clean\_session@{mosquitto\_client\_clean\_session}}
+\index{mosquitto\_client\_clean\_session@{mosquitto\_client\_clean\_session}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_client\_clean\_session()}{mosquitto\_client\_clean\_session()}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+client\+\_\+clean\+\_\+session (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a2a2f5527f92a5415c2745111693819c8}\label{plugin__public_8c_a2a2f5527f92a5415c2745111693819c8}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_client\_id@{mosquitto\_client\_id}}
+\index{mosquitto\_client\_id@{mosquitto\_client\_id}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_client\_id()}{mosquitto\_client\_id()}}
+{\footnotesize\ttfamily const char $\ast$ mosquitto\+\_\+client\+\_\+id (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a50a79e39eb668ecc46d04211e166a14f}\label{plugin__public_8c_a50a79e39eb668ecc46d04211e166a14f}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_client\_keepalive@{mosquitto\_client\_keepalive}}
+\index{mosquitto\_client\_keepalive@{mosquitto\_client\_keepalive}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_client\_keepalive()}{mosquitto\_client\_keepalive()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+client\+\_\+keepalive (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_ae940a3ef78f8ccd71b79e6e7b499f396}\label{plugin__public_8c_ae940a3ef78f8ccd71b79e6e7b499f396}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_client\_protocol@{mosquitto\_client\_protocol}}
+\index{mosquitto\_client\_protocol@{mosquitto\_client\_protocol}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_client\_protocol()}{mosquitto\_client\_protocol()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+client\+\_\+protocol (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a2a28e7a6729e8e94221f9224a64e1538}\label{plugin__public_8c_a2a28e7a6729e8e94221f9224a64e1538}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_client\_protocol\_version@{mosquitto\_client\_protocol\_version}}
+\index{mosquitto\_client\_protocol\_version@{mosquitto\_client\_protocol\_version}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_client\_protocol\_version()}{mosquitto\_client\_protocol\_version()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+client\+\_\+protocol\+\_\+version (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a09d8707d42ec84ffd022f90d3462de9a}\label{plugin__public_8c_a09d8707d42ec84ffd022f90d3462de9a}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_client\_sub\_count@{mosquitto\_client\_sub\_count}}
+\index{mosquitto\_client\_sub\_count@{mosquitto\_client\_sub\_count}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_client\_sub\_count()}{mosquitto\_client\_sub\_count()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+client\+\_\+sub\+\_\+count (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a2661776588ca1460efcfcd62c2b05fb7}\label{plugin__public_8c_a2661776588ca1460efcfcd62c2b05fb7}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_client\_username@{mosquitto\_client\_username}}
+\index{mosquitto\_client\_username@{mosquitto\_client\_username}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_client\_username()}{mosquitto\_client\_username()}}
+{\footnotesize\ttfamily const char $\ast$ mosquitto\+\_\+client\+\_\+username (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{client }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a826e51dea757eb66a3f0fe8719bbc80d}\label{plugin__public_8c_a826e51dea757eb66a3f0fe8719bbc80d}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_kick\_client\_by\_clientid@{mosquitto\_kick\_client\_by\_clientid}}
+\index{mosquitto\_kick\_client\_by\_clientid@{mosquitto\_kick\_client\_by\_clientid}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_kick\_client\_by\_clientid()}{mosquitto\_kick\_client\_by\_clientid()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+kick\+\_\+client\+\_\+by\+\_\+clientid (\begin{DoxyParamCaption}\item[{const char $\ast$}]{clientid,  }\item[{bool}]{with\+\_\+will }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_ae86f0a6ca0e3511f1de835788071373f}\label{plugin__public_8c_ae86f0a6ca0e3511f1de835788071373f}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_kick\_client\_by\_username@{mosquitto\_kick\_client\_by\_username}}
+\index{mosquitto\_kick\_client\_by\_username@{mosquitto\_kick\_client\_by\_username}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_kick\_client\_by\_username()}{mosquitto\_kick\_client\_by\_username()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+kick\+\_\+client\+\_\+by\+\_\+username (\begin{DoxyParamCaption}\item[{const char $\ast$}]{username,  }\item[{bool}]{with\+\_\+will }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__public_8c_a83d17435ab9ea3eff71e4715f29ad740}\label{plugin__public_8c_a83d17435ab9ea3eff71e4715f29ad740}} 
+\index{plugin\_public.c@{plugin\_public.c}!mosquitto\_set\_username@{mosquitto\_set\_username}}
+\index{mosquitto\_set\_username@{mosquitto\_set\_username}!plugin\_public.c@{plugin\_public.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_set\_username()}{mosquitto\_set\_username()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+set\+\_\+username (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{client,  }\item[{const char $\ast$}]{username }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{plugin__public_8c_a83d17435ab9ea3eff71e4715f29ad740_cgraph}
+\end{center}
+\end{figure}

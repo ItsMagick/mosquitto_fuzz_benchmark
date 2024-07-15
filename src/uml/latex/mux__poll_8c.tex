@@ -1,0 +1,176 @@
+\hypertarget{mux__poll_8c}{}\doxysection{mux\+\_\+poll.\+c File Reference}
+\label{mux__poll_8c}\index{mux\_poll.c@{mux\_poll.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$poll.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}packet\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}send\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sys\+\_\+tree.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}time\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mux.\+h\char`\"{}}\newline
+Include dependency graph for mux\+\_\+poll.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mux__poll_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{mux__poll_8c_a369266c24eacffb87046522897a570d5}{\+\_\+\+GNU\+\_\+\+SOURCE}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{mux__poll_8c_aaa15f9c2ed4fc0e7f257c37901d633b4}{mux\+\_\+poll\+\_\+\+\_\+init}} (struct \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\+\_\+\+\_\+listener\+\_\+sock}} $\ast$listensock, int listensock\+\_\+count)
+\item 
+int \mbox{\hyperlink{mux__poll_8c_a6ec1aafbf02cf830cbc8a65e3c4cf1e6}{mux\+\_\+poll\+\_\+\+\_\+add\+\_\+out}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{mux__poll_8c_ad97901da5303741b1a64ff166ff05b29}{mux\+\_\+poll\+\_\+\+\_\+remove\+\_\+out}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{mux__poll_8c_a89f80f02a9ad3269651713aae5968ea5}{mux\+\_\+poll\+\_\+\+\_\+add\+\_\+in}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{mux__poll_8c_a727793e05a8ee685a6f6313023068dc3}{mux\+\_\+poll\+\_\+\+\_\+delete}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{mux__poll_8c_a91b48c3069cc239e5f66c269ff846b78}{mux\+\_\+poll\+\_\+\+\_\+handle}} (struct \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\+\_\+\+\_\+listener\+\_\+sock}} $\ast$listensock, int listensock\+\_\+count)
+\item 
+int \mbox{\hyperlink{mux__poll_8c_a342e1b42b9164b068cda147ef245c086}{mux\+\_\+poll\+\_\+\+\_\+cleanup}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{mux__poll_8c_a369266c24eacffb87046522897a570d5}\label{mux__poll_8c_a369266c24eacffb87046522897a570d5}} 
+\index{mux\_poll.c@{mux\_poll.c}!\_GNU\_SOURCE@{\_GNU\_SOURCE}}
+\index{\_GNU\_SOURCE@{\_GNU\_SOURCE}!mux\_poll.c@{mux\_poll.c}}
+\doxysubsubsection{\texorpdfstring{\_GNU\_SOURCE}{\_GNU\_SOURCE}}
+{\footnotesize\ttfamily \#define \+\_\+\+GNU\+\_\+\+SOURCE}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{mux__poll_8c_a89f80f02a9ad3269651713aae5968ea5}\label{mux__poll_8c_a89f80f02a9ad3269651713aae5968ea5}} 
+\index{mux\_poll.c@{mux\_poll.c}!mux\_poll\_\_add\_in@{mux\_poll\_\_add\_in}}
+\index{mux\_poll\_\_add\_in@{mux\_poll\_\_add\_in}!mux\_poll.c@{mux\_poll.c}}
+\doxysubsubsection{\texorpdfstring{mux\_poll\_\_add\_in()}{mux\_poll\_\_add\_in()}}
+{\footnotesize\ttfamily int mux\+\_\+poll\+\_\+\+\_\+add\+\_\+in (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mux__poll_8c_a89f80f02a9ad3269651713aae5968ea5_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{mux__poll_8c_a6ec1aafbf02cf830cbc8a65e3c4cf1e6}\label{mux__poll_8c_a6ec1aafbf02cf830cbc8a65e3c4cf1e6}} 
+\index{mux\_poll.c@{mux\_poll.c}!mux\_poll\_\_add\_out@{mux\_poll\_\_add\_out}}
+\index{mux\_poll\_\_add\_out@{mux\_poll\_\_add\_out}!mux\_poll.c@{mux\_poll.c}}
+\doxysubsubsection{\texorpdfstring{mux\_poll\_\_add\_out()}{mux\_poll\_\_add\_out()}}
+{\footnotesize\ttfamily int mux\+\_\+poll\+\_\+\+\_\+add\+\_\+out (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=315pt]{mux__poll_8c_a6ec1aafbf02cf830cbc8a65e3c4cf1e6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{mux__poll_8c_a342e1b42b9164b068cda147ef245c086}\label{mux__poll_8c_a342e1b42b9164b068cda147ef245c086}} 
+\index{mux\_poll.c@{mux\_poll.c}!mux\_poll\_\_cleanup@{mux\_poll\_\_cleanup}}
+\index{mux\_poll\_\_cleanup@{mux\_poll\_\_cleanup}!mux\_poll.c@{mux\_poll.c}}
+\doxysubsubsection{\texorpdfstring{mux\_poll\_\_cleanup()}{mux\_poll\_\_cleanup()}}
+{\footnotesize\ttfamily int mux\+\_\+poll\+\_\+\+\_\+cleanup (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mux__poll_8c_a342e1b42b9164b068cda147ef245c086_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{mux__poll_8c_a727793e05a8ee685a6f6313023068dc3}\label{mux__poll_8c_a727793e05a8ee685a6f6313023068dc3}} 
+\index{mux\_poll.c@{mux\_poll.c}!mux\_poll\_\_delete@{mux\_poll\_\_delete}}
+\index{mux\_poll\_\_delete@{mux\_poll\_\_delete}!mux\_poll.c@{mux\_poll.c}}
+\doxysubsubsection{\texorpdfstring{mux\_poll\_\_delete()}{mux\_poll\_\_delete()}}
+{\footnotesize\ttfamily int mux\+\_\+poll\+\_\+\+\_\+delete (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mux__poll_8c_a727793e05a8ee685a6f6313023068dc3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{mux__poll_8c_a91b48c3069cc239e5f66c269ff846b78}\label{mux__poll_8c_a91b48c3069cc239e5f66c269ff846b78}} 
+\index{mux\_poll.c@{mux\_poll.c}!mux\_poll\_\_handle@{mux\_poll\_\_handle}}
+\index{mux\_poll\_\_handle@{mux\_poll\_\_handle}!mux\_poll.c@{mux\_poll.c}}
+\doxysubsubsection{\texorpdfstring{mux\_poll\_\_handle()}{mux\_poll\_\_handle()}}
+{\footnotesize\ttfamily int mux\+\_\+poll\+\_\+\+\_\+handle (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\+\_\+\+\_\+listener\+\_\+sock}} $\ast$}]{listensock,  }\item[{int}]{listensock\+\_\+count }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mux__poll_8c_a91b48c3069cc239e5f66c269ff846b78_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mux__poll_8c_a91b48c3069cc239e5f66c269ff846b78_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{mux__poll_8c_aaa15f9c2ed4fc0e7f257c37901d633b4}\label{mux__poll_8c_aaa15f9c2ed4fc0e7f257c37901d633b4}} 
+\index{mux\_poll.c@{mux\_poll.c}!mux\_poll\_\_init@{mux\_poll\_\_init}}
+\index{mux\_poll\_\_init@{mux\_poll\_\_init}!mux\_poll.c@{mux\_poll.c}}
+\doxysubsubsection{\texorpdfstring{mux\_poll\_\_init()}{mux\_poll\_\_init()}}
+{\footnotesize\ttfamily int mux\+\_\+poll\+\_\+\+\_\+init (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\+\_\+\+\_\+listener\+\_\+sock}} $\ast$}]{listensock,  }\item[{int}]{listensock\+\_\+count }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=346pt]{mux__poll_8c_aaa15f9c2ed4fc0e7f257c37901d633b4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{mux__poll_8c_ad97901da5303741b1a64ff166ff05b29}\label{mux__poll_8c_ad97901da5303741b1a64ff166ff05b29}} 
+\index{mux\_poll.c@{mux\_poll.c}!mux\_poll\_\_remove\_out@{mux\_poll\_\_remove\_out}}
+\index{mux\_poll\_\_remove\_out@{mux\_poll\_\_remove\_out}!mux\_poll.c@{mux\_poll.c}}
+\doxysubsubsection{\texorpdfstring{mux\_poll\_\_remove\_out()}{mux\_poll\_\_remove\_out()}}
+{\footnotesize\ttfamily int mux\+\_\+poll\+\_\+\+\_\+remove\+\_\+out (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mux__poll_8c_ad97901da5303741b1a64ff166ff05b29_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mux__poll_8c_ad97901da5303741b1a64ff166ff05b29_icgraph}
+\end{center}
+\end{figure}

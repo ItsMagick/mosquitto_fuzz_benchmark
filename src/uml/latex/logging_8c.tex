@@ -1,0 +1,92 @@
+\hypertarget{logging_8c}{}\doxysection{logging.\+c File Reference}
+\label{logging_8c}\index{logging.c@{logging.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$inttypes.\+h$>$}\newline
+{\ttfamily \#include $<$syslog.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}logging\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}misc\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util\+\_\+mosq.\+h\char`\"{}}\newline
+Include dependency graph for logging.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{logging_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{logging_8c_accfcdcf879d3cda4473640de19a0b1cd}{log\+\_\+\+\_\+init}} (struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}} $\ast$config)
+\item 
+int \mbox{\hyperlink{logging_8c_a44279c6fa8809fbc8ae1fb063a219ea1}{log\+\_\+\+\_\+close}} (struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}} $\ast$config)
+\item 
+int \mbox{\hyperlink{logging_8c_a0d6c0534280f961a5c6f509eb196edd2}{log\+\_\+\+\_\+printf}} (struct mosquitto $\ast$mosq, unsigned int priority, const char $\ast$fmt,...)
+\item 
+void \mbox{\hyperlink{logging_8c_a53d4eb3553199cca18a3f64a899bb4ca}{log\+\_\+\+\_\+internal}} (const char $\ast$fmt,...)
+\item 
+int \mbox{\hyperlink{logging_8c_accf607fe270247859367e036925dd980}{mosquitto\+\_\+log\+\_\+vprintf}} (int level, const char $\ast$fmt, va\+\_\+list va)
+\item 
+void \mbox{\hyperlink{logging_8c_a013e909428066a064f623891885ea555}{mosquitto\+\_\+log\+\_\+printf}} (int level, const char $\ast$fmt,...)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{logging_8c_a44279c6fa8809fbc8ae1fb063a219ea1}\label{logging_8c_a44279c6fa8809fbc8ae1fb063a219ea1}} 
+\index{logging.c@{logging.c}!log\_\_close@{log\_\_close}}
+\index{log\_\_close@{log\_\_close}!logging.c@{logging.c}}
+\doxysubsubsection{\texorpdfstring{log\_\_close()}{log\_\_close()}}
+{\footnotesize\ttfamily int log\+\_\+\+\_\+close (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}} $\ast$}]{config }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{logging_8c_a44279c6fa8809fbc8ae1fb063a219ea1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{logging_8c_accfcdcf879d3cda4473640de19a0b1cd}\label{logging_8c_accfcdcf879d3cda4473640de19a0b1cd}} 
+\index{logging.c@{logging.c}!log\_\_init@{log\_\_init}}
+\index{log\_\_init@{log\_\_init}!logging.c@{logging.c}}
+\doxysubsubsection{\texorpdfstring{log\_\_init()}{log\_\_init()}}
+{\footnotesize\ttfamily int log\+\_\+\+\_\+init (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}} $\ast$}]{config }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{logging_8c_accfcdcf879d3cda4473640de19a0b1cd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{logging_8c_a53d4eb3553199cca18a3f64a899bb4ca}\label{logging_8c_a53d4eb3553199cca18a3f64a899bb4ca}} 
+\index{logging.c@{logging.c}!log\_\_internal@{log\_\_internal}}
+\index{log\_\_internal@{log\_\_internal}!logging.c@{logging.c}}
+\doxysubsubsection{\texorpdfstring{log\_\_internal()}{log\_\_internal()}}
+{\footnotesize\ttfamily void log\+\_\+\+\_\+internal (\begin{DoxyParamCaption}\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{logging_8c_a0d6c0534280f961a5c6f509eb196edd2}\label{logging_8c_a0d6c0534280f961a5c6f509eb196edd2}} 
+\index{logging.c@{logging.c}!log\_\_printf@{log\_\_printf}}
+\index{log\_\_printf@{log\_\_printf}!logging.c@{logging.c}}
+\doxysubsubsection{\texorpdfstring{log\_\_printf()}{log\_\_printf()}}
+{\footnotesize\ttfamily int log\+\_\+\+\_\+printf (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{mosq,  }\item[{unsigned int}]{priority,  }\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{logging_8c_a013e909428066a064f623891885ea555}\label{logging_8c_a013e909428066a064f623891885ea555}} 
+\index{logging.c@{logging.c}!mosquitto\_log\_printf@{mosquitto\_log\_printf}}
+\index{mosquitto\_log\_printf@{mosquitto\_log\_printf}!logging.c@{logging.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_log\_printf()}{mosquitto\_log\_printf()}}
+{\footnotesize\ttfamily void mosquitto\+\_\+log\+\_\+printf (\begin{DoxyParamCaption}\item[{int}]{level,  }\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{logging_8c_accf607fe270247859367e036925dd980}\label{logging_8c_accf607fe270247859367e036925dd980}} 
+\index{logging.c@{logging.c}!mosquitto\_log\_vprintf@{mosquitto\_log\_vprintf}}
+\index{mosquitto\_log\_vprintf@{mosquitto\_log\_vprintf}!logging.c@{logging.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_log\_vprintf()}{mosquitto\_log\_vprintf()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+log\+\_\+vprintf (\begin{DoxyParamCaption}\item[{int}]{level,  }\item[{const char $\ast$}]{fmt,  }\item[{va\+\_\+list}]{va }\end{DoxyParamCaption})}
+

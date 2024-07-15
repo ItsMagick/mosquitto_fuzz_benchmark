@@ -1,0 +1,140 @@
+\hypertarget{net_8c}{}\doxysection{net.\+c File Reference}
+\label{net_8c}\index{net.c@{net.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$ifaddrs.\+h$>$}\newline
+{\ttfamily \#include $<$netdb.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/tcp.\+h$>$}\newline
+{\ttfamily \#include $<$strings.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mqtt\+\_\+protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}misc\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}net\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sys\+\_\+tree.\+h\char`\"{}}\newline
+Include dependency graph for net.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{net_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{net_8c_a089661e1d7aa7a6bd06781c027142ccd}{net\+\_\+\+\_\+broker\+\_\+init}} (void)
+\item 
+void \mbox{\hyperlink{net_8c_aa1758f3fba38080ad2eacbe8f5ed959e}{net\+\_\+\+\_\+broker\+\_\+cleanup}} (void)
+\item 
+struct mosquitto $\ast$ \mbox{\hyperlink{net_8c_a72939337dd5e1b596af313c903d110b6}{net\+\_\+\+\_\+socket\+\_\+accept}} (struct \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\+\_\+\+\_\+listener\+\_\+sock}} $\ast$listensock)
+\item 
+int \mbox{\hyperlink{net_8c_a3d3e1cd9da97afa6cd88a5c42504cce9}{net\+\_\+\+\_\+load\+\_\+certificates}} (struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}} $\ast$listener)
+\item 
+int \mbox{\hyperlink{net_8c_a58fb124581c0d69d83e3c9dc8e12007c}{net\+\_\+\+\_\+tls\+\_\+load\+\_\+verify}} (struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}} $\ast$listener)
+\item 
+int \mbox{\hyperlink{net_8c_a96965cc5292e1fccaf723130be53f168}{net\+\_\+\+\_\+socket\+\_\+listen}} (struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}} $\ast$listener)
+\item 
+int \mbox{\hyperlink{net_8c_a96d13d0516efc7e0dcb09116dedd6c75}{net\+\_\+\+\_\+socket\+\_\+get\+\_\+address}} (mosq\+\_\+sock\+\_\+t sock, char $\ast$buf, size\+\_\+t len, uint16\+\_\+t $\ast$remote\+\_\+port)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{net_8c_aa1758f3fba38080ad2eacbe8f5ed959e}\label{net_8c_aa1758f3fba38080ad2eacbe8f5ed959e}} 
+\index{net.c@{net.c}!net\_\_broker\_cleanup@{net\_\_broker\_cleanup}}
+\index{net\_\_broker\_cleanup@{net\_\_broker\_cleanup}!net.c@{net.c}}
+\doxysubsubsection{\texorpdfstring{net\_\_broker\_cleanup()}{net\_\_broker\_cleanup()}}
+{\footnotesize\ttfamily void net\+\_\+\+\_\+broker\+\_\+cleanup (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{net_8c_aa1758f3fba38080ad2eacbe8f5ed959e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{net_8c_a089661e1d7aa7a6bd06781c027142ccd}\label{net_8c_a089661e1d7aa7a6bd06781c027142ccd}} 
+\index{net.c@{net.c}!net\_\_broker\_init@{net\_\_broker\_init}}
+\index{net\_\_broker\_init@{net\_\_broker\_init}!net.c@{net.c}}
+\doxysubsubsection{\texorpdfstring{net\_\_broker\_init()}{net\_\_broker\_init()}}
+{\footnotesize\ttfamily void net\+\_\+\+\_\+broker\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{net_8c_a089661e1d7aa7a6bd06781c027142ccd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{net_8c_a3d3e1cd9da97afa6cd88a5c42504cce9}\label{net_8c_a3d3e1cd9da97afa6cd88a5c42504cce9}} 
+\index{net.c@{net.c}!net\_\_load\_certificates@{net\_\_load\_certificates}}
+\index{net\_\_load\_certificates@{net\_\_load\_certificates}!net.c@{net.c}}
+\doxysubsubsection{\texorpdfstring{net\_\_load\_certificates()}{net\_\_load\_certificates()}}
+{\footnotesize\ttfamily int net\+\_\+\+\_\+load\+\_\+certificates (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}} $\ast$}]{listener }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{net_8c_a3d3e1cd9da97afa6cd88a5c42504cce9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{net_8c_a72939337dd5e1b596af313c903d110b6}\label{net_8c_a72939337dd5e1b596af313c903d110b6}} 
+\index{net.c@{net.c}!net\_\_socket\_accept@{net\_\_socket\_accept}}
+\index{net\_\_socket\_accept@{net\_\_socket\_accept}!net.c@{net.c}}
+\doxysubsubsection{\texorpdfstring{net\_\_socket\_accept()}{net\_\_socket\_accept()}}
+{\footnotesize\ttfamily struct mosquitto $\ast$ net\+\_\+\+\_\+socket\+\_\+accept (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\+\_\+\+\_\+listener\+\_\+sock}} $\ast$}]{listensock }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{net_8c_a72939337dd5e1b596af313c903d110b6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{net_8c_a72939337dd5e1b596af313c903d110b6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{net_8c_a96d13d0516efc7e0dcb09116dedd6c75}\label{net_8c_a96d13d0516efc7e0dcb09116dedd6c75}} 
+\index{net.c@{net.c}!net\_\_socket\_get\_address@{net\_\_socket\_get\_address}}
+\index{net\_\_socket\_get\_address@{net\_\_socket\_get\_address}!net.c@{net.c}}
+\doxysubsubsection{\texorpdfstring{net\_\_socket\_get\_address()}{net\_\_socket\_get\_address()}}
+{\footnotesize\ttfamily int net\+\_\+\+\_\+socket\+\_\+get\+\_\+address (\begin{DoxyParamCaption}\item[{mosq\+\_\+sock\+\_\+t}]{sock,  }\item[{char $\ast$}]{buf,  }\item[{size\+\_\+t}]{len,  }\item[{uint16\+\_\+t $\ast$}]{remote\+\_\+port }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{net_8c_a96965cc5292e1fccaf723130be53f168}\label{net_8c_a96965cc5292e1fccaf723130be53f168}} 
+\index{net.c@{net.c}!net\_\_socket\_listen@{net\_\_socket\_listen}}
+\index{net\_\_socket\_listen@{net\_\_socket\_listen}!net.c@{net.c}}
+\doxysubsubsection{\texorpdfstring{net\_\_socket\_listen()}{net\_\_socket\_listen()}}
+{\footnotesize\ttfamily int net\+\_\+\+\_\+socket\+\_\+listen (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}} $\ast$}]{listener }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{net_8c_a58fb124581c0d69d83e3c9dc8e12007c}\label{net_8c_a58fb124581c0d69d83e3c9dc8e12007c}} 
+\index{net.c@{net.c}!net\_\_tls\_load\_verify@{net\_\_tls\_load\_verify}}
+\index{net\_\_tls\_load\_verify@{net\_\_tls\_load\_verify}!net.c@{net.c}}
+\doxysubsubsection{\texorpdfstring{net\_\_tls\_load\_verify()}{net\_\_tls\_load\_verify()}}
+{\footnotesize\ttfamily int net\+\_\+\+\_\+tls\+\_\+load\+\_\+verify (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}} $\ast$}]{listener }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{net_8c_a58fb124581c0d69d83e3c9dc8e12007c_cgraph}
+\end{center}
+\end{figure}

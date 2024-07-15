@@ -1,0 +1,7 @@
+<map id="plugin__handle_disconnect" name="plugin__handle_disconnect">
+<area shape="rect" id="node1" title=" " alt="" coords="565,31,763,57"/>
+<area shape="rect" id="node2" href="$context_8c.html#a23ceef03d4bbfee4cb48d74a512b00a2" title=" " alt="" coords="363,31,517,57"/>
+<area shape="rect" id="node3" href="$loop_8c.html#a29985d87fa8f10c27534b63a38bd403a" title=" " alt="" coords="154,5,269,32"/>
+<area shape="rect" id="node4" href="$session__expiry_8c.html#a697ded88bfba20186cba05258fb8bc0e" title=" " alt="" coords="108,56,315,83"/>
+<area shape="rect" id="node5" href="$mosquitto_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,56,60,83"/>
+</map>

@@ -1,0 +1,878 @@
+\hypertarget{mosquitto__broker__internal_8h_source}{}\doxysection{mosquitto\+\_\+broker\+\_\+internal.\+h}
+\mbox{\hyperlink{mosquitto__broker__internal_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{Copyright (c) 2009-\/2020 Roger Light <roger@atchoo.org>}}
+\DoxyCodeLine{3 \textcolor{comment}{}}
+\DoxyCodeLine{4 \textcolor{comment}{All rights reserved. This program and the accompanying materials}}
+\DoxyCodeLine{5 \textcolor{comment}{are made available under the terms of the Eclipse Public License 2.0}}
+\DoxyCodeLine{6 \textcolor{comment}{and Eclipse Distribution License v1.0 which accompany this distribution.}}
+\DoxyCodeLine{7 \textcolor{comment}{}}
+\DoxyCodeLine{8 \textcolor{comment}{The Eclipse Public License is available at}}
+\DoxyCodeLine{9 \textcolor{comment}{   https://www.eclipse.org/legal/epl-\/2.0/}}
+\DoxyCodeLine{10 \textcolor{comment}{and the Eclipse Distribution License is available at}}
+\DoxyCodeLine{11 \textcolor{comment}{  http://www.eclipse.org/org/documents/edl-\/v10.php.}}
+\DoxyCodeLine{12 \textcolor{comment}{}}
+\DoxyCodeLine{13 \textcolor{comment}{SPDX-\/License-\/Identifier: EPL-\/2.0 OR BSD-\/3-\/Clause}}
+\DoxyCodeLine{14 \textcolor{comment}{}}
+\DoxyCodeLine{15 \textcolor{comment}{Contributors:}}
+\DoxyCodeLine{16 \textcolor{comment}{   Roger Light -\/ initial implementation and documentation.}}
+\DoxyCodeLine{17 \textcolor{comment}{   Tatsuzo Osawa -\/ Add epoll.}}
+\DoxyCodeLine{18 \textcolor{comment}{*/}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \textcolor{preprocessor}{MOSQUITTO\_BROKER\_INTERNAL\_H}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MOSQUITTO\_BROKER\_INTERNAL\_H}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"{}config.h"{}}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{stdio}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_WEBSOCKETS}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#}  \textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{libwebsockets}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#}  \textcolor{preprocessor}{if} \textcolor{preprocessor}{LWS\_LIBRARY\_VERSION\_NUMBER} \textcolor{preprocessor}{>=} 3002000 \textcolor{preprocessor}{\&\&} \textcolor{preprocessor}{!}\textcolor{preprocessor}{defined}\textcolor{preprocessor}{(}\textcolor{preprocessor}{LWS\_WITH\_EXTERNAL\_POLL}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#}    \textcolor{preprocessor}{warning} \textcolor{stringliteral}{"{}libwebsockets is not compiled with LWS\_WITH\_EXTERNAL\_POLL support. Websocket performance will be unusable."{}}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#}  \textcolor{preprocessor}{endif}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"{}mosquitto\_internal.h"{}}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"{}mosquitto\_broker.h"{}}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"{}mosquitto\_plugin.h"{}}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"{}mosquitto.h"{}}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"{}logging\_mosq.h"{}}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \mbox{\hyperlink{password__mosq_8h}{"{}password\_mosq.h"{}}}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"{}tls\_mosq.h"{}}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{"{}uthash.h"{}}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifndef} \_\_GNUC\_\_}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{\_\_attribute\_\_}\textcolor{preprocessor}{(}\textcolor{preprocessor}{attrib}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{comment}{/* Log destinations */}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MQTT3\_LOG\_NONE} 0x00}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MQTT3\_LOG\_SYSLOG} 0x01}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MQTT3\_LOG\_FILE} 0x02}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MQTT3\_LOG\_STDOUT} 0x04}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MQTT3\_LOG\_STDERR} 0x08}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MQTT3\_LOG\_TOPIC} 0x10}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MQTT3\_LOG\_DLT} 0x20}
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{MQTT3\_LOG\_ALL} 0xFF}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{WEBSOCKET\_CLIENT} \textcolor{preprocessor}{-\/}2}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{CMD\_PORT\_LIMIT} 10}
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{define} \textcolor{preprocessor}{TOPIC\_HIERARCHY\_LIMIT} 200}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{keyword}{typedef} uint64\_t \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\_t}};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a81942f1ba184453675fd12b77e73ad9f}{FUNC\_plugin\_init\_v5}})(\mbox{\hyperlink{mosquitto__broker__internal_8h_a81942f1ba184453675fd12b77e73ad9f}{mosquitto\_plugin\_id\_t}} *, \textcolor{keywordtype}{void} **, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{64 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a9edae8bef503fadef0c58a88b99a20ab}{FUNC\_plugin\_cleanup\_v5}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a9a8c0e757c3857292ff2118e42769dbb}{FUNC\_auth\_plugin\_init\_v4}})(\textcolor{keywordtype}{void} **, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{67 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a7e6653e7d207536ace357af5e26d77a8}{FUNC\_auth\_plugin\_cleanup\_v4}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{68 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_abf0e531a4bec02faa4c91e2e8ddcce51}{FUNC\_auth\_plugin\_security\_init\_v4}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{69 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a53545d059b4c6fe18658ab0a5d53cb09}{FUNC\_auth\_plugin\_security\_cleanup\_v4}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{70 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a5e38d6ef97464c87374752c05b63a8a7}{FUNC\_auth\_plugin\_acl\_check\_v4}})(\textcolor{keywordtype}{void} *, \textcolor{keywordtype}{int}, \textcolor{keyword}{struct} mosquitto *, \textcolor{keyword}{struct} mosquitto\_acl\_msg *);}
+\DoxyCodeLine{71 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_af2a20706841460d7904728bf2c79b91f}{FUNC\_auth\_plugin\_unpwd\_check\_v4}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *);}
+\DoxyCodeLine{72 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a052914998b8ed172256af68604931b2d}{FUNC\_auth\_plugin\_psk\_key\_get\_v4}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keywordtype}{char} *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{73 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a2666ff338d11a58179074caf782cf544}{FUNC\_auth\_plugin\_auth\_start\_v4}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keywordtype}{bool}, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *, uint16\_t, \textcolor{keywordtype}{void} **, uint16\_t *);}
+\DoxyCodeLine{74 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a3fe47e35d89b5b2bbda10fffb129a341}{FUNC\_auth\_plugin\_auth\_continue\_v4}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *, uint16\_t, \textcolor{keywordtype}{void} **, uint16\_t *);}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_ac38f1a78f0f473315389a0bece2a64e9}{FUNC\_auth\_plugin\_init\_v3}})(\textcolor{keywordtype}{void} **, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{77 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a407916ecf2e811b2ddd9ab1e6ac7c75a}{FUNC\_auth\_plugin\_cleanup\_v3}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{78 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a961c052e5660096259d20f7d8a7ea75a}{FUNC\_auth\_plugin\_security\_init\_v3}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{79 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a3b96b019fa6aee50507148d461069492}{FUNC\_auth\_plugin\_security\_cleanup\_v3}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_opt *, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{80 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a7a0d9de69c431d742278d0935b6d7d59}{FUNC\_auth\_plugin\_acl\_check\_v3}})(\textcolor{keywordtype}{void} *, \textcolor{keywordtype}{int}, \textcolor{keyword}{const} \textcolor{keyword}{struct} mosquitto *, \textcolor{keyword}{struct} mosquitto\_acl\_msg *);}
+\DoxyCodeLine{81 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a80ff53fa20bb46dd97eb0735ecb1d420}{FUNC\_auth\_plugin\_unpwd\_check\_v3}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{const} \textcolor{keyword}{struct} mosquitto *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *);}
+\DoxyCodeLine{82 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_ad462a7e8c7d5c40fbaed93f37a9fddcd}{FUNC\_auth\_plugin\_psk\_key\_get\_v3}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{const} \textcolor{keyword}{struct} mosquitto *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keywordtype}{char} *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a04b656a59793d7d79d389761d52189c4}{FUNC\_auth\_plugin\_init\_v2}})(\textcolor{keywordtype}{void} **, \textcolor{keyword}{struct} mosquitto\_auth\_opt *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{85 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a292f7713809d117291b1aab8be8593e0}{FUNC\_auth\_plugin\_cleanup\_v2}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_auth\_opt *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{86 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a0c03578e8f77fc4d84aaff441b55041a}{FUNC\_auth\_plugin\_security\_init\_v2}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_auth\_opt *, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{87 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_aacf953cae5c1d8d19fbcd0a5ee3f7f20}{FUNC\_auth\_plugin\_security\_cleanup\_v2}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{struct} mosquitto\_auth\_opt *, \textcolor{keywordtype}{int}, \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{88 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a8a332e4afce2e57784cc01d00eb25ea4}{FUNC\_auth\_plugin\_acl\_check\_v2}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{89 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a0d92e08175f16a4c347d49570d73baa3}{FUNC\_auth\_plugin\_unpwd\_check\_v2}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *);}
+\DoxyCodeLine{90 \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} (*\mbox{\hyperlink{mosquitto__broker__internal_8h_a504a6a9410434c8cdd129a548bc31a0f}{FUNC\_auth\_plugin\_psk\_key\_get\_v2}})(\textcolor{keywordtype}{void} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *, \textcolor{keywordtype}{char} *, \textcolor{keywordtype}{int});}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 \textcolor{keyword}{enum} \mbox{\hyperlink{mosquitto__broker__internal_8h_a66f3ae83ec017eab76353877d44476ae}{mosquitto\_msg\_origin}}\{}
+\DoxyCodeLine{94     \mbox{\hyperlink{mosquitto__broker__internal_8h_a66f3ae83ec017eab76353877d44476aea34b89db3e57cd09ad3e3dede511fc10e}{mosq\_mo\_client}} = 0,}
+\DoxyCodeLine{95     \mbox{\hyperlink{mosquitto__broker__internal_8h_a66f3ae83ec017eab76353877d44476aea921579922b62a8adc99b59ae4b5a6359}{mosq\_mo\_broker}} = 1}
+\DoxyCodeLine{96 \};}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____auth__plugin}{mosquitto\_\_auth\_plugin}}\{}
+\DoxyCodeLine{99     \textcolor{keywordtype}{void} *\mbox{\hyperlink{structmosquitto____auth__plugin_a55a5c01f44bad4aca08a4aff46702db0}{lib}};}
+\DoxyCodeLine{100     \textcolor{keywordtype}{void} *\mbox{\hyperlink{structmosquitto____auth__plugin_ac8fc75421d15cb3a8c6a5b4d0a7cd122}{user\_data}};}
+\DoxyCodeLine{101     \textcolor{keywordtype}{int} (*\mbox{\hyperlink{structmosquitto____auth__plugin_af632e5ab3dfdc7a09afbccabe13ae100}{plugin\_version}})(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{102     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__plugin__id__t}{mosquitto\_plugin\_id\_t}} *\mbox{\hyperlink{structmosquitto____auth__plugin_a3d811a42e2375b0c70a5f945b9818b96}{identifier}};}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \mbox{\hyperlink{mosquitto__broker__internal_8h_a81942f1ba184453675fd12b77e73ad9f}{FUNC\_plugin\_init\_v5}} \mbox{\hyperlink{structmosquitto____auth__plugin_a0d5f48a318a3855ab82c2d39f3c617f2}{plugin\_init\_v5}};}
+\DoxyCodeLine{105     \mbox{\hyperlink{mosquitto__broker__internal_8h_a9edae8bef503fadef0c58a88b99a20ab}{FUNC\_plugin\_cleanup\_v5}} \mbox{\hyperlink{structmosquitto____auth__plugin_a090d8bf8d4947c26e0d485b84787cea3}{plugin\_cleanup\_v5}};}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \mbox{\hyperlink{mosquitto__broker__internal_8h_a9a8c0e757c3857292ff2118e42769dbb}{FUNC\_auth\_plugin\_init\_v4}} \mbox{\hyperlink{structmosquitto____auth__plugin_ad9a31c144b780bba213fa46fef9d9670}{plugin\_init\_v4}};}
+\DoxyCodeLine{108     \mbox{\hyperlink{mosquitto__broker__internal_8h_a7e6653e7d207536ace357af5e26d77a8}{FUNC\_auth\_plugin\_cleanup\_v4}} \mbox{\hyperlink{structmosquitto____auth__plugin_aed40f19f0ea78d4d98862383eec23436}{plugin\_cleanup\_v4}};}
+\DoxyCodeLine{109     \mbox{\hyperlink{mosquitto__broker__internal_8h_abf0e531a4bec02faa4c91e2e8ddcce51}{FUNC\_auth\_plugin\_security\_init\_v4}} \mbox{\hyperlink{structmosquitto____auth__plugin_a1f20892bc121eccd71b75c229b911fc3}{security\_init\_v4}};}
+\DoxyCodeLine{110     \mbox{\hyperlink{mosquitto__broker__internal_8h_a53545d059b4c6fe18658ab0a5d53cb09}{FUNC\_auth\_plugin\_security\_cleanup\_v4}} \mbox{\hyperlink{structmosquitto____auth__plugin_acf8e8a35bf72bc9de86ff42de9870c63}{security\_cleanup\_v4}};}
+\DoxyCodeLine{111     \mbox{\hyperlink{mosquitto__broker__internal_8h_a5e38d6ef97464c87374752c05b63a8a7}{FUNC\_auth\_plugin\_acl\_check\_v4}} \mbox{\hyperlink{structmosquitto____auth__plugin_a4832123e18a6eff71ae5fa91a17bb2b4}{acl\_check\_v4}};}
+\DoxyCodeLine{112     \mbox{\hyperlink{mosquitto__broker__internal_8h_af2a20706841460d7904728bf2c79b91f}{FUNC\_auth\_plugin\_unpwd\_check\_v4}} \mbox{\hyperlink{structmosquitto____auth__plugin_a0af653086b1aed0fd42f72a8a502744b}{unpwd\_check\_v4}};}
+\DoxyCodeLine{113     \mbox{\hyperlink{mosquitto__broker__internal_8h_a052914998b8ed172256af68604931b2d}{FUNC\_auth\_plugin\_psk\_key\_get\_v4}} \mbox{\hyperlink{structmosquitto____auth__plugin_a5d9f61ead94f3626dc4cf6494347195e}{psk\_key\_get\_v4}};}
+\DoxyCodeLine{114     \mbox{\hyperlink{mosquitto__broker__internal_8h_a2666ff338d11a58179074caf782cf544}{FUNC\_auth\_plugin\_auth\_start\_v4}} \mbox{\hyperlink{structmosquitto____auth__plugin_afdc20c9c2196ef83079258417eca701c}{auth\_start\_v4}};}
+\DoxyCodeLine{115     \mbox{\hyperlink{mosquitto__broker__internal_8h_a3fe47e35d89b5b2bbda10fffb129a341}{FUNC\_auth\_plugin\_auth\_continue\_v4}} \mbox{\hyperlink{structmosquitto____auth__plugin_a70abbb4a524af5020d8ba864c56fb629}{auth\_continue\_v4}};}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \mbox{\hyperlink{mosquitto__broker__internal_8h_ac38f1a78f0f473315389a0bece2a64e9}{FUNC\_auth\_plugin\_init\_v3}} \mbox{\hyperlink{structmosquitto____auth__plugin_aeee22646cfc9e5ab4b1dff29aacc5f80}{plugin\_init\_v3}};}
+\DoxyCodeLine{118     \mbox{\hyperlink{mosquitto__broker__internal_8h_a407916ecf2e811b2ddd9ab1e6ac7c75a}{FUNC\_auth\_plugin\_cleanup\_v3}} \mbox{\hyperlink{structmosquitto____auth__plugin_a306c8eb919d978f7613649b37c0ea9d4}{plugin\_cleanup\_v3}};}
+\DoxyCodeLine{119     \mbox{\hyperlink{mosquitto__broker__internal_8h_a961c052e5660096259d20f7d8a7ea75a}{FUNC\_auth\_plugin\_security\_init\_v3}} \mbox{\hyperlink{structmosquitto____auth__plugin_a0790a6091854717841751ccdb962e752}{security\_init\_v3}};}
+\DoxyCodeLine{120     \mbox{\hyperlink{mosquitto__broker__internal_8h_a3b96b019fa6aee50507148d461069492}{FUNC\_auth\_plugin\_security\_cleanup\_v3}} \mbox{\hyperlink{structmosquitto____auth__plugin_a05c9e2fc4db71a237bc5a083fd939405}{security\_cleanup\_v3}};}
+\DoxyCodeLine{121     \mbox{\hyperlink{mosquitto__broker__internal_8h_a7a0d9de69c431d742278d0935b6d7d59}{FUNC\_auth\_plugin\_acl\_check\_v3}} \mbox{\hyperlink{structmosquitto____auth__plugin_a24180848a9199ef09d0ec8c26585137e}{acl\_check\_v3}};}
+\DoxyCodeLine{122     \mbox{\hyperlink{mosquitto__broker__internal_8h_a80ff53fa20bb46dd97eb0735ecb1d420}{FUNC\_auth\_plugin\_unpwd\_check\_v3}} \mbox{\hyperlink{structmosquitto____auth__plugin_a35fe27f58169bb5c7fe2e4d330394553}{unpwd\_check\_v3}};}
+\DoxyCodeLine{123     \mbox{\hyperlink{mosquitto__broker__internal_8h_ad462a7e8c7d5c40fbaed93f37a9fddcd}{FUNC\_auth\_plugin\_psk\_key\_get\_v3}} \mbox{\hyperlink{structmosquitto____auth__plugin_ab0bff98b413a15ad3e300a5b2c33881c}{psk\_key\_get\_v3}};}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125     \mbox{\hyperlink{mosquitto__broker__internal_8h_a04b656a59793d7d79d389761d52189c4}{FUNC\_auth\_plugin\_init\_v2}} \mbox{\hyperlink{structmosquitto____auth__plugin_a81316bb17c36920116f40583c099bd22}{plugin\_init\_v2}};}
+\DoxyCodeLine{126     \mbox{\hyperlink{mosquitto__broker__internal_8h_a292f7713809d117291b1aab8be8593e0}{FUNC\_auth\_plugin\_cleanup\_v2}} \mbox{\hyperlink{structmosquitto____auth__plugin_a1464008d03b7b063d0df6f3bdd6396bf}{plugin\_cleanup\_v2}};}
+\DoxyCodeLine{127     \mbox{\hyperlink{mosquitto__broker__internal_8h_a0c03578e8f77fc4d84aaff441b55041a}{FUNC\_auth\_plugin\_security\_init\_v2}} \mbox{\hyperlink{structmosquitto____auth__plugin_aa382d5f8a9df4ef3ebd29db7cc87b4a8}{security\_init\_v2}};}
+\DoxyCodeLine{128     \mbox{\hyperlink{mosquitto__broker__internal_8h_aacf953cae5c1d8d19fbcd0a5ee3f7f20}{FUNC\_auth\_plugin\_security\_cleanup\_v2}} \mbox{\hyperlink{structmosquitto____auth__plugin_a0fd45b4605a8a827ed44e014bf173018}{security\_cleanup\_v2}};}
+\DoxyCodeLine{129     \mbox{\hyperlink{mosquitto__broker__internal_8h_a8a332e4afce2e57784cc01d00eb25ea4}{FUNC\_auth\_plugin\_acl\_check\_v2}} \mbox{\hyperlink{structmosquitto____auth__plugin_a948a53666d11cf0e24a3b6a5df0b865c}{acl\_check\_v2}};}
+\DoxyCodeLine{130     \mbox{\hyperlink{mosquitto__broker__internal_8h_a0d92e08175f16a4c347d49570d73baa3}{FUNC\_auth\_plugin\_unpwd\_check\_v2}} \mbox{\hyperlink{structmosquitto____auth__plugin_a1f39609422733290180f2d5b968e0979}{unpwd\_check\_v2}};}
+\DoxyCodeLine{131     \mbox{\hyperlink{mosquitto__broker__internal_8h_a504a6a9410434c8cdd129a548bc31a0f}{FUNC\_auth\_plugin\_psk\_key\_get\_v2}} \mbox{\hyperlink{structmosquitto____auth__plugin_ad8af5db1eb4875ae950fc21fd546045b}{psk\_key\_get\_v2}};}
+\DoxyCodeLine{132     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____auth__plugin_a2fd9c78fc671d939e63a87465f7bde55}{version}};}
+\DoxyCodeLine{133 \};}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____auth__plugin__config}{mosquitto\_\_auth\_plugin\_config}}}
+\DoxyCodeLine{136 \{}
+\DoxyCodeLine{137     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____auth__plugin__config_ade85fad1a168ad406de3d6136159c68f}{path}};}
+\DoxyCodeLine{138     \textcolor{keyword}{struct} mosquitto\_opt *\mbox{\hyperlink{structmosquitto____auth__plugin__config_a31426f02d3cf74a692af20b857533da0}{options}};}
+\DoxyCodeLine{139     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____auth__plugin__config_a3aae6d4770332b08310049dbfe3c3516}{option\_count}};}
+\DoxyCodeLine{140     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____auth__plugin__config_a1ab71d5038dca9ad0bc7f05999e1a3f7}{deny\_special\_chars}};}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____auth__plugin}{mosquitto\_\_auth\_plugin}} \mbox{\hyperlink{structmosquitto____auth__plugin__config_aa7e61bcf07d43acc7dabd6e37d458801}{plugin}};}
+\DoxyCodeLine{143 \};}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}}\{}
+\DoxyCodeLine{146     \mbox{\hyperlink{structmosquitto____callback_a3869ab41e1b70190f7c5d22e513fa210}{UT\_hash\_handle}} \mbox{\hyperlink{structmosquitto____callback_a3869ab41e1b70190f7c5d22e513fa210}{hh}}; \textcolor{comment}{/* For callbacks that register for e.g. a specific topic */}}
+\DoxyCodeLine{147     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structmosquitto____callback_ad4b18aa4eee1579134781084a4c93460}{next}}, *\mbox{\hyperlink{structmosquitto____callback_ac72934587971b87c7211dc4f1c91a8cf}{prev}}; \textcolor{comment}{/* For typical callbacks */}}
+\DoxyCodeLine{148     \mbox{\hyperlink{structmosquitto____callback_ac7547506cf80c500cc0cdd56ed262610}{MOSQ\_FUNC\_generic\_callback}} \mbox{\hyperlink{structmosquitto____callback_ac7547506cf80c500cc0cdd56ed262610}{cb}};}
+\DoxyCodeLine{149     \textcolor{keywordtype}{void} *\mbox{\hyperlink{structmosquitto____callback_ad5c48473fc94db0147c787e8b248ee48}{userdata}};}
+\DoxyCodeLine{150     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____callback_a278f92630e903c9b3a51da5f339946c6}{data}}; \textcolor{comment}{/* e.g. topic for control event */}}
+\DoxyCodeLine{151 \};}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153 \textcolor{keyword}{struct} \mbox{\hyperlink{structplugin____callbacks}{plugin\_\_callbacks}}\{}
+\DoxyCodeLine{154     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_a60e409d46c80514b245794063354d0f1}{tick}};}
+\DoxyCodeLine{155     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_a010c7b4107a43cc038d165d0160b5652}{acl\_check}};}
+\DoxyCodeLine{156     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_a025d62d8cba31a232c01ea4419158ff1}{basic\_auth}};}
+\DoxyCodeLine{157     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_ab7e1772cc668185cb0f8bd6f71f70f56}{control}};}
+\DoxyCodeLine{158     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_a9ecacde83b71c088b55041af428236d2}{disconnect}};}
+\DoxyCodeLine{159     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_a711fa58d92a2d247cd8b5379f91af291}{ext\_auth\_continue}};}
+\DoxyCodeLine{160     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_a314bea794e518beacae31f12b92f4bfd}{ext\_auth\_start}};}
+\DoxyCodeLine{161     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_a9e074653210dd9a8276f418f9cc0f387}{message}};}
+\DoxyCodeLine{162     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_a06b1eb753aea72279eb8f8f79dd19a28}{psk\_key}};}
+\DoxyCodeLine{163     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____callback}{mosquitto\_\_callback}} *\mbox{\hyperlink{structplugin____callbacks_a10b7b3ab3ee267b78cc60d1fa8fdd252}{reload}};}
+\DoxyCodeLine{164 \};}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\_\_security\_options}} \{}
+\DoxyCodeLine{167     \textcolor{comment}{/* Any options that get added here also need considering}}
+\DoxyCodeLine{168 \textcolor{comment}{     * in config\_\_read() with regards whether allow\_anonymous}}
+\DoxyCodeLine{169 \textcolor{comment}{     * should be disabled when these options are set.}}
+\DoxyCodeLine{170 \textcolor{comment}{     */}}
+\DoxyCodeLine{171     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____unpwd}{mosquitto\_\_unpwd}} *\mbox{\hyperlink{structmosquitto____security__options_a845d27fb576d3f228f01e4a65cb39935}{unpwd}};}
+\DoxyCodeLine{172     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____unpwd}{mosquitto\_\_unpwd}} *\mbox{\hyperlink{structmosquitto____security__options_a32ecf80ba93948b8eb8bf2adf5aab4ab}{psk\_id}};}
+\DoxyCodeLine{173     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____acl__user}{mosquitto\_\_acl\_user}} *\mbox{\hyperlink{structmosquitto____security__options_a3560125dd0462ff6b76f1f7578c9803b}{acl\_list}};}
+\DoxyCodeLine{174     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____acl}{mosquitto\_\_acl}} *\mbox{\hyperlink{structmosquitto____security__options_aadc82d90e96574a8ef7040a494315eaf}{acl\_patterns}};}
+\DoxyCodeLine{175     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____security__options_aa69a3fe2b28651f66b846c607d212e9a}{password\_file}};}
+\DoxyCodeLine{176     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____security__options_a602f87edc7779786e119e1bb818e2a8d}{psk\_file}};}
+\DoxyCodeLine{177     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____security__options_ab4fa3aab8aeaaa0fe3a0e2cb3527fd59}{acl\_file}};}
+\DoxyCodeLine{178     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____auth__plugin__config}{mosquitto\_\_auth\_plugin\_config}} *\mbox{\hyperlink{structmosquitto____security__options_a75fe864e016da8384af91e7d49b644e7}{auth\_plugin\_configs}};}
+\DoxyCodeLine{179     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____security__options_a36af84a968db354167e03815be123655}{auth\_plugin\_config\_count}};}
+\DoxyCodeLine{180     int8\_t \mbox{\hyperlink{structmosquitto____security__options_acb6afa1f7fd2575ceb784d47deaea929}{allow\_anonymous}};}
+\DoxyCodeLine{181     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____security__options_a354ddd1737a28e371fa2bf2bd43ea139}{allow\_zero\_length\_clientid}};}
+\DoxyCodeLine{182     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____security__options_ae2e20dbc4ab8513bbadf6b74d5b63f81}{auto\_id\_prefix}};}
+\DoxyCodeLine{183     uint16\_t \mbox{\hyperlink{structmosquitto____security__options_ad684f8c9d3397f7e8af68831cb8d9ec9}{auto\_id\_prefix\_len}};}
+\DoxyCodeLine{184     \textcolor{keyword}{struct} \mbox{\hyperlink{structplugin____callbacks}{plugin\_\_callbacks}} \mbox{\hyperlink{structmosquitto____security__options_a8a96965cc6f4cd3b0978925527305a40}{plugin\_callbacks}};}
+\DoxyCodeLine{185     \mbox{\hyperlink{structmosquitto__plugin__id__t}{mosquitto\_plugin\_id\_t}} *\mbox{\hyperlink{structmosquitto____security__options_a0673faab69cb54087b012e22cc327c9a}{pid}}; \textcolor{comment}{/* For registering as a "{}plugin"{} */}}
+\DoxyCodeLine{186 \};}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_EPOLL}}
+\DoxyCodeLine{189 \textcolor{keyword}{enum} struct\_ident\{}
+\DoxyCodeLine{190     id\_invalid = 0,}
+\DoxyCodeLine{191     id\_listener = 1,}
+\DoxyCodeLine{192     id\_client = 2,}
+\DoxyCodeLine{193     id\_listener\_ws = 3,}
+\DoxyCodeLine{194 \};}
+\DoxyCodeLine{195 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} \{}
+\DoxyCodeLine{198     uint16\_t \mbox{\hyperlink{structmosquitto____listener_a9da2f56892558b10962811734817ff66}{port}};}
+\DoxyCodeLine{199     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener_a8ba035e28a8732c1af2fb89c30f1b310}{host}};}
+\DoxyCodeLine{200     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener_acb3833485cf6f201fb8445fcea8df122}{bind\_interface}};}
+\DoxyCodeLine{201     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____listener_a84aed8146499a5878f2ef6cc75cdc12e}{max\_connections}};}
+\DoxyCodeLine{202     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener_a2699d56e19f520fd5c6c98dea602647f}{mount\_point}};}
+\DoxyCodeLine{203     \mbox{\hyperlink{structmosquitto____listener_a2158b596124e208bc669d851dd374e3c}{mosq\_sock\_t}} *\mbox{\hyperlink{structmosquitto____listener_a2158b596124e208bc669d851dd374e3c}{socks}};}
+\DoxyCodeLine{204     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____listener_a2e6b37bad67dcc63647e760cc294a076}{sock\_count}};}
+\DoxyCodeLine{205     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____listener_ac1583a6e958e8978118202b172cec5ee}{client\_count}};}
+\DoxyCodeLine{206     \textcolor{keyword}{enum} mosquitto\_protocol \mbox{\hyperlink{structmosquitto____listener_abe0e1996fa6e1d03e3487d52c0997090}{protocol}};}
+\DoxyCodeLine{207     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____listener_aab51364b3122b7a369bdcef1c6a2ca37}{socket\_domain}};}
+\DoxyCodeLine{208     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____listener_ac69025b3c68794da88c5680140b523c5}{use\_username\_as\_clientid}};}
+\DoxyCodeLine{209     uint8\_t \mbox{\hyperlink{structmosquitto____listener_a39dfcd04b891aa1d4689b29b94510549}{max\_qos}};}
+\DoxyCodeLine{210     uint16\_t \mbox{\hyperlink{structmosquitto____listener_ad9eb8cf041696dc1388db292d8d1c5b3}{max\_topic\_alias}};}
+\DoxyCodeLine{211 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_TLS}}
+\DoxyCodeLine{212     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{cafile}};}
+\DoxyCodeLine{213     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{capath}};}
+\DoxyCodeLine{214     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{certfile}};}
+\DoxyCodeLine{215     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{keyfile}};}
+\DoxyCodeLine{216     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{tls\_engine}};}
+\DoxyCodeLine{217     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{tls\_engine\_kpass\_sha1}};}
+\DoxyCodeLine{218     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{ciphers}};}
+\DoxyCodeLine{219     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{ciphers\_tls13}};}
+\DoxyCodeLine{220     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{psk\_hint}};}
+\DoxyCodeLine{221     \mbox{\hyperlink{structmosquitto____listener}{SSL\_CTX}} *\mbox{\hyperlink{structmosquitto____listener}{ssl\_ctx}};}
+\DoxyCodeLine{222     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{crlfile}};}
+\DoxyCodeLine{223     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{tls\_version}};}
+\DoxyCodeLine{224     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{dhparamfile}};}
+\DoxyCodeLine{225     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____listener}{use\_identity\_as\_username}};}
+\DoxyCodeLine{226     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____listener}{use\_subject\_as\_username}};}
+\DoxyCodeLine{227     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____listener}{require\_certificate}};}
+\DoxyCodeLine{228     \textcolor{keyword}{enum} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_keyform}} \mbox{\hyperlink{structmosquitto____listener}{tls\_keyform}};}
+\DoxyCodeLine{229 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{230 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_WEBSOCKETS}}
+\DoxyCodeLine{231     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{lws\_context}} *\mbox{\hyperlink{structmosquitto____listener}{ws\_context}};}
+\DoxyCodeLine{232     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____listener}{ws\_in\_init}};}
+\DoxyCodeLine{233     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{http\_dir}};}
+\DoxyCodeLine{234     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{lws\_protocols}} *\mbox{\hyperlink{structmosquitto____listener}{ws\_protocol}};}
+\DoxyCodeLine{235 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{236     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\_\_security\_options}} \mbox{\hyperlink{structmosquitto____listener_a6bc17e7a5969951f7cde05efe358dd27}{security\_options}};}
+\DoxyCodeLine{237 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_UNIX\_SOCKETS}}
+\DoxyCodeLine{238     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____listener}{unix\_socket\_path}};}
+\DoxyCodeLine{239 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{240 \};}
+\DoxyCodeLine{241 }
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\_\_listener\_sock}}\{}
+\DoxyCodeLine{244 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_EPOLL}}
+\DoxyCodeLine{245     \textcolor{comment}{/* This *must* be the first element in the struct. */}}
+\DoxyCodeLine{246     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____listener__sock}{ident}};}
+\DoxyCodeLine{247 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{248     \mbox{\hyperlink{structmosquitto____listener__sock_aacee618d48949f80e7dfa95d52c686a9}{mosq\_sock\_t}} \mbox{\hyperlink{structmosquitto____listener__sock_aacee618d48949f80e7dfa95d52c686a9}{sock}};}
+\DoxyCodeLine{249     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *\mbox{\hyperlink{structmosquitto____listener__sock_ac65f3d20dbb128e342d87f50dc241b8e}{listener}};}
+\DoxyCodeLine{250 \};}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252 \textcolor{keyword}{typedef} \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__plugin__id__t}{mosquitto\_plugin\_id\_t}}\{}
+\DoxyCodeLine{253     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *\mbox{\hyperlink{structmosquitto__plugin__id__t_aeea78435eab5b585f91d85032886fe71}{listener}};}
+\DoxyCodeLine{254 \} mosquitto\_plugin\_id\_t;}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} \{}
+\DoxyCodeLine{257     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_a1ea90431c7ef770ea845cd9f7cdb8d6d}{allow\_duplicate\_messages}};}
+\DoxyCodeLine{258     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config_a463a7fb30d17608ec2eef80237677dd5}{autosave\_interval}};}
+\DoxyCodeLine{259     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_ad95fb934aeb00d02c10970a032eb986e}{autosave\_on\_changes}};}
+\DoxyCodeLine{260     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_aeff18734136e9492bbd8b576e1a2b457}{check\_retain\_source}};}
+\DoxyCodeLine{261     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____config_ab9cfd89822664e0578b0190d009fcfe4}{clientid\_prefixes}};}
+\DoxyCodeLine{262     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_a68f0b3b2e2c26464bcbbeea0aecef694}{connection\_messages}};}
+\DoxyCodeLine{263     uint16\_t \mbox{\hyperlink{structmosquitto____config_abf7bdc4ddbf1feb9afc23bd62a3112d4}{cmd\_port}}[\mbox{\hyperlink{mosquitto__broker__internal_8h_a2933386c54e74f343bfb55e2893603b4}{CMD\_PORT\_LIMIT}}];}
+\DoxyCodeLine{264     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config_aa2890bdd3e68ce33d20d9301658c73d8}{cmd\_port\_count}};}
+\DoxyCodeLine{265     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_afc88c04e305ec10b31ea164e217b509d}{daemon}};}
+\DoxyCodeLine{266     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} \mbox{\hyperlink{structmosquitto____config_ab20165a7e10c0049a6a5f7f77a41dd88}{default\_listener}};}
+\DoxyCodeLine{267     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *\mbox{\hyperlink{structmosquitto____config_a11c0282f3ce77cbeb6aac74442dcfc9a}{listeners}};}
+\DoxyCodeLine{268     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config_a35fec3fad8da878c590acaa16eac50d6}{listener\_count}};}
+\DoxyCodeLine{269     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_a4dd557838dcfb84b2f1f09122a7f1642}{local\_only}};}
+\DoxyCodeLine{270     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config_a5acd32c14c9a0afeb5b87c57e0196799}{log\_dest}};}
+\DoxyCodeLine{271     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config_ac8f67c126e82e9a9f007d8f3be252ed1}{log\_facility}};}
+\DoxyCodeLine{272     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config_a3e98c2129eac75578c63a4221c8081a5}{log\_type}};}
+\DoxyCodeLine{273     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_a61991cdab91fc4792bba7be4c2dcc321}{log\_timestamp}};}
+\DoxyCodeLine{274     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____config_a3f3753388eef0bb1a8d8ab27168b33ed}{log\_timestamp\_format}};}
+\DoxyCodeLine{275     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____config_a3b344bac8ae0ee73dd4ec6d5d95b9db0}{log\_file}};}
+\DoxyCodeLine{276     FILE *\mbox{\hyperlink{structmosquitto____config_ae9bed20196b3fc2b3266e18d31e06883}{log\_fptr}};}
+\DoxyCodeLine{277     size\_t \mbox{\hyperlink{structmosquitto____config_a0513dc8694693bd84c0f8d92f4a699ff}{max\_inflight\_bytes}};}
+\DoxyCodeLine{278     size\_t \mbox{\hyperlink{structmosquitto____config_a2396854e1b18ada1343eb4a236ec7aa8}{max\_queued\_bytes}};}
+\DoxyCodeLine{279     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config_a9e6213387791a2f8224facf13e7872f6}{max\_queued\_messages}};}
+\DoxyCodeLine{280     uint32\_t \mbox{\hyperlink{structmosquitto____config_ac7561ee8931f5485b671443e29492724}{max\_packet\_size}};}
+\DoxyCodeLine{281     uint32\_t \mbox{\hyperlink{structmosquitto____config_afdb491824781c02762a75f261796c682}{message\_size\_limit}};}
+\DoxyCodeLine{282     uint16\_t \mbox{\hyperlink{structmosquitto____config_ab68e5ed7013003e107f56b404af0c0e0}{max\_inflight\_messages}};}
+\DoxyCodeLine{283     uint16\_t \mbox{\hyperlink{structmosquitto____config_a6514f614b5353a3d632877fafb89a812}{max\_keepalive}};}
+\DoxyCodeLine{284     uint8\_t \mbox{\hyperlink{structmosquitto____config_aeb902a37c4fa9f90b86d517e1da65d00}{max\_qos}};}
+\DoxyCodeLine{285     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_a22953fab06c673dd641deddbc902e93f}{persistence}};}
+\DoxyCodeLine{286     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____config_af6c2a7d3b02e52e8849b32fdd0299dbf}{persistence\_location}};}
+\DoxyCodeLine{287     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____config_aa35d6369dfa0452dd0fc7d99e21557d6}{persistence\_file}};}
+\DoxyCodeLine{288     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____config_ab819bb82e4ea48f1b08457cf114d31f9}{persistence\_filepath}};}
+\DoxyCodeLine{289     time\_t \mbox{\hyperlink{structmosquitto____config_a42491c39b64b25c070d36d7a5d616518}{persistent\_client\_expiration}};}
+\DoxyCodeLine{290     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____config_a4e8186da5f72705788634b3a3416137a}{pid\_file}};}
+\DoxyCodeLine{291     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_a8e108ac9d9fc7caab2ac785714024dc2}{queue\_qos0\_messages}};}
+\DoxyCodeLine{292     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_ac0fe2529cd3a7f8eb31bfb5136d3f73c}{per\_listener\_settings}};}
+\DoxyCodeLine{293     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_ad716281c14b76dbac18a70053ffb72f2}{retain\_available}};}
+\DoxyCodeLine{294     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_ae3e0f2a52858a3f4ef07726f2f5bbe1f}{set\_tcp\_nodelay}};}
+\DoxyCodeLine{295     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config_a2e3f520f509f34e8fe16339a38a171d1}{sys\_interval}};}
+\DoxyCodeLine{296     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____config_ae444cbe7e3f8c144de938bc3a8b50585}{upgrade\_outgoing\_qos}};}
+\DoxyCodeLine{297     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____config_ab93577ddbb540f8568f14b82bd580296}{user}};}
+\DoxyCodeLine{298 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_WEBSOCKETS}}
+\DoxyCodeLine{299     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config}{websockets\_log\_level}};}
+\DoxyCodeLine{300     \mbox{\hyperlink{structmosquitto____config}{uint16\_t}} \mbox{\hyperlink{structmosquitto____config}{websockets\_headers\_size}};}
+\DoxyCodeLine{301 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{302 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_BRIDGE}}
+\DoxyCodeLine{303     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_bridge}} *\mbox{\hyperlink{structmosquitto____config}{bridges}};}
+\DoxyCodeLine{304     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____config}{bridge\_count}};}
+\DoxyCodeLine{305 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{306     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\_\_security\_options}} \mbox{\hyperlink{structmosquitto____config_a1e87da1c6648056bb9b4933c143c83f1}{security\_options}};}
+\DoxyCodeLine{307 \};}
+\DoxyCodeLine{308 }
+\DoxyCodeLine{309 }
+\DoxyCodeLine{310 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subleaf}{mosquitto\_\_subleaf}} \{}
+\DoxyCodeLine{311     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subleaf}{mosquitto\_\_subleaf}} *\mbox{\hyperlink{structmosquitto____subleaf_a5d56bec4a1ea8c66421cbc630828add7}{prev}};}
+\DoxyCodeLine{312     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subleaf}{mosquitto\_\_subleaf}} *\mbox{\hyperlink{structmosquitto____subleaf_abf7e0f361e8e483e7addd0cad2c37232}{next}};}
+\DoxyCodeLine{313     \textcolor{keyword}{struct} mosquitto *\mbox{\hyperlink{structmosquitto____subleaf_abc938bfd4d19ce4e808f78269154498f}{context}};}
+\DoxyCodeLine{314     uint32\_t \mbox{\hyperlink{structmosquitto____subleaf_a77e9e82fecd5bae9b4749363bc4d53f4}{identifier}};}
+\DoxyCodeLine{315     uint8\_t \mbox{\hyperlink{structmosquitto____subleaf_a88c964f1a77e95bfd72da91e1bd2c123}{qos}};}
+\DoxyCodeLine{316     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____subleaf_a2aa497519f732dfd503af4c69386d015}{no\_local}};}
+\DoxyCodeLine{317     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____subleaf_a158983412677ec1e5c4dba5d88cd3292}{retain\_as\_published}};}
+\DoxyCodeLine{318 \};}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{320 }
+\DoxyCodeLine{321 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subshared}{mosquitto\_\_subshared}} \{}
+\DoxyCodeLine{322     \mbox{\hyperlink{structmosquitto____subshared_a33d4723d57a0382f876c384c79442681}{UT\_hash\_handle}} \mbox{\hyperlink{structmosquitto____subshared_a33d4723d57a0382f876c384c79442681}{hh}};}
+\DoxyCodeLine{323     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____subshared_a222bf9b873a4c3fac549dceadbaeed72}{name}};}
+\DoxyCodeLine{324     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subleaf}{mosquitto\_\_subleaf}} *\mbox{\hyperlink{structmosquitto____subshared_a06705bdf0179952cc6974c12a721c334}{subs}};}
+\DoxyCodeLine{325 \};}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} \{}
+\DoxyCodeLine{328     \mbox{\hyperlink{structmosquitto____subhier_a07f09c527438564dfccbe39c74558753}{UT\_hash\_handle}} \mbox{\hyperlink{structmosquitto____subhier_a07f09c527438564dfccbe39c74558753}{hh}};}
+\DoxyCodeLine{329     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} *\mbox{\hyperlink{structmosquitto____subhier_aa1e2efe7f440cc4630d7550aa489b2b5}{parent}};}
+\DoxyCodeLine{330     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} *\mbox{\hyperlink{structmosquitto____subhier_a7d445d544629493bc183cc573c4e0c38}{children}};}
+\DoxyCodeLine{331     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subleaf}{mosquitto\_\_subleaf}} *\mbox{\hyperlink{structmosquitto____subhier_a594c9a518ba42844a6910030b320237a}{subs}};}
+\DoxyCodeLine{332     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subshared}{mosquitto\_\_subshared}} *\mbox{\hyperlink{structmosquitto____subhier_ae39fb6478a392751d5f540f084eb9b33}{shared}};}
+\DoxyCodeLine{333     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____subhier_a54ee6f19917bb2919457466a978592f3}{topic}};}
+\DoxyCodeLine{334     uint16\_t \mbox{\hyperlink{structmosquitto____subhier_a295af2b2b29a3521340baccf2c502152}{topic\_len}};}
+\DoxyCodeLine{335 \};}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____client__sub}{mosquitto\_\_client\_sub}} \{}
+\DoxyCodeLine{338     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} *\mbox{\hyperlink{structmosquitto____client__sub_a73771739338d1a5a7006574905013890}{hier}};}
+\DoxyCodeLine{339     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subshared}{mosquitto\_\_subshared}} *\mbox{\hyperlink{structmosquitto____client__sub_ad3eaea28216cf8ea860a42d6e507d632}{shared}};}
+\DoxyCodeLine{340     \textcolor{keywordtype}{char} \mbox{\hyperlink{structmosquitto____client__sub_a727b4c86afe7c1cce590da51219e2d0d}{topic\_filter}}[];}
+\DoxyCodeLine{341 \};}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343 \textcolor{keyword}{struct} \mbox{\hyperlink{structsub____token}{sub\_\_token}} \{}
+\DoxyCodeLine{344     \textcolor{keyword}{struct} \mbox{\hyperlink{structsub____token}{sub\_\_token}} *\mbox{\hyperlink{structsub____token_a3a454bef3fe0ca60a9b851a1d1c39f57}{next}};}
+\DoxyCodeLine{345     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structsub____token_a5de70dcc3ccd32569e2d0369d1b3196b}{topic}};}
+\DoxyCodeLine{346     uint16\_t \mbox{\hyperlink{structsub____token_a7b8a2f0ec066f9cbdb9347b4fa297905}{topic\_len}};}
+\DoxyCodeLine{347 \};}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\_\_retainhier}} \{}
+\DoxyCodeLine{350     \mbox{\hyperlink{structmosquitto____retainhier_a5b18f08fe9e2ce6d18af31b54ac31cbc}{UT\_hash\_handle}} \mbox{\hyperlink{structmosquitto____retainhier_a5b18f08fe9e2ce6d18af31b54ac31cbc}{hh}};}
+\DoxyCodeLine{351     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\_\_retainhier}} *\mbox{\hyperlink{structmosquitto____retainhier_af6dc0339a893e88061d154153f2c40d6}{parent}};}
+\DoxyCodeLine{352     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\_\_retainhier}} *\mbox{\hyperlink{structmosquitto____retainhier_a79554ed99b3859e18acd9ffcb30115f4}{children}};}
+\DoxyCodeLine{353     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *\mbox{\hyperlink{structmosquitto____retainhier_ab7cc1d7a24840f461176c9ede77f959e}{retained}};}
+\DoxyCodeLine{354     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____retainhier_a1ebe4effbd843cbfc7135135004384dd}{topic}};}
+\DoxyCodeLine{355     uint16\_t \mbox{\hyperlink{structmosquitto____retainhier_a2eebadc60d715c51f79648908240191a}{topic\_len}};}
+\DoxyCodeLine{356 \};}
+\DoxyCodeLine{357 }
+\DoxyCodeLine{358 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store__load}{mosquitto\_msg\_store\_load}}\{}
+\DoxyCodeLine{359     \mbox{\hyperlink{structmosquitto__msg__store__load_a95be23ecd531119b18e437b004eaaceb}{UT\_hash\_handle}} \mbox{\hyperlink{structmosquitto__msg__store__load_a95be23ecd531119b18e437b004eaaceb}{hh}};}
+\DoxyCodeLine{360     \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\_t}} \mbox{\hyperlink{structmosquitto__msg__store__load_a9ab417ca8ad6b122a60fbd835868fbed}{db\_id}};}
+\DoxyCodeLine{361     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *\mbox{\hyperlink{structmosquitto__msg__store__load_aa07367fae1db705052d3490780896d22}{store}};}
+\DoxyCodeLine{362 \};}
+\DoxyCodeLine{363 }
+\DoxyCodeLine{364 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}}\{}
+\DoxyCodeLine{365     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *\mbox{\hyperlink{structmosquitto__msg__store_adc0c2cef8a8fba862810c5f0acf70777}{next}};}
+\DoxyCodeLine{366     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *\mbox{\hyperlink{structmosquitto__msg__store_afebce6488f474153ec48988055270e92}{prev}};}
+\DoxyCodeLine{367     \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\_t}} \mbox{\hyperlink{structmosquitto__msg__store_ac5b098725701e2c7018775e5cd9eb1cc}{db\_id}};}
+\DoxyCodeLine{368     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto__msg__store_a63a59debb4a78b52c937c8e7129b214c}{source\_id}};}
+\DoxyCodeLine{369     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto__msg__store_a59551481591cda2be0300b380ba5ddbb}{source\_username}};}
+\DoxyCodeLine{370     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *\mbox{\hyperlink{structmosquitto__msg__store_aa84b35f1cd4d43fbc5e5cd4a4a0f5048}{source\_listener}};}
+\DoxyCodeLine{371     \textcolor{keywordtype}{char} **\mbox{\hyperlink{structmosquitto__msg__store_a9a0bdf0801fb982110d423428a8701d9}{dest\_ids}};}
+\DoxyCodeLine{372     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__msg__store_a1056110537a89222bc155371a223ae2d}{dest\_id\_count}};}
+\DoxyCodeLine{373     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__msg__store_a693f049167450b7f65c23da58b4b0ff5}{ref\_count}};}
+\DoxyCodeLine{374     \textcolor{keywordtype}{char}* \mbox{\hyperlink{structmosquitto__msg__store_a9f27c2318268a2034571e2bbe91f69c6}{topic}};}
+\DoxyCodeLine{375     \mbox{\hyperlink{structmosquitto__msg__store_abde7876068f0b7e8e639e6f5837485ac}{mosquitto\_property}} *\mbox{\hyperlink{structmosquitto__msg__store_abde7876068f0b7e8e639e6f5837485ac}{properties}};}
+\DoxyCodeLine{376     \textcolor{keywordtype}{void} *\mbox{\hyperlink{structmosquitto__msg__store_ad9f78d099469a4300ca282d895855f72}{payload}};}
+\DoxyCodeLine{377     time\_t \mbox{\hyperlink{structmosquitto__msg__store_a92b43e538b51002a1d3f1329a1fe464c}{message\_expiry\_time}};}
+\DoxyCodeLine{378     uint32\_t \mbox{\hyperlink{structmosquitto__msg__store_a64d3652d6f85f1eb574f7b2c2df45306}{payloadlen}};}
+\DoxyCodeLine{379     \textcolor{keyword}{enum} \mbox{\hyperlink{mosquitto__broker__internal_8h_a66f3ae83ec017eab76353877d44476ae}{mosquitto\_msg\_origin}} \mbox{\hyperlink{structmosquitto__msg__store_a9c1be8b07fc8da5ea2e4eab468c01cf8}{origin}};}
+\DoxyCodeLine{380     uint16\_t \mbox{\hyperlink{structmosquitto__msg__store_adb2bdfafa23f89fd177aadfd42e78a51}{source\_mid}};}
+\DoxyCodeLine{381     uint16\_t \mbox{\hyperlink{structmosquitto__msg__store_a5d510bbc415f3e83ad2ff640ea98e93b}{mid}};}
+\DoxyCodeLine{382     uint8\_t \mbox{\hyperlink{structmosquitto__msg__store_ad277fe117cd8e5f97fb043c00ca66964}{qos}};}
+\DoxyCodeLine{383     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto__msg__store_a2c3e7f1461c037f0d38c88f3bb3073fb}{retain}};}
+\DoxyCodeLine{384 \};}
+\DoxyCodeLine{385 }
+\DoxyCodeLine{386 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\_client\_msg}}\{}
+\DoxyCodeLine{387     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\_client\_msg}} *\mbox{\hyperlink{structmosquitto__client__msg_ade56586de917c6b1d6a37daeddfa59f8}{prev}};}
+\DoxyCodeLine{388     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\_client\_msg}} *\mbox{\hyperlink{structmosquitto__client__msg_a83facd74fd028e6d26f152f4a29aef8d}{next}};}
+\DoxyCodeLine{389     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *\mbox{\hyperlink{structmosquitto__client__msg_a3a37d2ec3ec40dbb0ee15332baf82b45}{store}};}
+\DoxyCodeLine{390     \mbox{\hyperlink{structmosquitto__client__msg_a5fb2d31ccdb1a1680381c8916048d270}{mosquitto\_property}} *\mbox{\hyperlink{structmosquitto__client__msg_a5fb2d31ccdb1a1680381c8916048d270}{properties}};}
+\DoxyCodeLine{391     time\_t \mbox{\hyperlink{structmosquitto__client__msg_a5b04e3d4a8ab404de8b432efabd1f583}{timestamp}};}
+\DoxyCodeLine{392     uint16\_t \mbox{\hyperlink{structmosquitto__client__msg_a5b27db513724cdddca30cd56b0bb1208}{mid}};}
+\DoxyCodeLine{393     uint8\_t \mbox{\hyperlink{structmosquitto__client__msg_aeb7b0700522773bb8d21e0c0e0603f34}{qos}};}
+\DoxyCodeLine{394     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto__client__msg_aaf2d9b795432e04d07fbb18b23fd253e}{retain}};}
+\DoxyCodeLine{395     \textcolor{keyword}{enum} mosquitto\_msg\_direction \mbox{\hyperlink{structmosquitto__client__msg_a323f6ea0b036b886cf7998e24d60c997}{direction}};}
+\DoxyCodeLine{396     \textcolor{keyword}{enum} mosquitto\_msg\_state \mbox{\hyperlink{structmosquitto__client__msg_a9b214e12e7bd4d2fa48273ad82554ac1}{state}};}
+\DoxyCodeLine{397     uint8\_t \mbox{\hyperlink{structmosquitto__client__msg_a63ca61dcfd28f6fe7a2a67fc7c2f30b4}{dup}};}
+\DoxyCodeLine{398 \};}
+\DoxyCodeLine{399 }
+\DoxyCodeLine{400 }
+\DoxyCodeLine{401 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____unpwd}{mosquitto\_\_unpwd}}\{}
+\DoxyCodeLine{402     \mbox{\hyperlink{structmosquitto____unpwd_acf22b8b4130beb69fb38a04db524a047}{UT\_hash\_handle}} \mbox{\hyperlink{structmosquitto____unpwd_acf22b8b4130beb69fb38a04db524a047}{hh}};}
+\DoxyCodeLine{403     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____unpwd_a1bf38dc6d958fc433bbdf8155e971e5e}{username}};}
+\DoxyCodeLine{404     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____unpwd_aec8403ddaddaa06acf26db9e311355f1}{password}};}
+\DoxyCodeLine{405     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____unpwd_aa6dddc2d5439bd106263bd4f2330d001}{clientid}};}
+\DoxyCodeLine{406 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_TLS}}
+\DoxyCodeLine{407     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____unpwd}{salt}};}
+\DoxyCodeLine{408     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____unpwd}{password\_len}};}
+\DoxyCodeLine{409     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____unpwd}{salt\_len}};}
+\DoxyCodeLine{410     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____unpwd}{iterations}};}
+\DoxyCodeLine{411 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{412     \textcolor{keyword}{enum} \mbox{\hyperlink{password__mosq_8h_a8188b99d4286200c8a4be9c115883881}{mosquitto\_pwhash\_type}} \mbox{\hyperlink{structmosquitto____unpwd_a1401c143e4976b48013bcbafd2c32f80}{hashtype}};}
+\DoxyCodeLine{413 \};}
+\DoxyCodeLine{414 }
+\DoxyCodeLine{415 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____acl}{mosquitto\_\_acl}}\{}
+\DoxyCodeLine{416     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____acl}{mosquitto\_\_acl}} *\mbox{\hyperlink{structmosquitto____acl_a412750a64663dfd265ec44f8effd7d64}{next}};}
+\DoxyCodeLine{417     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____acl_a4fdcae903d1b6c907164ee9383c5384e}{topic}};}
+\DoxyCodeLine{418     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____acl_adaffc0314438fc680f02f644c0a22964}{access}};}
+\DoxyCodeLine{419     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____acl_a589a8939345a2d7b9461e3c422310c9d}{ucount}};}
+\DoxyCodeLine{420     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____acl_ac62c7f7cda5ba27d1d3c788862d6fd23}{ccount}};}
+\DoxyCodeLine{421 \};}
+\DoxyCodeLine{422 }
+\DoxyCodeLine{423 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____acl__user}{mosquitto\_\_acl\_user}}\{}
+\DoxyCodeLine{424     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____acl__user}{mosquitto\_\_acl\_user}} *\mbox{\hyperlink{structmosquitto____acl__user_a96ffd9335dbc072f1b8d10b737842745}{next}};}
+\DoxyCodeLine{425     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____acl__user_a0113722c49cab28410b456d478285187}{username}};}
+\DoxyCodeLine{426     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____acl}{mosquitto\_\_acl}} *\mbox{\hyperlink{structmosquitto____acl__user_ac72f38e73e5c37503784cfda05bf7525}{acl}};}
+\DoxyCodeLine{427 \};}
+\DoxyCodeLine{428 }
+\DoxyCodeLine{429 }
+\DoxyCodeLine{430 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__message__v5}{mosquitto\_message\_v5}}\{}
+\DoxyCodeLine{431     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__message__v5}{mosquitto\_message\_v5}} *\mbox{\hyperlink{structmosquitto__message__v5_aa9def77fa1359048398c8b77917f9d39}{next}}, *\mbox{\hyperlink{structmosquitto__message__v5_a6037a94b87364f8415295995dea6cf40}{prev}};}
+\DoxyCodeLine{432     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto__message__v5_a9ba0dd0366e1fe54ce0fe78f459e9436}{topic}};}
+\DoxyCodeLine{433     \textcolor{keywordtype}{void} *\mbox{\hyperlink{structmosquitto__message__v5_a5eadb7d6ff1a90248e830bb059d4dfc2}{payload}};}
+\DoxyCodeLine{434     \mbox{\hyperlink{structmosquitto__message__v5_a602377772a33d1c37c68bcebfc1d24c0}{mosquitto\_property}} *\mbox{\hyperlink{structmosquitto__message__v5_a602377772a33d1c37c68bcebfc1d24c0}{properties}};}
+\DoxyCodeLine{435     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto__message__v5_ad414054b291519c22c106e404176ab9b}{clientid}}; \textcolor{comment}{/* Used only by mosquitto\_broker\_publish*() to indicate}}
+\DoxyCodeLine{436 \textcolor{comment}{                       this message is for a specific client. */}}
+\DoxyCodeLine{437     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__message__v5_a7fe037c7ffa2bac280177978ded6ca06}{payloadlen}};}
+\DoxyCodeLine{438     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__message__v5_a4938adff67c3c20b076f642a0a9d88a1}{qos}};}
+\DoxyCodeLine{439     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto__message__v5_a7d5ba0c673e15c5baccd90fe3d85da9d}{retain}};}
+\DoxyCodeLine{440 \};}
+\DoxyCodeLine{441 }
+\DoxyCodeLine{442 }
+\DoxyCodeLine{443 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__db}{mosquitto\_db}}\{}
+\DoxyCodeLine{444     \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\_t}} \mbox{\hyperlink{structmosquitto__db_a411d3ba9bf064853c3f89d606dc456be}{last\_db\_id}};}
+\DoxyCodeLine{445     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} *\mbox{\hyperlink{structmosquitto__db_ab6408cc2a6d6efb6d283559c21002a3b}{subs}};}
+\DoxyCodeLine{446     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\_\_retainhier}} *\mbox{\hyperlink{structmosquitto__db_aaf0c9d0689c4d33d75feb6556b3a7652}{retains}};}
+\DoxyCodeLine{447     \textcolor{keyword}{struct} mosquitto *\mbox{\hyperlink{structmosquitto__db_ac5b775be8b87233bb22f20b10bbac0bd}{contexts\_by\_id}};}
+\DoxyCodeLine{448     \textcolor{keyword}{struct} mosquitto *\mbox{\hyperlink{structmosquitto__db_acef8c251ec284f40de65517454659178}{contexts\_by\_sock}};}
+\DoxyCodeLine{449     \textcolor{keyword}{struct} mosquitto *\mbox{\hyperlink{structmosquitto__db_a17c32122ec7e4cb760ae241854a51073}{contexts\_for\_free}};}
+\DoxyCodeLine{450 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_BRIDGE}}
+\DoxyCodeLine{451     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__db}{mosquitto}} **\mbox{\hyperlink{structmosquitto__db}{bridges}};}
+\DoxyCodeLine{452 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{453     \textcolor{keyword}{struct} clientid\_\_index\_hash *\mbox{\hyperlink{structmosquitto__db_a2e4937747aa8b0459c28079632b87b29}{clientid\_index\_hash}};}
+\DoxyCodeLine{454     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *\mbox{\hyperlink{structmosquitto__db_abf110ad0dc01421cae84a539c80a1fb0}{msg\_store}};}
+\DoxyCodeLine{455     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store__load}{mosquitto\_msg\_store\_load}} *\mbox{\hyperlink{structmosquitto__db_adf345ee58cf3f03e6af7d9ddf2dc8f05}{msg\_store\_load}};}
+\DoxyCodeLine{456     time\_t \mbox{\hyperlink{structmosquitto__db_aacc524956ef58781b0ef567ba78303ff}{now\_s}}; \textcolor{comment}{/* Monotonic clock, where possible */}}
+\DoxyCodeLine{457     time\_t \mbox{\hyperlink{structmosquitto__db_a2d2f905bb6f22a91290ac7472e45119f}{now\_real\_s}}; \textcolor{comment}{/* Read clock, for measuring session/message expiry */}}
+\DoxyCodeLine{458 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_BRIDGE}}
+\DoxyCodeLine{459     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__db}{bridge\_count}};}
+\DoxyCodeLine{460 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{461     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__db_a9dbd28cac7509625e45df1563df9230a}{msg\_store\_count}};}
+\DoxyCodeLine{462     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \mbox{\hyperlink{structmosquitto__db_ad30f1bd52c260c83dda2499d2c39278a}{msg\_store\_bytes}};}
+\DoxyCodeLine{463     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto__db_a8e5c6dd822ab77ae7af9922c730a1c4c}{config\_file}};}
+\DoxyCodeLine{464     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} *\mbox{\hyperlink{structmosquitto__db_aca8a66f6ab5ba4d78958f7b0fa1bbecf}{config}};}
+\DoxyCodeLine{465     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__db_a2314a0eb0dc48d704fcba90653b484c0}{auth\_plugin\_count}};}
+\DoxyCodeLine{466     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto__db_a4564c61f52fced8dcd07cb2a54a1a384}{verbose}};}
+\DoxyCodeLine{467 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_SYS\_TREE}}
+\DoxyCodeLine{468     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__db}{subscription\_count}};}
+\DoxyCodeLine{469     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__db}{shared\_subscription\_count}};}
+\DoxyCodeLine{470     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__db}{retained\_count}};}
+\DoxyCodeLine{471 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{472     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__db_a85ea76e88408ef3a3c00129214782028}{persistence\_changes}};}
+\DoxyCodeLine{473     \textcolor{keyword}{struct} mosquitto *\mbox{\hyperlink{structmosquitto__db_add5e5f3f2a13b2ae5fc346f4171d904d}{ll\_for\_free}};}
+\DoxyCodeLine{474 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_EPOLL}}
+\DoxyCodeLine{475     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto__db}{epollfd}};}
+\DoxyCodeLine{476 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{477     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__message__v5}{mosquitto\_message\_v5}} *\mbox{\hyperlink{structmosquitto__db_a1606d2bbc7fa6e884a782b4443688b07}{plugin\_msgs}};}
+\DoxyCodeLine{478 \};}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480 \textcolor{keyword}{enum} \mbox{\hyperlink{mosquitto__broker__internal_8h_a164a53eaf69347e56c0c60de26c7fa02}{mosquitto\_\_bridge\_direction}}\{}
+\DoxyCodeLine{481     \mbox{\hyperlink{mosquitto__broker__internal_8h_a164a53eaf69347e56c0c60de26c7fa02a7bcdf04926a05a68948f9af357617ba1}{bd\_out}} = 0,}
+\DoxyCodeLine{482     \mbox{\hyperlink{mosquitto__broker__internal_8h_a164a53eaf69347e56c0c60de26c7fa02a75a8ca294459d4875531640b769852b8}{bd\_in}} = 1,}
+\DoxyCodeLine{483     \mbox{\hyperlink{mosquitto__broker__internal_8h_a164a53eaf69347e56c0c60de26c7fa02a6726bee8759240b307cd94963c469b75}{bd\_both}} = 2}
+\DoxyCodeLine{484 \};}
+\DoxyCodeLine{485 }
+\DoxyCodeLine{486 \textcolor{keyword}{enum} \mbox{\hyperlink{mosquitto__broker__internal_8h_a31e03d23fb1912cb7983c4b123417e53}{mosquitto\_bridge\_start\_type}}\{}
+\DoxyCodeLine{487     \mbox{\hyperlink{mosquitto__broker__internal_8h_a31e03d23fb1912cb7983c4b123417e53a72c992c5c2b3279fc0b2941b697fcd1f}{bst\_automatic}} = 0,}
+\DoxyCodeLine{488     \mbox{\hyperlink{mosquitto__broker__internal_8h_a31e03d23fb1912cb7983c4b123417e53ad977bb3a862549a41464534b54d61431}{bst\_lazy}} = 1,}
+\DoxyCodeLine{489     \mbox{\hyperlink{mosquitto__broker__internal_8h_a31e03d23fb1912cb7983c4b123417e53a8311a658b22562fba92ef15b90866278}{bst\_manual}} = 2,}
+\DoxyCodeLine{490     \mbox{\hyperlink{mosquitto__broker__internal_8h_a31e03d23fb1912cb7983c4b123417e53a72ff7cd1f23a0fd5eddb11cbce494ae1}{bst\_once}} = 3}
+\DoxyCodeLine{491 \};}
+\DoxyCodeLine{492 }
+\DoxyCodeLine{493 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____bridge__topic}{mosquitto\_\_bridge\_topic}}\{}
+\DoxyCodeLine{494     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge__topic_a2373e5ce6213c9036381bb076195bb71}{topic}};}
+\DoxyCodeLine{495     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge__topic_aa1ba26b5aed360044202d630991820b0}{local\_prefix}};}
+\DoxyCodeLine{496     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge__topic_a59b716270542c0df87a9023d62f0f023}{remote\_prefix}};}
+\DoxyCodeLine{497     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge__topic_a454952b651cea627760a956e228a0d8a}{local\_topic}}; \textcolor{comment}{/* topic prefixed with local\_prefix */}}
+\DoxyCodeLine{498     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge__topic_a7b807373722cfcab302c72cfacda3501}{remote\_topic}}; \textcolor{comment}{/* topic prefixed with remote\_prefix */}}
+\DoxyCodeLine{499     \textcolor{keyword}{enum} \mbox{\hyperlink{mosquitto__broker__internal_8h_a164a53eaf69347e56c0c60de26c7fa02}{mosquitto\_\_bridge\_direction}} \mbox{\hyperlink{structmosquitto____bridge__topic_ae45d5cfa2e25c945b8bd29260f58f1c7}{direction}};}
+\DoxyCodeLine{500     uint8\_t \mbox{\hyperlink{structmosquitto____bridge__topic_aaa393b5c5ffc8e7c5789b8410fa731e8}{qos}};}
+\DoxyCodeLine{501 \};}
+\DoxyCodeLine{502 }
+\DoxyCodeLine{503 \textcolor{keyword}{struct} \mbox{\hyperlink{structbridge__address}{bridge\_address}}\{}
+\DoxyCodeLine{504     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structbridge__address_a69e437835539f6e43c8085bb65daeeeb}{address}};}
+\DoxyCodeLine{505     uint16\_t \mbox{\hyperlink{structbridge__address_afbef388ed180e431776ad711f03992f1}{port}};}
+\DoxyCodeLine{506 \};}
+\DoxyCodeLine{507 }
+\DoxyCodeLine{508 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____bridge}{mosquitto\_\_bridge}}\{}
+\DoxyCodeLine{509     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge_a9f8a3292008aea96a59da768801e8b85}{name}};}
+\DoxyCodeLine{510     \textcolor{keyword}{struct} \mbox{\hyperlink{structbridge__address}{bridge\_address}} *\mbox{\hyperlink{structmosquitto____bridge_a43d6c56291ab19a64ddc095f1bc9b158}{addresses}};}
+\DoxyCodeLine{511     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____bridge_a2ccfaa2e1b22155b1c8515420a9222c6}{cur\_address}};}
+\DoxyCodeLine{512     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____bridge_af8f4bbb44fc72ad0a93c36e0d8512bf0}{address\_count}};}
+\DoxyCodeLine{513     time\_t \mbox{\hyperlink{structmosquitto____bridge_a986660dc2307b9480d935c8765ce2bcc}{primary\_retry}};}
+\DoxyCodeLine{514     \mbox{\hyperlink{structmosquitto____bridge_a0438b42777a5423c4fef120763fe3274}{mosq\_sock\_t}} \mbox{\hyperlink{structmosquitto____bridge_a0438b42777a5423c4fef120763fe3274}{primary\_retry\_sock}};}
+\DoxyCodeLine{515     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_a2de3c5d45ed5c044e4823c1d3fc7a408}{round\_robin}};}
+\DoxyCodeLine{516     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_aab947b0ebb5802e0ddbfe8e39735f57e}{try\_private}};}
+\DoxyCodeLine{517     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_a110016b60d907f620c3f1faf389a5d20}{try\_private\_accepted}};}
+\DoxyCodeLine{518     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_aabf3b955f12f1bff4eca75b8bbed9ab0}{clean\_start}};}
+\DoxyCodeLine{519     int8\_t \mbox{\hyperlink{structmosquitto____bridge_a7a4b2d351d28a9cbbdd94819362dc4eb}{clean\_start\_local}};}
+\DoxyCodeLine{520     uint16\_t \mbox{\hyperlink{structmosquitto____bridge_a6edd41fe1d2fb1da6e0c7ecccd531476}{keepalive}};}
+\DoxyCodeLine{521     \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____bridge__topic}{mosquitto\_\_bridge\_topic}} *\mbox{\hyperlink{structmosquitto____bridge_aeea60d1112fa8d3c2abdba964000b7c0}{topics}};}
+\DoxyCodeLine{522     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____bridge_a934636dd245bf56072de12d9e83d9fc2}{topic\_count}};}
+\DoxyCodeLine{523     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_a909ef5aa57e7ec85694ae50488f3cb19}{topic\_remapping}};}
+\DoxyCodeLine{524     \textcolor{keyword}{enum} mosquitto\_\_protocol \mbox{\hyperlink{structmosquitto____bridge_ab96b09f18541e3c8da2308e2e82c460f}{protocol\_version}};}
+\DoxyCodeLine{525     time\_t \mbox{\hyperlink{structmosquitto____bridge_a663dcb10657f0a5e8934cfe43bcfdd1c}{restart\_t}};}
+\DoxyCodeLine{526     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge_a7c844c8ea816372d6bed6fd7b6bba043}{remote\_clientid}};}
+\DoxyCodeLine{527     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge_ade1fa03bd24c0113235cc585754f037d}{remote\_username}};}
+\DoxyCodeLine{528     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge_a48ad2c51650994967ed97d449a713c69}{remote\_password}};}
+\DoxyCodeLine{529     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge_a46baf404b66bf7740dc82b2c2cd84ee3}{local\_clientid}};}
+\DoxyCodeLine{530     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge_aa081da3f9d1c92f50219610b8db5b13b}{local\_username}};}
+\DoxyCodeLine{531     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge_afb8665ad1cd693f01a45461d2e7de491}{local\_password}};}
+\DoxyCodeLine{532     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge_a7c46423ac096f922c160f69aa79dcfe3}{notification\_topic}};}
+\DoxyCodeLine{533     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge_abba83c430506e1b75d54e7f246ce4f3e}{bind\_address}};}
+\DoxyCodeLine{534     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_ac0a1c8a3f5ac7663c02991de606c0326}{notifications}};}
+\DoxyCodeLine{535     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_ab6fcbd0d6c21739083ec78de3e4ceb3d}{notifications\_local\_only}};}
+\DoxyCodeLine{536     \textcolor{keyword}{enum} \mbox{\hyperlink{mosquitto__broker__internal_8h_a31e03d23fb1912cb7983c4b123417e53}{mosquitto\_bridge\_start\_type}} \mbox{\hyperlink{structmosquitto____bridge_a494097a040a6a671af9e100b7fe33b4e}{start\_type}};}
+\DoxyCodeLine{537     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____bridge_aa41f108fe9dc5f23765c80c1c5cc84b2}{idle\_timeout}};}
+\DoxyCodeLine{538     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____bridge_a11d277af25a783a98f83059f9e89a203}{restart\_timeout}};}
+\DoxyCodeLine{539     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____bridge_a2516d45c28004063c6239b1d3e6bc1aa}{backoff\_base}};}
+\DoxyCodeLine{540     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____bridge_a7f1fd2c0758dbcad1f65354ac8974f0f}{backoff\_cap}};}
+\DoxyCodeLine{541     \textcolor{keywordtype}{int} \mbox{\hyperlink{structmosquitto____bridge_a2b3b014acc86f133c66b19299bd6ec35}{threshold}};}
+\DoxyCodeLine{542     uint32\_t \mbox{\hyperlink{structmosquitto____bridge_a91583e0a2886ded56d2c9ed0f33ea8cb}{maximum\_packet\_size}};}
+\DoxyCodeLine{543     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_a49b401ec7e90d44eae1c8aaccffa4c35}{lazy\_reconnect}};}
+\DoxyCodeLine{544     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_aa9c08f8ceeab793ba0f90ac889074d51}{attempt\_unsubscribe}};}
+\DoxyCodeLine{545     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_ab11c4179dd55dd0c5c001380da97e270}{initial\_notification\_done}};}
+\DoxyCodeLine{546     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge_a224e9401ba5982ec781dfe277592707d}{outgoing\_retain}};}
+\DoxyCodeLine{547 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_TLS}}
+\DoxyCodeLine{548     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge}{tls\_insecure}};}
+\DoxyCodeLine{549     \textcolor{keywordtype}{bool} \mbox{\hyperlink{structmosquitto____bridge}{tls\_ocsp\_required}};}
+\DoxyCodeLine{550     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge}{tls\_cafile}};}
+\DoxyCodeLine{551     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge}{tls\_capath}};}
+\DoxyCodeLine{552     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge}{tls\_certfile}};}
+\DoxyCodeLine{553     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge}{tls\_keyfile}};}
+\DoxyCodeLine{554     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge}{tls\_version}};}
+\DoxyCodeLine{555     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge}{tls\_alpn}};}
+\DoxyCodeLine{556 \textcolor{preprocessor}{\#}  \textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{FINAL\_WITH\_TLS\_PSK}}
+\DoxyCodeLine{557     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge}{tls\_psk\_identity}};}
+\DoxyCodeLine{558     \textcolor{keywordtype}{char} *\mbox{\hyperlink{structmosquitto____bridge}{tls\_psk}};}
+\DoxyCodeLine{559 \textcolor{preprocessor}{\#}  \textcolor{preprocessor}{endif}}
+\DoxyCodeLine{560 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{561 \};}
+\DoxyCodeLine{562 }
+\DoxyCodeLine{563 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_WEBSOCKETS}}
+\DoxyCodeLine{564 \textcolor{keyword}{struct} libws\_mqtt\_hack \{}
+\DoxyCodeLine{565     \textcolor{keywordtype}{char} *http\_dir;}
+\DoxyCodeLine{566     \textcolor{keyword}{struct} mosquitto\_\_listener *listener;}
+\DoxyCodeLine{567 \};}
+\DoxyCodeLine{568 }
+\DoxyCodeLine{569 \textcolor{keyword}{struct} libws\_mqtt\_data \{}
+\DoxyCodeLine{570     \textcolor{keyword}{struct} mosquitto *mosq;}
+\DoxyCodeLine{571 \};}
+\DoxyCodeLine{572 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{573 }
+\DoxyCodeLine{574 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{include} \textcolor{preprocessor}{<}\textcolor{preprocessor}{net\_mosq}\textcolor{preprocessor}{.}\textcolor{preprocessor}{h}\textcolor{preprocessor}{>}}
+\DoxyCodeLine{575 }
+\DoxyCodeLine{576 }
+\DoxyCodeLine{577 \textcolor{keyword}{extern} \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__db}{mosquitto\_db}} \mbox{\hyperlink{mosquitto__broker__internal_8h_aa1bce74a2a746391e93e087c98e19ce5}{db}};}
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{580 \textcolor{comment}{ * Main functions}}
+\DoxyCodeLine{581 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{582 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a7dac165503b843e776b333325acd4045}{mosquitto\_main\_loop}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\_\_listener\_sock}} *listensock, \textcolor{keywordtype}{int} listensock\_count);}
+\DoxyCodeLine{583 }
+\DoxyCodeLine{584 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{585 \textcolor{comment}{ * Config functions}}
+\DoxyCodeLine{586 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{587 \textcolor{comment}{/* Initialise config struct to default values. */}}
+\DoxyCodeLine{588 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a88614a66294ada618c738edd053c58fb}{config\_\_init}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} *config);}
+\DoxyCodeLine{589 \textcolor{comment}{/* Parse command line options into config. */}}
+\DoxyCodeLine{590 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_ac041718ce76b5afb133286dae961a4fd}{config\_\_parse\_args}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} *config, \textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} *argv[]);}
+\DoxyCodeLine{591 \textcolor{comment}{/* Read configuration data from config-\/>config\_file into config.}}
+\DoxyCodeLine{592 \textcolor{comment}{ * If reload is true, don't process config options that shouldn't be reloaded (listeners etc)}}
+\DoxyCodeLine{593 \textcolor{comment}{ * Returns 0 on success, 1 if there is a configuration error or if a file cannot be opened.}}
+\DoxyCodeLine{594 \textcolor{comment}{ */}}
+\DoxyCodeLine{595 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a784bce4e595d9b9d3f5597f265648195}{config\_\_read}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} *config, \textcolor{keywordtype}{bool} reload);}
+\DoxyCodeLine{596 \textcolor{comment}{/* Free all config data. */}}
+\DoxyCodeLine{597 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a95532d3ca270dda35becb7e4e164ab1d}{config\_\_cleanup}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} *config);}
+\DoxyCodeLine{598 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a10c9ded012ca981c5194de6e913b8839}{config\_\_get\_dir\_files}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *include\_dir, \textcolor{keywordtype}{char} ***files, \textcolor{keywordtype}{int} *file\_count);}
+\DoxyCodeLine{599 }
+\DoxyCodeLine{600 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a42276474c5f145974bc99b10b91990d6}{drop\_privileges}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} *config);}
+\DoxyCodeLine{601 }
+\DoxyCodeLine{602 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{603 \textcolor{comment}{ * Server send functions}}
+\DoxyCodeLine{604 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{605 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_aa96f55096a439e3fabc50f30007de509}{send\_\_connack}}(\textcolor{keyword}{struct} mosquitto *context, uint8\_t ack, uint8\_t reason\_code, \textcolor{keyword}{const} mosquitto\_property *properties);}
+\DoxyCodeLine{606 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a39bf898fd327cb2b947fb1aa8b9ffc42}{send\_\_suback}}(\textcolor{keyword}{struct} mosquitto *context, uint16\_t mid, uint32\_t payloadlen, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *payload);}
+\DoxyCodeLine{607 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a0fbbf28cc948d5aa9597e1bc791b1e23}{send\_\_unsuback}}(\textcolor{keyword}{struct} mosquitto *context, uint16\_t mid, \textcolor{keywordtype}{int} reason\_code\_count, uint8\_t *reason\_codes, \textcolor{keyword}{const} mosquitto\_property *properties);}
+\DoxyCodeLine{608 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a1836189dfb5e110b3079baddb1716078}{send\_\_auth}}(\textcolor{keyword}{struct} mosquitto *context, uint8\_t reason\_code, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *auth\_data, uint16\_t auth\_data\_len);}
+\DoxyCodeLine{609 }
+\DoxyCodeLine{610 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{611 \textcolor{comment}{ * Network functions}}
+\DoxyCodeLine{612 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{613 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a089661e1d7aa7a6bd06781c027142ccd}{net\_\_broker\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{614 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_aa1758f3fba38080ad2eacbe8f5ed959e}{net\_\_broker\_cleanup}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{615 \textcolor{keyword}{struct} mosquitto *\mbox{\hyperlink{mosquitto__broker__internal_8h_a72939337dd5e1b596af313c903d110b6}{net\_\_socket\_accept}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\_\_listener\_sock}} *listensock);}
+\DoxyCodeLine{616 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a96965cc5292e1fccaf723130be53f168}{net\_\_socket\_listen}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *listener);}
+\DoxyCodeLine{617 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a5c62d50d5712ccea260e0877b77edd12}{net\_\_socket\_get\_address}}(mosq\_sock\_t sock, \textcolor{keywordtype}{char} *buf, size\_t len, uint16\_t *remote\_address);}
+\DoxyCodeLine{618 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a58fb124581c0d69d83e3c9dc8e12007c}{net\_\_tls\_load\_verify}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *listener);}
+\DoxyCodeLine{619 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a6d9595a6b3b6b29f177c7d88bdb359bc}{net\_\_tls\_server\_ctx}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *listener);}
+\DoxyCodeLine{620 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a3d3e1cd9da97afa6cd88a5c42504cce9}{net\_\_load\_certificates}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *listener);}
+\DoxyCodeLine{621 }
+\DoxyCodeLine{622 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{623 \textcolor{comment}{ * Read handling functions}}
+\DoxyCodeLine{624 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{625 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a6cce992d83a7521aafa4700670cde124}{handle\_\_packet}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{626 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_af8413fda8f289bb16832a0853c30708f}{handle\_\_connack}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{627 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a4cab6c63a56f814e289e3df106a03236}{handle\_\_connect}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{628 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_acf0936a9d74d61397eb11da1ca68f4e9}{handle\_\_disconnect}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{629 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a3efa95a08a38a606350d6f8cae620b7c}{handle\_\_publish}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{630 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a22f2cb984bc358da4771c8e3c4950ddf}{handle\_\_subscribe}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{631 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a4318ee23dccc63dd5553a1b749f46399}{handle\_\_unsubscribe}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{632 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_abfed43f75e912ca2aca0c893f14b72f9}{handle\_\_auth}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{633 }
+\DoxyCodeLine{634 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{635 \textcolor{comment}{ * Database handling}}
+\DoxyCodeLine{636 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{637 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_afd982e436d7ae9fbbddbacee40edb784}{db\_\_open}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} *config);}
+\DoxyCodeLine{638 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a806921a0a18c8155757d1761144abd11}{db\_\_close}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{639 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_PERSISTENCE}}
+\DoxyCodeLine{640 \textcolor{keywordtype}{int} persist\_\_backup(\textcolor{keywordtype}{bool} shutdown);}
+\DoxyCodeLine{641 \textcolor{keywordtype}{int} persist\_\_restore(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{642 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{643 \textcolor{comment}{/* Return the number of in-\/flight messages in count. */}}
+\DoxyCodeLine{644 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a7370615802016e5ef51d00fa147c606a}{db\_\_message\_count}}(\textcolor{keywordtype}{int} *count);}
+\DoxyCodeLine{645 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a569a09aec637048e6ad118d9126cb709}{db\_\_message\_delete\_outgoing}}(\textcolor{keyword}{struct} mosquitto *context, uint16\_t mid, \textcolor{keyword}{enum} mosquitto\_msg\_state expect\_state, \textcolor{keywordtype}{int} qos);}
+\DoxyCodeLine{646 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a7241b3a255f4ab7717c6df5dce7f19ba}{db\_\_message\_insert}}(\textcolor{keyword}{struct} mosquitto *context, uint16\_t mid, \textcolor{keyword}{enum} mosquitto\_msg\_direction dir, uint8\_t qos, \textcolor{keywordtype}{bool} retain, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *stored, mosquitto\_property *properties, \textcolor{keywordtype}{bool} update);}
+\DoxyCodeLine{647 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_aae15968596671733aa919d9bf10696dd}{db\_\_message\_remove\_incoming}}(\textcolor{keyword}{struct} mosquitto* context, uint16\_t mid);}
+\DoxyCodeLine{648 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a97a1d479248ba6a8677866fadd6b6f29}{db\_\_message\_release\_incoming}}(\textcolor{keyword}{struct} mosquitto *context, uint16\_t mid);}
+\DoxyCodeLine{649 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a8d3ac3acd47532c9a829144b0164153a}{db\_\_message\_update\_outgoing}}(\textcolor{keyword}{struct} mosquitto *context, uint16\_t mid, \textcolor{keyword}{enum} mosquitto\_msg\_state state, \textcolor{keywordtype}{int} qos);}
+\DoxyCodeLine{650 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a22c029e832d3b6ec8cf0336cd358b658}{db\_\_message\_dequeue\_first}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{struct} mosquitto\_msg\_data *msg\_data);}
+\DoxyCodeLine{651 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a6865c472693cc50a3ddf358669d166b0}{db\_\_messages\_delete}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keywordtype}{bool} force\_free);}
+\DoxyCodeLine{652 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_ab120b99a2636e8c3861ef3ebe643b603}{db\_\_messages\_easy\_queue}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *topic, uint8\_t qos, uint32\_t payloadlen, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *payload, \textcolor{keywordtype}{int} retain, uint32\_t message\_expiry\_interval, mosquitto\_property **properties);}
+\DoxyCodeLine{653 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a6c2c23ae04af4fcc5159944d0aea03cb}{db\_\_message\_store}}(\textcolor{keyword}{const} \textcolor{keyword}{struct} mosquitto *source, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *stored, uint32\_t message\_expiry\_interval, \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\_t}} store\_id, \textcolor{keyword}{enum} \mbox{\hyperlink{mosquitto__broker__internal_8h_a66f3ae83ec017eab76353877d44476ae}{mosquitto\_msg\_origin}} origin);}
+\DoxyCodeLine{654 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a600be4a0f8108802af9fd16d70534a0e}{db\_\_message\_store\_find}}(\textcolor{keyword}{struct} mosquitto *context, uint16\_t mid, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\_client\_msg}} **client\_msg);}
+\DoxyCodeLine{655 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a941e290a450554c9b4bd60c29f593048}{db\_\_msg\_store\_add}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *store);}
+\DoxyCodeLine{656 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a79d64b7ae2ffec5baccc51a3aeb3d498}{db\_\_msg\_store\_remove}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *store);}
+\DoxyCodeLine{657 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_adb07e3321cc494e256edbfbcc63f4389}{db\_\_msg\_store\_ref\_inc}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *store);}
+\DoxyCodeLine{658 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a3a45878f82755958e42bb3117e358c71}{db\_\_msg\_store\_ref\_dec}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} **store);}
+\DoxyCodeLine{659 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a6d27e2c9125af1d863bc9adc0a31d996}{db\_\_msg\_store\_clean}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{660 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a0ea917185045812f186d6665272a7031}{db\_\_msg\_store\_compact}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{661 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_ab58a039b20a5e919d0120b7d1553a965}{db\_\_msg\_store\_free}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *store);}
+\DoxyCodeLine{662 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_aeb0e9392b9457432d0c1ceeadf5badcc}{db\_\_message\_reconnect\_reset}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{663 \textcolor{keywordtype}{bool} \mbox{\hyperlink{mosquitto__broker__internal_8h_ac03b712ad28109b088ebbb51523f7fe3}{db\_\_ready\_for\_flight}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{enum} mosquitto\_msg\_direction dir, \textcolor{keywordtype}{int} qos);}
+\DoxyCodeLine{664 \textcolor{keywordtype}{bool} \mbox{\hyperlink{mosquitto__broker__internal_8h_a56119c45e47972ba78b6aca8dc29c3c8}{db\_\_ready\_for\_queue}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keywordtype}{int} qos, \textcolor{keyword}{struct} mosquitto\_msg\_data *msg\_data);}
+\DoxyCodeLine{665 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a18f6161f5703b1e17726b76de0213e6a}{sys\_tree\_\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{666 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a5af2ed9fead8e456481a8ece6a94a958}{sys\_tree\_\_update}}(\textcolor{keywordtype}{int} interval, time\_t start\_time);}
+\DoxyCodeLine{667 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a8a1a6154b691c0ab5bc547cb3c3d43bd}{db\_\_message\_write\_inflight\_out\_all}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{668 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_ac7697ed8cfc046267006ce203337144a}{db\_\_message\_write\_inflight\_out\_latest}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{669 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a3c01cf8821046fc4fa15d41358ec5f57}{db\_\_message\_write\_queued\_out}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{670 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a4cf2895355a7fe382dd1fecfd1497ad8}{db\_\_message\_write\_queued\_in}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{671 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a6d63672fa37a93108edf4545e6cccd52}{db\_\_msg\_add\_to\_inflight\_stats}}(\textcolor{keyword}{struct} mosquitto\_msg\_data *msg\_data, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\_client\_msg}} *msg);}
+\DoxyCodeLine{672 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_abab52e14192657384d97de99f2f4921c}{db\_\_msg\_add\_to\_queued\_stats}}(\textcolor{keyword}{struct} mosquitto\_msg\_data *msg\_data, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\_client\_msg}} *msg);}
+\DoxyCodeLine{673 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a3f1b92a1177dd21226eaa8b4b3e49e96}{db\_\_expire\_all\_messages}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{674 }
+\DoxyCodeLine{675 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{676 \textcolor{comment}{ * Subscription functions}}
+\DoxyCodeLine{677 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{678 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a0c17c8ffe6db4184ffb391c418f1fc7d}{sub\_\_add}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *sub, uint8\_t qos, uint32\_t identifier, \textcolor{keywordtype}{int} options, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} **root);}
+\DoxyCodeLine{679 \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} *\mbox{\hyperlink{mosquitto__broker__internal_8h_a788c68867443ffb7bef57c0c1c3e178b}{sub\_\_add\_hier\_entry}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} *parent, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} **sibling, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *topic, uint16\_t len);}
+\DoxyCodeLine{680 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a604fd66a2efbd94bb467bc47de70c5da}{sub\_\_remove}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *sub, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} *root, uint8\_t *reason);}
+\DoxyCodeLine{681 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_abb8d22af898e13422580788dd17affd1}{sub\_\_tree\_print}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____subhier}{mosquitto\_\_subhier}} *root, \textcolor{keywordtype}{int} level);}
+\DoxyCodeLine{682 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a22f49a8f3ecb22ff40a7e5fd4aa3dc62}{sub\_\_clean\_session}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{683 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a74a73210b313a2c2371589d926c5e7c0}{sub\_\_messages\_queue}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *source\_id, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *topic, uint8\_t qos, \textcolor{keywordtype}{int} retain, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} **stored);}
+\DoxyCodeLine{684 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a1201454d82ba92a5b683d722c4613c06}{sub\_\_topic\_tokenise}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *subtopic, \textcolor{keywordtype}{char} **local\_sub, \textcolor{keywordtype}{char} ***topics, \textcolor{keyword}{const} \textcolor{keywordtype}{char} **sharename);}
+\DoxyCodeLine{685 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a4cc0eb9cafd2f7eb4d25652a64842c07}{sub\_\_topic\_tokens\_free}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structsub____token}{sub\_\_token}} *tokens);}
+\DoxyCodeLine{686 }
+\DoxyCodeLine{687 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{688 \textcolor{comment}{ * Context functions}}
+\DoxyCodeLine{689 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{690 \textcolor{keyword}{struct} mosquitto *\mbox{\hyperlink{mosquitto__broker__internal_8h_a1385833ee3638f7fe73f6aad6657c480}{context\_\_init}}(mosq\_sock\_t sock);}
+\DoxyCodeLine{691 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a7315015dcfcf8477759d566b85b7b9b1}{context\_\_cleanup}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keywordtype}{bool} force\_free);}
+\DoxyCodeLine{692 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a23ceef03d4bbfee4cb48d74a512b00a2}{context\_\_disconnect}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{693 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a04cbc1aab17c1e05f2b3296aa9c78644}{context\_\_add\_to\_disused}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{694 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a5408b16e49614600a6a9734fce2f41f9}{context\_\_free\_disused}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{695 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a9281dd2ef4a81334e8722041a012dba2}{context\_\_send\_will}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{696 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a248d7de166535a20109e72205cbe7cd6}{context\_\_add\_to\_by\_id}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{697 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a2dcd0d62f06dc8398753d8d3fb780b7d}{context\_\_remove\_from\_by\_id}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{698 }
+\DoxyCodeLine{699 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a0921382979e03a32387724687a07a31a}{connect\_\_on\_authorised}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keywordtype}{void} *auth\_data\_out, uint16\_t auth\_data\_out\_len);}
+\DoxyCodeLine{700 }
+\DoxyCodeLine{701 }
+\DoxyCodeLine{702 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{703 \textcolor{comment}{ * Control functions}}
+\DoxyCodeLine{704 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{705 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_CONTROL}}
+\DoxyCodeLine{706 \textcolor{keywordtype}{int} control\_\_process(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{struct} mosquitto\_msg\_store *stored);}
+\DoxyCodeLine{707 \textcolor{keywordtype}{void} control\_\_cleanup(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{708 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{709 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a8bc588f10bb375e0672833a9995cb7fa}{control\_\_register\_callback}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\_\_security\_options}} *opts, MOSQ\_FUNC\_generic\_callback cb\_func, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *topic, \textcolor{keywordtype}{void} *userdata);}
+\DoxyCodeLine{710 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a95d096bd13a795d431d7348715dd39c7}{control\_\_unregister\_callback}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____security__options}{mosquitto\_\_security\_options}} *opts, MOSQ\_FUNC\_generic\_callback cb\_func, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *topic);}
+\DoxyCodeLine{711 }
+\DoxyCodeLine{712 }
+\DoxyCodeLine{713 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{714 \textcolor{comment}{ * Logging functions}}
+\DoxyCodeLine{715 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{716 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_accfcdcf879d3cda4473640de19a0b1cd}{log\_\_init}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} *config);}
+\DoxyCodeLine{717 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a44279c6fa8809fbc8ae1fb063a219ea1}{log\_\_close}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____config}{mosquitto\_\_config}} *config);}
+\DoxyCodeLine{718 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_aab73e89dea2e2c87e6335a79c82b80fd}{log\_\_internal}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *fmt, ...) \textcolor{keyword}{\_\_attribute\_\_}((format(printf, 1, 2)));}
+\DoxyCodeLine{719 }
+\DoxyCodeLine{720 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{721 \textcolor{comment}{ * Bridge functions}}
+\DoxyCodeLine{722 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{723 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_BRIDGE}}
+\DoxyCodeLine{724 \textcolor{keywordtype}{void} bridge\_\_start\_all(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{725 \textcolor{keywordtype}{int} bridge\_\_new(\textcolor{keyword}{struct} mosquitto\_\_bridge *bridge);}
+\DoxyCodeLine{726 \textcolor{keywordtype}{void} bridge\_\_cleanup(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{727 \textcolor{keywordtype}{int} bridge\_\_connect(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{728 \textcolor{keywordtype}{int} bridge\_\_connect\_step1(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{729 \textcolor{keywordtype}{int} bridge\_\_connect\_step2(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{730 \textcolor{keywordtype}{int} bridge\_\_connect\_step3(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{731 \textcolor{keywordtype}{int} bridge\_\_on\_connect(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{732 \textcolor{keywordtype}{void} bridge\_\_packet\_cleanup(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{733 \textcolor{keywordtype}{void} bridge\_check(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{734 \textcolor{keywordtype}{int} bridge\_\_register\_local\_connections(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{735 \textcolor{keywordtype}{int} bridge\_\_add\_topic(\textcolor{keyword}{struct} mosquitto\_\_bridge *bridge, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *topic, \textcolor{keyword}{enum} mosquitto\_\_bridge\_direction direction, uint8\_t qos, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *local\_prefix, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *remote\_prefix);}
+\DoxyCodeLine{736 \textcolor{keywordtype}{int} bridge\_\_remap\_topic\_in(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keywordtype}{char} **topic);}
+\DoxyCodeLine{737 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{738 }
+\DoxyCodeLine{739 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{740 \textcolor{comment}{ * IO multiplex related functions}}
+\DoxyCodeLine{741 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{742 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a4051a0ec4573c21ed43d84e7514d96b8}{mux\_\_init}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\_\_listener\_sock}} *listensock, \textcolor{keywordtype}{int} listensock\_count);}
+\DoxyCodeLine{743 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a2fd2fb317eb240468946e614467dfc34}{mux\_\_loop\_prepare}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{744 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a278443f69b634352ad8f5eac3849dbb4}{mux\_\_add\_out}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{745 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a8e2844f3a9dae8c386f682ea315c815c}{mux\_\_remove\_out}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{746 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_aebf119197d9410495a50eac65ba0012d}{mux\_\_add\_in}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{747 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_aba64ed9815577fd352ee6280817022a4}{mux\_\_delete}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{748 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_acc607b1feed1fdc90ab5dc0aacd0a95e}{mux\_\_wait}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{749 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a023b5eaabdec454b08816694895e1ca9}{mux\_\_handle}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\_\_listener\_sock}} *listensock, \textcolor{keywordtype}{int} listensock\_count);}
+\DoxyCodeLine{750 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a879610fbea7e8245a9ef4c892b164bf1}{mux\_\_cleanup}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{751 }
+\DoxyCodeLine{752 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{753 \textcolor{comment}{ * Listener related functions}}
+\DoxyCodeLine{754 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{755 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a7df6a05e702af55c64d000e3ba4bff93}{listener\_\_set\_defaults}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *listener);}
+\DoxyCodeLine{756 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a135e2b3dda2631d27f5fce0a38a0fb33}{listeners\_\_reload\_all\_certificates}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{757 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_WEBSOCKETS}}
+\DoxyCodeLine{758 \textcolor{keywordtype}{void} listeners\_\_add\_websockets(\textcolor{keyword}{struct} lws\_context *ws\_context, mosq\_sock\_t fd);}
+\DoxyCodeLine{759 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{760 }
+\DoxyCodeLine{761 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{762 \textcolor{comment}{ * Plugin related functions}}
+\DoxyCodeLine{763 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{764 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_af1f5d523990091d77e104c5d84d4628b}{plugin\_\_load\_v5}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____listener}{mosquitto\_\_listener}} *listener, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____auth__plugin}{mosquitto\_\_auth\_plugin}} *plugin, \textcolor{keyword}{struct} mosquitto\_opt *auth\_options, \textcolor{keywordtype}{int} auth\_option\_count, \textcolor{keywordtype}{void} *lib);}
+\DoxyCodeLine{765 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a41eea187a32e7f8d559cb63cee3f26b6}{plugin\_\_handle\_disconnect}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keywordtype}{int} reason);}
+\DoxyCodeLine{766 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a6d49c95c31bd8030e4f1e532115ec378}{plugin\_\_handle\_message}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *stored);}
+\DoxyCodeLine{767 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a140fbba76cc7844400cc66fa24d034d7}{LIB\_ERROR}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{768 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a7b30b41ca8db483960aae8d1769837fa}{plugin\_\_handle\_tick}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{769 }
+\DoxyCodeLine{770 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{771 \textcolor{comment}{ * Property related functions}}
+\DoxyCodeLine{772 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{773 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a9b725b7835e97729d15f449dc8792847}{keepalive\_\_add}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{774 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a8916037b4c4cf7f489f9279f42e623de}{keepalive\_\_check}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{775 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_abbffa248d34dccc1da7517bb5276ae79}{keepalive\_\_remove}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{776 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_aaab028eb76636ef09dee53b2adf55425}{keepalive\_\_remove\_all}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{777 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a5af141c875792494ed998d11c797fcd4}{keepalive\_\_update}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{778 }
+\DoxyCodeLine{779 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{780 \textcolor{comment}{ * Property related functions}}
+\DoxyCodeLine{781 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{782 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_aedeaa770b58e1d7b20a2f76c83dcbef2}{property\_\_process\_connect}}(\textcolor{keyword}{struct} mosquitto *context, mosquitto\_property **props);}
+\DoxyCodeLine{783 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_ac1171eb15346e2c7a742fcef7a2225a1}{property\_\_process\_will}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{struct} mosquitto\_message\_all *msg, mosquitto\_property **props);}
+\DoxyCodeLine{784 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a9fd5a83264df563a3170243a15b16c0f}{property\_\_process\_disconnect}}(\textcolor{keyword}{struct} mosquitto *context, mosquitto\_property **props);}
+\DoxyCodeLine{785 }
+\DoxyCodeLine{786 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{787 \textcolor{comment}{ * Retain tree related functions}}
+\DoxyCodeLine{788 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{789 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a2e1c8e8d0e21c6ee12a1cb2e356a9fd4}{retain\_\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{790 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_aafa7ed48e0387477d71dd8bbdca5a62a}{retain\_\_clean}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____retainhier}{mosquitto\_\_retainhier}} **retainhier);}
+\DoxyCodeLine{791 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a96c92c982b5df215efe95e6561060bdd}{retain\_\_queue}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *sub, uint8\_t sub\_qos, uint32\_t subscription\_identifier);}
+\DoxyCodeLine{792 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a76a30b9d9d60fa62b09252561d9a1f42}{retain\_\_store}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *topic, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\_msg\_store}} *stored, \textcolor{keywordtype}{char} **split\_topics);}
+\DoxyCodeLine{793 }
+\DoxyCodeLine{794 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{795 \textcolor{comment}{ * Security related functions}}
+\DoxyCodeLine{796 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{797 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a3c358c684e9151e623af5fea2ad3d0e3}{acl\_\_find\_acls}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{798 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a3032d314d0fd04d44de6b5bbab512768}{mosquitto\_security\_module\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{799 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_ad6edeeac8301f4ccabfdb559f58e7e59}{mosquitto\_security\_module\_cleanup}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{800 }
+\DoxyCodeLine{801 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a0e5cc1f4e4ff7bd1cd7dbe63dc262fbe}{mosquitto\_security\_init}}(\textcolor{keywordtype}{bool} reload);}
+\DoxyCodeLine{802 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_ab9338090ac0c98f442b98eca631e2caa}{mosquitto\_security\_apply}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{803 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_aad9751b75651d030b18be2abfbd999a7}{mosquitto\_security\_cleanup}}(\textcolor{keywordtype}{bool} reload);}
+\DoxyCodeLine{804 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a4ac9cf0001c1a5c4172cf96ddf4458d9}{mosquitto\_acl\_check}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *topic, uint32\_t payloadlen, \textcolor{keywordtype}{void}* payload, uint8\_t qos, \textcolor{keywordtype}{bool} retain, \textcolor{keywordtype}{int} access);}
+\DoxyCodeLine{805 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a2cd45fa7f0dfc1159b9d87b25692eb61}{mosquitto\_unpwd\_check}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{806 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a61ceff913da66e6453fc5c0fcbcf679c}{mosquitto\_psk\_key\_get}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *hint, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *identity, \textcolor{keywordtype}{char} *key, \textcolor{keywordtype}{int} max\_key\_len);}
+\DoxyCodeLine{807 }
+\DoxyCodeLine{808 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_aeaf2f138099726abc9d40b358974e89e}{mosquitto\_security\_init\_default}}(\textcolor{keywordtype}{bool} reload);}
+\DoxyCodeLine{809 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a50a3e2e4ff013440f1cb08551fbfddee}{mosquitto\_security\_apply\_default}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{810 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a0d3b215d48a0c023903a41c433fb62f6}{mosquitto\_security\_cleanup\_default}}(\textcolor{keywordtype}{bool} reload);}
+\DoxyCodeLine{811 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a54645b20814b4368e7498b0d39e11f77}{mosquitto\_psk\_key\_get\_default}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *hint, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *identity, \textcolor{keywordtype}{char} *key, \textcolor{keywordtype}{int} max\_key\_len);}
+\DoxyCodeLine{812 }
+\DoxyCodeLine{813 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_aef1b014d8c7dde6ef838d7eb46a36a7c}{mosquitto\_security\_auth\_start}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keywordtype}{bool} reauth, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *data\_in, uint16\_t data\_in\_len, \textcolor{keywordtype}{void} **data\_out, uint16\_t *data\_out\_len);}
+\DoxyCodeLine{814 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a21f7c00d1e09cb71bc78b5f3c47764d0}{mosquitto\_security\_auth\_continue}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *data\_in, uint16\_t data\_len, \textcolor{keywordtype}{void} **data\_out, uint16\_t *data\_out\_len);}
+\DoxyCodeLine{815 }
+\DoxyCodeLine{816 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a2666dc7d6daf26977330a74f9f96d389}{unpwd\_\_free\_item}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____unpwd}{mosquitto\_\_unpwd}} **unpwd, \textcolor{keyword}{struct} \mbox{\hyperlink{structmosquitto____unpwd}{mosquitto\_\_unpwd}} *item);}
+\DoxyCodeLine{817 }
+\DoxyCodeLine{818 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{819 \textcolor{comment}{ * Session expiry}}
+\DoxyCodeLine{820 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{821 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a11472679af9af53b8d3538ae34e02a5d}{session\_expiry\_\_add}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{822 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a9cad26865c7aaee113a5a44af13568da}{session\_expiry\_\_add\_from\_persistence}}(\textcolor{keyword}{struct} mosquitto *context, time\_t expiry\_time);}
+\DoxyCodeLine{823 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a2cdcd4347b70148889882126807025f1}{session\_expiry\_\_remove}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{824 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a697ded88bfba20186cba05258fb8bc0e}{session\_expiry\_\_remove\_all}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{825 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a616fed1840d1ea723de59e523079ce13}{session\_expiry\_\_check}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{826 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_aa70d5ca58956fb1b693ed88a271646fa}{session\_expiry\_\_send\_all}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{827 }
+\DoxyCodeLine{828 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{829 \textcolor{comment}{ * Signals}}
+\DoxyCodeLine{830 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{831 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a2f3ef7bd282a23f9a3c63eadf5b60657}{handle\_sigint}}(\textcolor{keywordtype}{int} signal);}
+\DoxyCodeLine{832 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a7c5f1f77d4d97890a52a592dbed90478}{handle\_sigusr1}}(\textcolor{keywordtype}{int} signal);}
+\DoxyCodeLine{833 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a7b9b6ce8abc9b2ea4c04397587804328}{handle\_sigusr2}}(\textcolor{keywordtype}{int} signal);}
+\DoxyCodeLine{834 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{SIGHUP}}
+\DoxyCodeLine{835 \textcolor{keywordtype}{void} handle\_sighup(\textcolor{keywordtype}{int} signal);}
+\DoxyCodeLine{836 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{837 }
+\DoxyCodeLine{838 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{839 \textcolor{comment}{ * Window service and signal related functions}}
+\DoxyCodeLine{840 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{841 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{if} \textcolor{preprocessor}{defined}\textcolor{preprocessor}{(}\textcolor{preprocessor}{WIN32}\textcolor{preprocessor}{)} \textcolor{preprocessor}{||} \textcolor{preprocessor}{defined}\textcolor{preprocessor}{(}\textcolor{preprocessor}{\_\_CYGWIN\_\_}\textcolor{preprocessor}{)}}
+\DoxyCodeLine{842 \textcolor{keywordtype}{void} service\_install(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{843 \textcolor{keywordtype}{void} service\_uninstall(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{844 \textcolor{keywordtype}{void} service\_run(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{845 }
+\DoxyCodeLine{846 DWORD WINAPI SigThreadProc(\textcolor{keywordtype}{void}* data);}
+\DoxyCodeLine{847 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{848 }
+\DoxyCodeLine{849 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{850 \textcolor{comment}{ * Websockets related functions}}
+\DoxyCodeLine{851 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{852 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_WEBSOCKETS}}
+\DoxyCodeLine{853 \textcolor{keywordtype}{void} mosq\_websockets\_init(\textcolor{keyword}{struct} mosquitto\_\_listener *listener, \textcolor{keyword}{const} \textcolor{keyword}{struct} mosquitto\_\_config *conf);}
+\DoxyCodeLine{854 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{855 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a29985d87fa8f10c27534b63a38bd403a}{do\_disconnect}}(\textcolor{keyword}{struct} mosquitto *context, \textcolor{keywordtype}{int} reason);}
+\DoxyCodeLine{856 }
+\DoxyCodeLine{857 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{858 \textcolor{comment}{ * Will delay}}
+\DoxyCodeLine{859 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{860 \textcolor{keywordtype}{int} \mbox{\hyperlink{mosquitto__broker__internal_8h_a3764220e3540136c2e1ef2fb372cf149}{will\_delay\_\_add}}(\textcolor{keyword}{struct} mosquitto *context);}
+\DoxyCodeLine{861 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_ac0fdfab7ba467f5e27fd9ef7624bd167}{will\_delay\_\_check}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{862 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a436e1344e7e2bedabe7a9f43b32f4b4b}{will\_delay\_\_send\_all}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{863 \textcolor{keywordtype}{void} \mbox{\hyperlink{mosquitto__broker__internal_8h_a41b1d3665f1030f0687ad9cd6f54a099}{will\_delay\_\_remove}}(\textcolor{keyword}{struct} mosquitto *mosq);}
+\DoxyCodeLine{864 }
+\DoxyCodeLine{865 }
+\DoxyCodeLine{866 \textcolor{comment}{/* ============================================================}}
+\DoxyCodeLine{867 \textcolor{comment}{ * Other}}
+\DoxyCodeLine{868 \textcolor{comment}{ * ============================================================ */}}
+\DoxyCodeLine{869 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{ifdef} \textcolor{preprocessor}{WITH\_XTREPORT}}
+\DoxyCodeLine{870 \textcolor{keywordtype}{void} xtreport(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{871 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+\DoxyCodeLine{872 }
+\DoxyCodeLine{873 \textcolor{preprocessor}{\#}\textcolor{preprocessor}{endif}}
+
+\end{DoxyCode}

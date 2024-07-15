@@ -1,0 +1,47 @@
+\hypertarget{property__broker_8c}{}\doxysection{property\+\_\+broker.\+c File Reference}
+\label{property__broker_8c}\index{property\_broker.c@{property\_broker.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mqtt\+\_\+protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}property\+\_\+mosq.\+h\char`\"{}}\newline
+Include dependency graph for property\+\_\+broker.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{property__broker_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{property__broker_8c_aedeaa770b58e1d7b20a2f76c83dcbef2}{property\+\_\+\+\_\+process\+\_\+connect}} (struct mosquitto $\ast$context, mosquitto\+\_\+property $\ast$$\ast$props)
+\item 
+int \mbox{\hyperlink{property__broker_8c_ac1171eb15346e2c7a742fcef7a2225a1}{property\+\_\+\+\_\+process\+\_\+will}} (struct mosquitto $\ast$context, struct mosquitto\+\_\+message\+\_\+all $\ast$msg, mosquitto\+\_\+property $\ast$$\ast$props)
+\item 
+int \mbox{\hyperlink{property__broker_8c_a9fd5a83264df563a3170243a15b16c0f}{property\+\_\+\+\_\+process\+\_\+disconnect}} (struct mosquitto $\ast$context, mosquitto\+\_\+property $\ast$$\ast$props)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{property__broker_8c_aedeaa770b58e1d7b20a2f76c83dcbef2}\label{property__broker_8c_aedeaa770b58e1d7b20a2f76c83dcbef2}} 
+\index{property\_broker.c@{property\_broker.c}!property\_\_process\_connect@{property\_\_process\_connect}}
+\index{property\_\_process\_connect@{property\_\_process\_connect}!property\_broker.c@{property\_broker.c}}
+\doxysubsubsection{\texorpdfstring{property\_\_process\_connect()}{property\_\_process\_connect()}}
+{\footnotesize\ttfamily int property\+\_\+\+\_\+process\+\_\+connect (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{mosquitto\+\_\+property $\ast$$\ast$}]{props }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{property__broker_8c_a9fd5a83264df563a3170243a15b16c0f}\label{property__broker_8c_a9fd5a83264df563a3170243a15b16c0f}} 
+\index{property\_broker.c@{property\_broker.c}!property\_\_process\_disconnect@{property\_\_process\_disconnect}}
+\index{property\_\_process\_disconnect@{property\_\_process\_disconnect}!property\_broker.c@{property\_broker.c}}
+\doxysubsubsection{\texorpdfstring{property\_\_process\_disconnect()}{property\_\_process\_disconnect()}}
+{\footnotesize\ttfamily int property\+\_\+\+\_\+process\+\_\+disconnect (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{mosquitto\+\_\+property $\ast$$\ast$}]{props }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{property__broker_8c_ac1171eb15346e2c7a742fcef7a2225a1}\label{property__broker_8c_ac1171eb15346e2c7a742fcef7a2225a1}} 
+\index{property\_broker.c@{property\_broker.c}!property\_\_process\_will@{property\_\_process\_will}}
+\index{property\_\_process\_will@{property\_\_process\_will}!property\_broker.c@{property\_broker.c}}
+\doxysubsubsection{\texorpdfstring{property\_\_process\_will()}{property\_\_process\_will()}}
+{\footnotesize\ttfamily int property\+\_\+\+\_\+process\+\_\+will (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{struct mosquitto\+\_\+message\+\_\+all $\ast$}]{msg,  }\item[{mosquitto\+\_\+property $\ast$$\ast$}]{props }\end{DoxyParamCaption})}
+

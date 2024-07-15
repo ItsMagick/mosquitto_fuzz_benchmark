@@ -1,0 +1,84 @@
+\hypertarget{plugin__defer_8c}{}\doxysection{plugin\+\_\+defer.\+c File Reference}
+\label{plugin__defer_8c}\index{plugin\_defer.c@{plugin\_defer.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+plugin.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mosquitto.\+h\char`\"{}}\newline
+Include dependency graph for plugin\+\_\+defer.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{plugin__defer_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{plugin__defer_8c_a98eca6fe8d3cc7a0e514513b4619f9ab}{mosquitto\+\_\+auth\+\_\+plugin\+\_\+version}} (void)
+\item 
+int \mbox{\hyperlink{plugin__defer_8c_a22ba23d7c9c73f6591a8e8808f6f0fbf}{mosquitto\+\_\+auth\+\_\+plugin\+\_\+init}} (void $\ast$$\ast$user\+\_\+data, struct mosquitto\+\_\+opt $\ast$auth\+\_\+opts, int auth\+\_\+opt\+\_\+count)
+\item 
+int \mbox{\hyperlink{plugin__defer_8c_ad8f66533f3785f8811972a05e688bced}{mosquitto\+\_\+auth\+\_\+plugin\+\_\+cleanup}} (void $\ast$user\+\_\+data, struct mosquitto\+\_\+opt $\ast$auth\+\_\+opts, int auth\+\_\+opt\+\_\+count)
+\item 
+int \mbox{\hyperlink{plugin__defer_8c_a54188318bf754f7976570786daa45078}{mosquitto\+\_\+auth\+\_\+security\+\_\+init}} (void $\ast$user\+\_\+data, struct mosquitto\+\_\+opt $\ast$auth\+\_\+opts, int auth\+\_\+opt\+\_\+count, bool reload)
+\item 
+int \mbox{\hyperlink{plugin__defer_8c_a859e429a6ec74ce676b1d88dc281ebd7}{mosquitto\+\_\+auth\+\_\+security\+\_\+cleanup}} (void $\ast$user\+\_\+data, struct mosquitto\+\_\+opt $\ast$auth\+\_\+opts, int auth\+\_\+opt\+\_\+count, bool reload)
+\item 
+int \mbox{\hyperlink{plugin__defer_8c_a0c066449e425e12e7f724ed753699441}{mosquitto\+\_\+auth\+\_\+acl\+\_\+check}} (void $\ast$user\+\_\+data, int access, struct mosquitto $\ast$client, const struct mosquitto\+\_\+acl\+\_\+msg $\ast$msg)
+\item 
+int \mbox{\hyperlink{plugin__defer_8c_a3a511451cf98f4711f6ce52802c95522}{mosquitto\+\_\+auth\+\_\+unpwd\+\_\+check}} (void $\ast$user\+\_\+data, struct mosquitto $\ast$client, const char $\ast$username, const char $\ast$password)
+\item 
+int \mbox{\hyperlink{plugin__defer_8c_a9e2d7a8af30a14679ac8e72adc1ccdb6}{mosquitto\+\_\+auth\+\_\+psk\+\_\+key\+\_\+get}} (void $\ast$user\+\_\+data, struct mosquitto $\ast$client, const char $\ast$hint, const char $\ast$identity, char $\ast$key, int max\+\_\+key\+\_\+len)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{plugin__defer_8c_a0c066449e425e12e7f724ed753699441}\label{plugin__defer_8c_a0c066449e425e12e7f724ed753699441}} 
+\index{plugin\_defer.c@{plugin\_defer.c}!mosquitto\_auth\_acl\_check@{mosquitto\_auth\_acl\_check}}
+\index{mosquitto\_auth\_acl\_check@{mosquitto\_auth\_acl\_check}!plugin\_defer.c@{plugin\_defer.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_auth\_acl\_check()}{mosquitto\_auth\_acl\_check()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+auth\+\_\+acl\+\_\+check (\begin{DoxyParamCaption}\item[{void $\ast$}]{user\+\_\+data,  }\item[{int}]{access,  }\item[{struct mosquitto $\ast$}]{client,  }\item[{const struct mosquitto\+\_\+acl\+\_\+msg $\ast$}]{msg }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__defer_8c_ad8f66533f3785f8811972a05e688bced}\label{plugin__defer_8c_ad8f66533f3785f8811972a05e688bced}} 
+\index{plugin\_defer.c@{plugin\_defer.c}!mosquitto\_auth\_plugin\_cleanup@{mosquitto\_auth\_plugin\_cleanup}}
+\index{mosquitto\_auth\_plugin\_cleanup@{mosquitto\_auth\_plugin\_cleanup}!plugin\_defer.c@{plugin\_defer.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_auth\_plugin\_cleanup()}{mosquitto\_auth\_plugin\_cleanup()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+auth\+\_\+plugin\+\_\+cleanup (\begin{DoxyParamCaption}\item[{void $\ast$}]{user\+\_\+data,  }\item[{struct mosquitto\+\_\+opt $\ast$}]{auth\+\_\+opts,  }\item[{int}]{auth\+\_\+opt\+\_\+count }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__defer_8c_a22ba23d7c9c73f6591a8e8808f6f0fbf}\label{plugin__defer_8c_a22ba23d7c9c73f6591a8e8808f6f0fbf}} 
+\index{plugin\_defer.c@{plugin\_defer.c}!mosquitto\_auth\_plugin\_init@{mosquitto\_auth\_plugin\_init}}
+\index{mosquitto\_auth\_plugin\_init@{mosquitto\_auth\_plugin\_init}!plugin\_defer.c@{plugin\_defer.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_auth\_plugin\_init()}{mosquitto\_auth\_plugin\_init()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+auth\+\_\+plugin\+\_\+init (\begin{DoxyParamCaption}\item[{void $\ast$$\ast$}]{user\+\_\+data,  }\item[{struct mosquitto\+\_\+opt $\ast$}]{auth\+\_\+opts,  }\item[{int}]{auth\+\_\+opt\+\_\+count }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__defer_8c_a98eca6fe8d3cc7a0e514513b4619f9ab}\label{plugin__defer_8c_a98eca6fe8d3cc7a0e514513b4619f9ab}} 
+\index{plugin\_defer.c@{plugin\_defer.c}!mosquitto\_auth\_plugin\_version@{mosquitto\_auth\_plugin\_version}}
+\index{mosquitto\_auth\_plugin\_version@{mosquitto\_auth\_plugin\_version}!plugin\_defer.c@{plugin\_defer.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_auth\_plugin\_version()}{mosquitto\_auth\_plugin\_version()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+auth\+\_\+plugin\+\_\+version (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__defer_8c_a9e2d7a8af30a14679ac8e72adc1ccdb6}\label{plugin__defer_8c_a9e2d7a8af30a14679ac8e72adc1ccdb6}} 
+\index{plugin\_defer.c@{plugin\_defer.c}!mosquitto\_auth\_psk\_key\_get@{mosquitto\_auth\_psk\_key\_get}}
+\index{mosquitto\_auth\_psk\_key\_get@{mosquitto\_auth\_psk\_key\_get}!plugin\_defer.c@{plugin\_defer.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_auth\_psk\_key\_get()}{mosquitto\_auth\_psk\_key\_get()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+auth\+\_\+psk\+\_\+key\+\_\+get (\begin{DoxyParamCaption}\item[{void $\ast$}]{user\+\_\+data,  }\item[{struct mosquitto $\ast$}]{client,  }\item[{const char $\ast$}]{hint,  }\item[{const char $\ast$}]{identity,  }\item[{char $\ast$}]{key,  }\item[{int}]{max\+\_\+key\+\_\+len }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__defer_8c_a859e429a6ec74ce676b1d88dc281ebd7}\label{plugin__defer_8c_a859e429a6ec74ce676b1d88dc281ebd7}} 
+\index{plugin\_defer.c@{plugin\_defer.c}!mosquitto\_auth\_security\_cleanup@{mosquitto\_auth\_security\_cleanup}}
+\index{mosquitto\_auth\_security\_cleanup@{mosquitto\_auth\_security\_cleanup}!plugin\_defer.c@{plugin\_defer.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_auth\_security\_cleanup()}{mosquitto\_auth\_security\_cleanup()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+auth\+\_\+security\+\_\+cleanup (\begin{DoxyParamCaption}\item[{void $\ast$}]{user\+\_\+data,  }\item[{struct mosquitto\+\_\+opt $\ast$}]{auth\+\_\+opts,  }\item[{int}]{auth\+\_\+opt\+\_\+count,  }\item[{bool}]{reload }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__defer_8c_a54188318bf754f7976570786daa45078}\label{plugin__defer_8c_a54188318bf754f7976570786daa45078}} 
+\index{plugin\_defer.c@{plugin\_defer.c}!mosquitto\_auth\_security\_init@{mosquitto\_auth\_security\_init}}
+\index{mosquitto\_auth\_security\_init@{mosquitto\_auth\_security\_init}!plugin\_defer.c@{plugin\_defer.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_auth\_security\_init()}{mosquitto\_auth\_security\_init()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+auth\+\_\+security\+\_\+init (\begin{DoxyParamCaption}\item[{void $\ast$}]{user\+\_\+data,  }\item[{struct mosquitto\+\_\+opt $\ast$}]{auth\+\_\+opts,  }\item[{int}]{auth\+\_\+opt\+\_\+count,  }\item[{bool}]{reload }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plugin__defer_8c_a3a511451cf98f4711f6ce52802c95522}\label{plugin__defer_8c_a3a511451cf98f4711f6ce52802c95522}} 
+\index{plugin\_defer.c@{plugin\_defer.c}!mosquitto\_auth\_unpwd\_check@{mosquitto\_auth\_unpwd\_check}}
+\index{mosquitto\_auth\_unpwd\_check@{mosquitto\_auth\_unpwd\_check}!plugin\_defer.c@{plugin\_defer.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_auth\_unpwd\_check()}{mosquitto\_auth\_unpwd\_check()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+auth\+\_\+unpwd\+\_\+check (\begin{DoxyParamCaption}\item[{void $\ast$}]{user\+\_\+data,  }\item[{struct mosquitto $\ast$}]{client,  }\item[{const char $\ast$}]{username,  }\item[{const char $\ast$}]{password }\end{DoxyParamCaption})}
+

@@ -1,0 +1,331 @@
+\hypertarget{structmosquitto____bridge}{}\doxysection{mosquitto\+\_\+\+\_\+bridge Struct Reference}
+\label{structmosquitto____bridge}\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+
+
+{\ttfamily \#include $<$mosquitto\+\_\+broker\+\_\+internal.\+h$>$}
+
+
+
+Collaboration diagram for mosquitto\+\_\+\+\_\+bridge\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=326pt]{structmosquitto____bridge__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____bridge_a9f8a3292008aea96a59da768801e8b85}{name}}
+\item 
+struct \mbox{\hyperlink{structbridge__address}{bridge\+\_\+address}} $\ast$ \mbox{\hyperlink{structmosquitto____bridge_a43d6c56291ab19a64ddc095f1bc9b158}{addresses}}
+\item 
+int \mbox{\hyperlink{structmosquitto____bridge_a2ccfaa2e1b22155b1c8515420a9222c6}{cur\+\_\+address}}
+\item 
+int \mbox{\hyperlink{structmosquitto____bridge_af8f4bbb44fc72ad0a93c36e0d8512bf0}{address\+\_\+count}}
+\item 
+time\+\_\+t \mbox{\hyperlink{structmosquitto____bridge_a986660dc2307b9480d935c8765ce2bcc}{primary\+\_\+retry}}
+\item 
+mosq\+\_\+sock\+\_\+t \mbox{\hyperlink{structmosquitto____bridge_a0438b42777a5423c4fef120763fe3274}{primary\+\_\+retry\+\_\+sock}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_a2de3c5d45ed5c044e4823c1d3fc7a408}{round\+\_\+robin}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_aab947b0ebb5802e0ddbfe8e39735f57e}{try\+\_\+private}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_a110016b60d907f620c3f1faf389a5d20}{try\+\_\+private\+\_\+accepted}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_aabf3b955f12f1bff4eca75b8bbed9ab0}{clean\+\_\+start}}
+\item 
+int8\+\_\+t \mbox{\hyperlink{structmosquitto____bridge_a7a4b2d351d28a9cbbdd94819362dc4eb}{clean\+\_\+start\+\_\+local}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structmosquitto____bridge_a6edd41fe1d2fb1da6e0c7ecccd531476}{keepalive}}
+\item 
+struct \mbox{\hyperlink{structmosquitto____bridge__topic}{mosquitto\+\_\+\+\_\+bridge\+\_\+topic}} $\ast$ \mbox{\hyperlink{structmosquitto____bridge_aeea60d1112fa8d3c2abdba964000b7c0}{topics}}
+\item 
+int \mbox{\hyperlink{structmosquitto____bridge_a934636dd245bf56072de12d9e83d9fc2}{topic\+\_\+count}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_a909ef5aa57e7ec85694ae50488f3cb19}{topic\+\_\+remapping}}
+\item 
+enum mosquitto\+\_\+\+\_\+protocol \mbox{\hyperlink{structmosquitto____bridge_ab96b09f18541e3c8da2308e2e82c460f}{protocol\+\_\+version}}
+\item 
+time\+\_\+t \mbox{\hyperlink{structmosquitto____bridge_a663dcb10657f0a5e8934cfe43bcfdd1c}{restart\+\_\+t}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____bridge_a7c844c8ea816372d6bed6fd7b6bba043}{remote\+\_\+clientid}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____bridge_ade1fa03bd24c0113235cc585754f037d}{remote\+\_\+username}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____bridge_a48ad2c51650994967ed97d449a713c69}{remote\+\_\+password}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____bridge_a46baf404b66bf7740dc82b2c2cd84ee3}{local\+\_\+clientid}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____bridge_aa081da3f9d1c92f50219610b8db5b13b}{local\+\_\+username}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____bridge_afb8665ad1cd693f01a45461d2e7de491}{local\+\_\+password}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____bridge_a7c46423ac096f922c160f69aa79dcfe3}{notification\+\_\+topic}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto____bridge_abba83c430506e1b75d54e7f246ce4f3e}{bind\+\_\+address}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_ac0a1c8a3f5ac7663c02991de606c0326}{notifications}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_ab6fcbd0d6c21739083ec78de3e4ceb3d}{notifications\+\_\+local\+\_\+only}}
+\item 
+enum \mbox{\hyperlink{mosquitto__broker__internal_8h_a31e03d23fb1912cb7983c4b123417e53}{mosquitto\+\_\+bridge\+\_\+start\+\_\+type}} \mbox{\hyperlink{structmosquitto____bridge_a494097a040a6a671af9e100b7fe33b4e}{start\+\_\+type}}
+\item 
+int \mbox{\hyperlink{structmosquitto____bridge_aa41f108fe9dc5f23765c80c1c5cc84b2}{idle\+\_\+timeout}}
+\item 
+int \mbox{\hyperlink{structmosquitto____bridge_a11d277af25a783a98f83059f9e89a203}{restart\+\_\+timeout}}
+\item 
+int \mbox{\hyperlink{structmosquitto____bridge_a2516d45c28004063c6239b1d3e6bc1aa}{backoff\+\_\+base}}
+\item 
+int \mbox{\hyperlink{structmosquitto____bridge_a7f1fd2c0758dbcad1f65354ac8974f0f}{backoff\+\_\+cap}}
+\item 
+int \mbox{\hyperlink{structmosquitto____bridge_a2b3b014acc86f133c66b19299bd6ec35}{threshold}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmosquitto____bridge_a91583e0a2886ded56d2c9ed0f33ea8cb}{maximum\+\_\+packet\+\_\+size}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_a49b401ec7e90d44eae1c8aaccffa4c35}{lazy\+\_\+reconnect}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_aa9c08f8ceeab793ba0f90ac889074d51}{attempt\+\_\+unsubscribe}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_ab11c4179dd55dd0c5c001380da97e270}{initial\+\_\+notification\+\_\+done}}
+\item 
+bool \mbox{\hyperlink{structmosquitto____bridge_a224e9401ba5982ec781dfe277592707d}{outgoing\+\_\+retain}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structmosquitto____bridge_af8f4bbb44fc72ad0a93c36e0d8512bf0}\label{structmosquitto____bridge_af8f4bbb44fc72ad0a93c36e0d8512bf0}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!address\_count@{address\_count}}
+\index{address\_count@{address\_count}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{address\_count}{address\_count}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+bridge\+::address\+\_\+count}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a43d6c56291ab19a64ddc095f1bc9b158}\label{structmosquitto____bridge_a43d6c56291ab19a64ddc095f1bc9b158}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!addresses@{addresses}}
+\index{addresses@{addresses}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{addresses}{addresses}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structbridge__address}{bridge\+\_\+address}}$\ast$ mosquitto\+\_\+\+\_\+bridge\+::addresses}
+
+\mbox{\Hypertarget{structmosquitto____bridge_aa9c08f8ceeab793ba0f90ac889074d51}\label{structmosquitto____bridge_aa9c08f8ceeab793ba0f90ac889074d51}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!attempt\_unsubscribe@{attempt\_unsubscribe}}
+\index{attempt\_unsubscribe@{attempt\_unsubscribe}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{attempt\_unsubscribe}{attempt\_unsubscribe}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::attempt\+\_\+unsubscribe}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a2516d45c28004063c6239b1d3e6bc1aa}\label{structmosquitto____bridge_a2516d45c28004063c6239b1d3e6bc1aa}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!backoff\_base@{backoff\_base}}
+\index{backoff\_base@{backoff\_base}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{backoff\_base}{backoff\_base}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+bridge\+::backoff\+\_\+base}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a7f1fd2c0758dbcad1f65354ac8974f0f}\label{structmosquitto____bridge_a7f1fd2c0758dbcad1f65354ac8974f0f}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!backoff\_cap@{backoff\_cap}}
+\index{backoff\_cap@{backoff\_cap}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{backoff\_cap}{backoff\_cap}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+bridge\+::backoff\+\_\+cap}
+
+\mbox{\Hypertarget{structmosquitto____bridge_abba83c430506e1b75d54e7f246ce4f3e}\label{structmosquitto____bridge_abba83c430506e1b75d54e7f246ce4f3e}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!bind\_address@{bind\_address}}
+\index{bind\_address@{bind\_address}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{bind\_address}{bind\_address}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+bridge\+::bind\+\_\+address}
+
+\mbox{\Hypertarget{structmosquitto____bridge_aabf3b955f12f1bff4eca75b8bbed9ab0}\label{structmosquitto____bridge_aabf3b955f12f1bff4eca75b8bbed9ab0}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!clean\_start@{clean\_start}}
+\index{clean\_start@{clean\_start}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{clean\_start}{clean\_start}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::clean\+\_\+start}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a7a4b2d351d28a9cbbdd94819362dc4eb}\label{structmosquitto____bridge_a7a4b2d351d28a9cbbdd94819362dc4eb}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!clean\_start\_local@{clean\_start\_local}}
+\index{clean\_start\_local@{clean\_start\_local}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{clean\_start\_local}{clean\_start\_local}}
+{\footnotesize\ttfamily int8\+\_\+t mosquitto\+\_\+\+\_\+bridge\+::clean\+\_\+start\+\_\+local}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a2ccfaa2e1b22155b1c8515420a9222c6}\label{structmosquitto____bridge_a2ccfaa2e1b22155b1c8515420a9222c6}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!cur\_address@{cur\_address}}
+\index{cur\_address@{cur\_address}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{cur\_address}{cur\_address}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+bridge\+::cur\+\_\+address}
+
+\mbox{\Hypertarget{structmosquitto____bridge_aa41f108fe9dc5f23765c80c1c5cc84b2}\label{structmosquitto____bridge_aa41f108fe9dc5f23765c80c1c5cc84b2}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!idle\_timeout@{idle\_timeout}}
+\index{idle\_timeout@{idle\_timeout}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{idle\_timeout}{idle\_timeout}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+bridge\+::idle\+\_\+timeout}
+
+\mbox{\Hypertarget{structmosquitto____bridge_ab11c4179dd55dd0c5c001380da97e270}\label{structmosquitto____bridge_ab11c4179dd55dd0c5c001380da97e270}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!initial\_notification\_done@{initial\_notification\_done}}
+\index{initial\_notification\_done@{initial\_notification\_done}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{initial\_notification\_done}{initial\_notification\_done}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::initial\+\_\+notification\+\_\+done}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a6edd41fe1d2fb1da6e0c7ecccd531476}\label{structmosquitto____bridge_a6edd41fe1d2fb1da6e0c7ecccd531476}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!keepalive@{keepalive}}
+\index{keepalive@{keepalive}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{keepalive}{keepalive}}
+{\footnotesize\ttfamily uint16\+\_\+t mosquitto\+\_\+\+\_\+bridge\+::keepalive}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a49b401ec7e90d44eae1c8aaccffa4c35}\label{structmosquitto____bridge_a49b401ec7e90d44eae1c8aaccffa4c35}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!lazy\_reconnect@{lazy\_reconnect}}
+\index{lazy\_reconnect@{lazy\_reconnect}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{lazy\_reconnect}{lazy\_reconnect}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::lazy\+\_\+reconnect}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a46baf404b66bf7740dc82b2c2cd84ee3}\label{structmosquitto____bridge_a46baf404b66bf7740dc82b2c2cd84ee3}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!local\_clientid@{local\_clientid}}
+\index{local\_clientid@{local\_clientid}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{local\_clientid}{local\_clientid}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+bridge\+::local\+\_\+clientid}
+
+\mbox{\Hypertarget{structmosquitto____bridge_afb8665ad1cd693f01a45461d2e7de491}\label{structmosquitto____bridge_afb8665ad1cd693f01a45461d2e7de491}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!local\_password@{local\_password}}
+\index{local\_password@{local\_password}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{local\_password}{local\_password}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+bridge\+::local\+\_\+password}
+
+\mbox{\Hypertarget{structmosquitto____bridge_aa081da3f9d1c92f50219610b8db5b13b}\label{structmosquitto____bridge_aa081da3f9d1c92f50219610b8db5b13b}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!local\_username@{local\_username}}
+\index{local\_username@{local\_username}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{local\_username}{local\_username}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+bridge\+::local\+\_\+username}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a91583e0a2886ded56d2c9ed0f33ea8cb}\label{structmosquitto____bridge_a91583e0a2886ded56d2c9ed0f33ea8cb}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!maximum\_packet\_size@{maximum\_packet\_size}}
+\index{maximum\_packet\_size@{maximum\_packet\_size}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{maximum\_packet\_size}{maximum\_packet\_size}}
+{\footnotesize\ttfamily uint32\+\_\+t mosquitto\+\_\+\+\_\+bridge\+::maximum\+\_\+packet\+\_\+size}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a9f8a3292008aea96a59da768801e8b85}\label{structmosquitto____bridge_a9f8a3292008aea96a59da768801e8b85}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!name@{name}}
+\index{name@{name}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+bridge\+::name}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a7c46423ac096f922c160f69aa79dcfe3}\label{structmosquitto____bridge_a7c46423ac096f922c160f69aa79dcfe3}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!notification\_topic@{notification\_topic}}
+\index{notification\_topic@{notification\_topic}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{notification\_topic}{notification\_topic}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+bridge\+::notification\+\_\+topic}
+
+\mbox{\Hypertarget{structmosquitto____bridge_ac0a1c8a3f5ac7663c02991de606c0326}\label{structmosquitto____bridge_ac0a1c8a3f5ac7663c02991de606c0326}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!notifications@{notifications}}
+\index{notifications@{notifications}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{notifications}{notifications}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::notifications}
+
+\mbox{\Hypertarget{structmosquitto____bridge_ab6fcbd0d6c21739083ec78de3e4ceb3d}\label{structmosquitto____bridge_ab6fcbd0d6c21739083ec78de3e4ceb3d}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!notifications\_local\_only@{notifications\_local\_only}}
+\index{notifications\_local\_only@{notifications\_local\_only}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{notifications\_local\_only}{notifications\_local\_only}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::notifications\+\_\+local\+\_\+only}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a224e9401ba5982ec781dfe277592707d}\label{structmosquitto____bridge_a224e9401ba5982ec781dfe277592707d}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!outgoing\_retain@{outgoing\_retain}}
+\index{outgoing\_retain@{outgoing\_retain}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{outgoing\_retain}{outgoing\_retain}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::outgoing\+\_\+retain}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a986660dc2307b9480d935c8765ce2bcc}\label{structmosquitto____bridge_a986660dc2307b9480d935c8765ce2bcc}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!primary\_retry@{primary\_retry}}
+\index{primary\_retry@{primary\_retry}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{primary\_retry}{primary\_retry}}
+{\footnotesize\ttfamily time\+\_\+t mosquitto\+\_\+\+\_\+bridge\+::primary\+\_\+retry}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a0438b42777a5423c4fef120763fe3274}\label{structmosquitto____bridge_a0438b42777a5423c4fef120763fe3274}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!primary\_retry\_sock@{primary\_retry\_sock}}
+\index{primary\_retry\_sock@{primary\_retry\_sock}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{primary\_retry\_sock}{primary\_retry\_sock}}
+{\footnotesize\ttfamily mosq\+\_\+sock\+\_\+t mosquitto\+\_\+\+\_\+bridge\+::primary\+\_\+retry\+\_\+sock}
+
+\mbox{\Hypertarget{structmosquitto____bridge_ab96b09f18541e3c8da2308e2e82c460f}\label{structmosquitto____bridge_ab96b09f18541e3c8da2308e2e82c460f}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!protocol\_version@{protocol\_version}}
+\index{protocol\_version@{protocol\_version}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{protocol\_version}{protocol\_version}}
+{\footnotesize\ttfamily enum mosquitto\+\_\+\+\_\+protocol mosquitto\+\_\+\+\_\+bridge\+::protocol\+\_\+version}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a7c844c8ea816372d6bed6fd7b6bba043}\label{structmosquitto____bridge_a7c844c8ea816372d6bed6fd7b6bba043}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!remote\_clientid@{remote\_clientid}}
+\index{remote\_clientid@{remote\_clientid}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{remote\_clientid}{remote\_clientid}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+bridge\+::remote\+\_\+clientid}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a48ad2c51650994967ed97d449a713c69}\label{structmosquitto____bridge_a48ad2c51650994967ed97d449a713c69}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!remote\_password@{remote\_password}}
+\index{remote\_password@{remote\_password}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{remote\_password}{remote\_password}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+bridge\+::remote\+\_\+password}
+
+\mbox{\Hypertarget{structmosquitto____bridge_ade1fa03bd24c0113235cc585754f037d}\label{structmosquitto____bridge_ade1fa03bd24c0113235cc585754f037d}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!remote\_username@{remote\_username}}
+\index{remote\_username@{remote\_username}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{remote\_username}{remote\_username}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+\+\_\+bridge\+::remote\+\_\+username}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a663dcb10657f0a5e8934cfe43bcfdd1c}\label{structmosquitto____bridge_a663dcb10657f0a5e8934cfe43bcfdd1c}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!restart\_t@{restart\_t}}
+\index{restart\_t@{restart\_t}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{restart\_t}{restart\_t}}
+{\footnotesize\ttfamily time\+\_\+t mosquitto\+\_\+\+\_\+bridge\+::restart\+\_\+t}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a11d277af25a783a98f83059f9e89a203}\label{structmosquitto____bridge_a11d277af25a783a98f83059f9e89a203}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!restart\_timeout@{restart\_timeout}}
+\index{restart\_timeout@{restart\_timeout}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{restart\_timeout}{restart\_timeout}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+bridge\+::restart\+\_\+timeout}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a2de3c5d45ed5c044e4823c1d3fc7a408}\label{structmosquitto____bridge_a2de3c5d45ed5c044e4823c1d3fc7a408}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!round\_robin@{round\_robin}}
+\index{round\_robin@{round\_robin}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{round\_robin}{round\_robin}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::round\+\_\+robin}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a494097a040a6a671af9e100b7fe33b4e}\label{structmosquitto____bridge_a494097a040a6a671af9e100b7fe33b4e}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!start\_type@{start\_type}}
+\index{start\_type@{start\_type}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{start\_type}{start\_type}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{mosquitto__broker__internal_8h_a31e03d23fb1912cb7983c4b123417e53}{mosquitto\+\_\+bridge\+\_\+start\+\_\+type}} mosquitto\+\_\+\+\_\+bridge\+::start\+\_\+type}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a2b3b014acc86f133c66b19299bd6ec35}\label{structmosquitto____bridge_a2b3b014acc86f133c66b19299bd6ec35}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!threshold@{threshold}}
+\index{threshold@{threshold}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{threshold}{threshold}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+bridge\+::threshold}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a934636dd245bf56072de12d9e83d9fc2}\label{structmosquitto____bridge_a934636dd245bf56072de12d9e83d9fc2}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!topic\_count@{topic\_count}}
+\index{topic\_count@{topic\_count}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{topic\_count}{topic\_count}}
+{\footnotesize\ttfamily int mosquitto\+\_\+\+\_\+bridge\+::topic\+\_\+count}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a909ef5aa57e7ec85694ae50488f3cb19}\label{structmosquitto____bridge_a909ef5aa57e7ec85694ae50488f3cb19}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!topic\_remapping@{topic\_remapping}}
+\index{topic\_remapping@{topic\_remapping}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{topic\_remapping}{topic\_remapping}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::topic\+\_\+remapping}
+
+\mbox{\Hypertarget{structmosquitto____bridge_aeea60d1112fa8d3c2abdba964000b7c0}\label{structmosquitto____bridge_aeea60d1112fa8d3c2abdba964000b7c0}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!topics@{topics}}
+\index{topics@{topics}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{topics}{topics}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto____bridge__topic}{mosquitto\+\_\+\+\_\+bridge\+\_\+topic}}$\ast$ mosquitto\+\_\+\+\_\+bridge\+::topics}
+
+\mbox{\Hypertarget{structmosquitto____bridge_aab947b0ebb5802e0ddbfe8e39735f57e}\label{structmosquitto____bridge_aab947b0ebb5802e0ddbfe8e39735f57e}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!try\_private@{try\_private}}
+\index{try\_private@{try\_private}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{try\_private}{try\_private}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::try\+\_\+private}
+
+\mbox{\Hypertarget{structmosquitto____bridge_a110016b60d907f620c3f1faf389a5d20}\label{structmosquitto____bridge_a110016b60d907f620c3f1faf389a5d20}} 
+\index{mosquitto\_\_bridge@{mosquitto\_\_bridge}!try\_private\_accepted@{try\_private\_accepted}}
+\index{try\_private\_accepted@{try\_private\_accepted}!mosquitto\_\_bridge@{mosquitto\_\_bridge}}
+\doxysubsubsection{\texorpdfstring{try\_private\_accepted}{try\_private\_accepted}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+\+\_\+bridge\+::try\+\_\+private\+\_\+accepted}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{mosquitto__broker__internal_8h}{mosquitto\+\_\+broker\+\_\+internal.\+h}}\end{DoxyCompactItemize}

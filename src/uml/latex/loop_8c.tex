@@ -1,0 +1,118 @@
+\hypertarget{loop_8c}{}\doxysection{loop.\+c File Reference}
+\label{loop_8c}\index{loop.c@{loop.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$utlist.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mqtt\+\_\+protocol.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}packet\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}send\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sys\+\_\+tree.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}time\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util\+\_\+mosq.\+h\char`\"{}}\newline
+Include dependency graph for loop.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{loop_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{loop_8c_a369266c24eacffb87046522897a570d5}{\+\_\+\+GNU\+\_\+\+SOURCE}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{loop_8c_a7dac165503b843e776b333325acd4045}{mosquitto\+\_\+main\+\_\+loop}} (struct \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\+\_\+\+\_\+listener\+\_\+sock}} $\ast$listensock, int listensock\+\_\+count)
+\item 
+void \mbox{\hyperlink{loop_8c_a29985d87fa8f10c27534b63a38bd403a}{do\+\_\+disconnect}} (struct mosquitto $\ast$context, int reason)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{loop_8c_a1c2245fafa57f7156b2961cdf4e3e4e6}{flag\+\_\+reload}}
+\item 
+bool \mbox{\hyperlink{loop_8c_a228845d5196a999a02fbe670985318a9}{flag\+\_\+tree\+\_\+print}}
+\item 
+int \mbox{\hyperlink{loop_8c_aecd587c4be6cba0dd6af4ea0b4d9c183}{run}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{loop_8c_a369266c24eacffb87046522897a570d5}\label{loop_8c_a369266c24eacffb87046522897a570d5}} 
+\index{loop.c@{loop.c}!\_GNU\_SOURCE@{\_GNU\_SOURCE}}
+\index{\_GNU\_SOURCE@{\_GNU\_SOURCE}!loop.c@{loop.c}}
+\doxysubsubsection{\texorpdfstring{\_GNU\_SOURCE}{\_GNU\_SOURCE}}
+{\footnotesize\ttfamily \#define \+\_\+\+GNU\+\_\+\+SOURCE}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{loop_8c_a29985d87fa8f10c27534b63a38bd403a}\label{loop_8c_a29985d87fa8f10c27534b63a38bd403a}} 
+\index{loop.c@{loop.c}!do\_disconnect@{do\_disconnect}}
+\index{do\_disconnect@{do\_disconnect}!loop.c@{loop.c}}
+\doxysubsubsection{\texorpdfstring{do\_disconnect()}{do\_disconnect()}}
+{\footnotesize\ttfamily void do\+\_\+disconnect (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{int}]{reason }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{loop_8c_a29985d87fa8f10c27534b63a38bd403a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{loop_8c_a7dac165503b843e776b333325acd4045}\label{loop_8c_a7dac165503b843e776b333325acd4045}} 
+\index{loop.c@{loop.c}!mosquitto\_main\_loop@{mosquitto\_main\_loop}}
+\index{mosquitto\_main\_loop@{mosquitto\_main\_loop}!loop.c@{loop.c}}
+\doxysubsubsection{\texorpdfstring{mosquitto\_main\_loop()}{mosquitto\_main\_loop()}}
+{\footnotesize\ttfamily int mosquitto\+\_\+main\+\_\+loop (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____listener__sock}{mosquitto\+\_\+\+\_\+listener\+\_\+sock}} $\ast$}]{listensock,  }\item[{int}]{listensock\+\_\+count }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{loop_8c_a7dac165503b843e776b333325acd4045_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=279pt]{loop_8c_a7dac165503b843e776b333325acd4045_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{loop_8c_a1c2245fafa57f7156b2961cdf4e3e4e6}\label{loop_8c_a1c2245fafa57f7156b2961cdf4e3e4e6}} 
+\index{loop.c@{loop.c}!flag\_reload@{flag\_reload}}
+\index{flag\_reload@{flag\_reload}!loop.c@{loop.c}}
+\doxysubsubsection{\texorpdfstring{flag\_reload}{flag\_reload}}
+{\footnotesize\ttfamily bool flag\+\_\+reload\hspace{0.3cm}{\ttfamily [extern]}}
+
+\mbox{\Hypertarget{loop_8c_a228845d5196a999a02fbe670985318a9}\label{loop_8c_a228845d5196a999a02fbe670985318a9}} 
+\index{loop.c@{loop.c}!flag\_tree\_print@{flag\_tree\_print}}
+\index{flag\_tree\_print@{flag\_tree\_print}!loop.c@{loop.c}}
+\doxysubsubsection{\texorpdfstring{flag\_tree\_print}{flag\_tree\_print}}
+{\footnotesize\ttfamily bool flag\+\_\+tree\+\_\+print\hspace{0.3cm}{\ttfamily [extern]}}
+
+\mbox{\Hypertarget{loop_8c_aecd587c4be6cba0dd6af4ea0b4d9c183}\label{loop_8c_aecd587c4be6cba0dd6af4ea0b4d9c183}} 
+\index{loop.c@{loop.c}!run@{run}}
+\index{run@{run}!loop.c@{loop.c}}
+\doxysubsubsection{\texorpdfstring{run}{run}}
+{\footnotesize\ttfamily int run\hspace{0.3cm}{\ttfamily [extern]}}
+

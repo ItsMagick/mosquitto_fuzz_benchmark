@@ -1,0 +1,322 @@
+\hypertarget{persist_8h}{}\doxysection{persist.\+h File Reference}
+\label{persist_8h}\index{persist.h@{persist.h}}
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+Include dependency graph for persist.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{persist_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structPF__header}{PF\+\_\+header}}
+\item 
+struct \mbox{\hyperlink{structPF__cfg}{PF\+\_\+cfg}}
+\item 
+struct \mbox{\hyperlink{structPF__client__v5}{PF\+\_\+client\+\_\+v5}}
+\item 
+struct \mbox{\hyperlink{structPF__client}{PF\+\_\+client}}
+\item 
+struct \mbox{\hyperlink{structP__client}{P\+\_\+client}}
+\item 
+struct \mbox{\hyperlink{structPF__client__msg}{PF\+\_\+client\+\_\+msg}}
+\item 
+struct \mbox{\hyperlink{structP__client__msg}{P\+\_\+client\+\_\+msg}}
+\item 
+struct \mbox{\hyperlink{structPF__msg__store}{PF\+\_\+msg\+\_\+store}}
+\item 
+struct \mbox{\hyperlink{structP__msg__store}{P\+\_\+msg\+\_\+store}}
+\item 
+struct \mbox{\hyperlink{structPF__sub}{PF\+\_\+sub}}
+\item 
+struct \mbox{\hyperlink{structP__sub}{P\+\_\+sub}}
+\item 
+struct \mbox{\hyperlink{structPF__retain}{PF\+\_\+retain}}
+\item 
+struct \mbox{\hyperlink{structP__retain}{P\+\_\+retain}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{persist_8h_a1447016fd9d7c51220938f7a8b3e04c4}{MOSQ\+\_\+\+DB\+\_\+\+VERSION}}~6
+\item 
+\#define \mbox{\hyperlink{persist_8h_a134fb5c107eba5ec3a0591e8b34e0500}{DB\+\_\+\+CHUNK\+\_\+\+CFG}}~1
+\item 
+\#define \mbox{\hyperlink{persist_8h_a166b361a4b43546e1f58062a6a82892f}{DB\+\_\+\+CHUNK\+\_\+\+MSG\+\_\+\+STORE}}~2
+\item 
+\#define \mbox{\hyperlink{persist_8h_ad88167f3a9e9d8e1cee9081e534e12c1}{DB\+\_\+\+CHUNK\+\_\+\+CLIENT\+\_\+\+MSG}}~3
+\item 
+\#define \mbox{\hyperlink{persist_8h_a30ba085d62327654249ee914a073ed5e}{DB\+\_\+\+CHUNK\+\_\+\+RETAIN}}~4
+\item 
+\#define \mbox{\hyperlink{persist_8h_a416359135e90043470fd06f74858daa9}{DB\+\_\+\+CHUNK\+\_\+\+SUB}}~5
+\item 
+\#define \mbox{\hyperlink{persist_8h_a67eb63dd1fe440d8a0191cfa7bacd643}{DB\+\_\+\+CHUNK\+\_\+\+CLIENT}}~6
+\item 
+\#define \mbox{\hyperlink{persist_8h_a22c5e2855142e9320f51cfa0ca8191b8}{read\+\_\+e}}(f,  b,  c)~if(fread(b, 1, c, f) != c)\{ goto error; \}
+\item 
+\#define \mbox{\hyperlink{persist_8h_a2eda266f936d2b84b984f1920a56b40d}{write\+\_\+e}}(f,  b,  c)~if(fwrite(b, 1, c, f) != c)\{ goto error; \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{persist_8h_aed08a467dec926706596098d1c33a113}{persist\+\_\+\+\_\+read\+\_\+string\+\_\+len}} (FILE $\ast$db\+\_\+fptr, char $\ast$$\ast$str, uint16\+\_\+t len)
+\item 
+int \mbox{\hyperlink{persist_8h_a154ad39db26a5b7402f18d54a0281772}{persist\+\_\+\+\_\+read\+\_\+string}} (FILE $\ast$db\+\_\+fptr, char $\ast$$\ast$str)
+\item 
+int \mbox{\hyperlink{persist_8h_abb934a2778022242ec60aabefedcb287}{persist\+\_\+\+\_\+chunk\+\_\+header\+\_\+read}} (FILE $\ast$db\+\_\+fptr, uint32\+\_\+t $\ast$chunk, uint32\+\_\+t $\ast$length)
+\item 
+int \mbox{\hyperlink{persist_8h_a00e7345124cfb081a865ea3643e02b41}{persist\+\_\+\+\_\+chunk\+\_\+header\+\_\+read\+\_\+v234}} (FILE $\ast$db\+\_\+fptr, uint32\+\_\+t $\ast$chunk, uint32\+\_\+t $\ast$length)
+\item 
+int \mbox{\hyperlink{persist_8h_a0175ef6aecbd7895e8c0bb8dae1cc897}{persist\+\_\+\+\_\+chunk\+\_\+cfg\+\_\+read\+\_\+v234}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structPF__cfg}{PF\+\_\+cfg}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_a9db68e75a54f213b0a24b01e841af43a}{persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+read\+\_\+v234}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__client}{P\+\_\+client}} $\ast$chunk, uint32\+\_\+t db\+\_\+version)
+\item 
+int \mbox{\hyperlink{persist_8h_a76e0ee6639afad6efc57075493b37a0e}{persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+msg\+\_\+read\+\_\+v234}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__client__msg}{P\+\_\+client\+\_\+msg}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_acaaff73e4759c37dae71ef705f87926f}{persist\+\_\+\+\_\+chunk\+\_\+msg\+\_\+store\+\_\+read\+\_\+v234}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__msg__store}{P\+\_\+msg\+\_\+store}} $\ast$chunk, uint32\+\_\+t db\+\_\+version)
+\item 
+int \mbox{\hyperlink{persist_8h_a4a54d0aff74ff8f15ff29fee9b978b53}{persist\+\_\+\+\_\+chunk\+\_\+retain\+\_\+read\+\_\+v234}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__retain}{P\+\_\+retain}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_a478b896cd170ec896cdad0116d73dccf}{persist\+\_\+\+\_\+chunk\+\_\+sub\+\_\+read\+\_\+v234}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__sub}{P\+\_\+sub}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_aa4e7f90e79dae08c1f438d077a05058f}{persist\+\_\+\+\_\+chunk\+\_\+header\+\_\+read\+\_\+v56}} (FILE $\ast$db\+\_\+fptr, uint32\+\_\+t $\ast$chunk, uint32\+\_\+t $\ast$length)
+\item 
+int \mbox{\hyperlink{persist_8h_a18888d9d8137331083385ba10db51cc2}{persist\+\_\+\+\_\+chunk\+\_\+cfg\+\_\+read\+\_\+v56}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structPF__cfg}{PF\+\_\+cfg}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_a8e196341997192debfd4f21062704802}{persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+read\+\_\+v56}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__client}{P\+\_\+client}} $\ast$chunk, uint32\+\_\+t db\+\_\+version)
+\item 
+int \mbox{\hyperlink{persist_8h_aa26b505a5f54cab7dfd923cffae22037}{persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+msg\+\_\+read\+\_\+v56}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__client__msg}{P\+\_\+client\+\_\+msg}} $\ast$chunk, uint32\+\_\+t length)
+\item 
+int \mbox{\hyperlink{persist_8h_a8df48ab0aa40cd577d1bac4d839a940e}{persist\+\_\+\+\_\+chunk\+\_\+msg\+\_\+store\+\_\+read\+\_\+v56}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__msg__store}{P\+\_\+msg\+\_\+store}} $\ast$chunk, uint32\+\_\+t length)
+\item 
+int \mbox{\hyperlink{persist_8h_a31d156ee9df1a3a4790e8ccf101c60c1}{persist\+\_\+\+\_\+chunk\+\_\+retain\+\_\+read\+\_\+v56}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__retain}{P\+\_\+retain}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_ac6c37888a6d32dddb9efb4e6963b1574}{persist\+\_\+\+\_\+chunk\+\_\+sub\+\_\+read\+\_\+v56}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__sub}{P\+\_\+sub}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_a8c5ee394d2e30a0b84a4e6bc81c96e14}{persist\+\_\+\+\_\+chunk\+\_\+cfg\+\_\+write\+\_\+v6}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structPF__cfg}{PF\+\_\+cfg}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_a95a14d55a4457367298f9c0505ea8836}{persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+write\+\_\+v6}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__client}{P\+\_\+client}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_a7501f41ab423f137e17ae44e067db3d6}{persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+msg\+\_\+write\+\_\+v6}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__client__msg}{P\+\_\+client\+\_\+msg}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_aad772b7f143003d37bfa08ab0a67448a}{persist\+\_\+\+\_\+chunk\+\_\+message\+\_\+store\+\_\+write\+\_\+v6}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__msg__store}{P\+\_\+msg\+\_\+store}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_acdfb74411d97c4bf766ac9c35e301a75}{persist\+\_\+\+\_\+chunk\+\_\+retain\+\_\+write\+\_\+v6}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__retain}{P\+\_\+retain}} $\ast$chunk)
+\item 
+int \mbox{\hyperlink{persist_8h_a21aa4b59887f0593aaa24d693095d6d9}{persist\+\_\+\+\_\+chunk\+\_\+sub\+\_\+write\+\_\+v6}} (FILE $\ast$db\+\_\+fptr, struct \mbox{\hyperlink{structP__sub}{P\+\_\+sub}} $\ast$chunk)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const unsigned char \mbox{\hyperlink{persist_8h_ae4432ac25413e52d0496c4fd67bed777}{magic}} \mbox{[}15\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{persist_8h_a134fb5c107eba5ec3a0591e8b34e0500}\label{persist_8h_a134fb5c107eba5ec3a0591e8b34e0500}} 
+\index{persist.h@{persist.h}!DB\_CHUNK\_CFG@{DB\_CHUNK\_CFG}}
+\index{DB\_CHUNK\_CFG@{DB\_CHUNK\_CFG}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{DB\_CHUNK\_CFG}{DB\_CHUNK\_CFG}}
+{\footnotesize\ttfamily \#define DB\+\_\+\+CHUNK\+\_\+\+CFG~1}
+
+\mbox{\Hypertarget{persist_8h_a67eb63dd1fe440d8a0191cfa7bacd643}\label{persist_8h_a67eb63dd1fe440d8a0191cfa7bacd643}} 
+\index{persist.h@{persist.h}!DB\_CHUNK\_CLIENT@{DB\_CHUNK\_CLIENT}}
+\index{DB\_CHUNK\_CLIENT@{DB\_CHUNK\_CLIENT}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{DB\_CHUNK\_CLIENT}{DB\_CHUNK\_CLIENT}}
+{\footnotesize\ttfamily \#define DB\+\_\+\+CHUNK\+\_\+\+CLIENT~6}
+
+\mbox{\Hypertarget{persist_8h_ad88167f3a9e9d8e1cee9081e534e12c1}\label{persist_8h_ad88167f3a9e9d8e1cee9081e534e12c1}} 
+\index{persist.h@{persist.h}!DB\_CHUNK\_CLIENT\_MSG@{DB\_CHUNK\_CLIENT\_MSG}}
+\index{DB\_CHUNK\_CLIENT\_MSG@{DB\_CHUNK\_CLIENT\_MSG}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{DB\_CHUNK\_CLIENT\_MSG}{DB\_CHUNK\_CLIENT\_MSG}}
+{\footnotesize\ttfamily \#define DB\+\_\+\+CHUNK\+\_\+\+CLIENT\+\_\+\+MSG~3}
+
+\mbox{\Hypertarget{persist_8h_a166b361a4b43546e1f58062a6a82892f}\label{persist_8h_a166b361a4b43546e1f58062a6a82892f}} 
+\index{persist.h@{persist.h}!DB\_CHUNK\_MSG\_STORE@{DB\_CHUNK\_MSG\_STORE}}
+\index{DB\_CHUNK\_MSG\_STORE@{DB\_CHUNK\_MSG\_STORE}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{DB\_CHUNK\_MSG\_STORE}{DB\_CHUNK\_MSG\_STORE}}
+{\footnotesize\ttfamily \#define DB\+\_\+\+CHUNK\+\_\+\+MSG\+\_\+\+STORE~2}
+
+\mbox{\Hypertarget{persist_8h_a30ba085d62327654249ee914a073ed5e}\label{persist_8h_a30ba085d62327654249ee914a073ed5e}} 
+\index{persist.h@{persist.h}!DB\_CHUNK\_RETAIN@{DB\_CHUNK\_RETAIN}}
+\index{DB\_CHUNK\_RETAIN@{DB\_CHUNK\_RETAIN}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{DB\_CHUNK\_RETAIN}{DB\_CHUNK\_RETAIN}}
+{\footnotesize\ttfamily \#define DB\+\_\+\+CHUNK\+\_\+\+RETAIN~4}
+
+\mbox{\Hypertarget{persist_8h_a416359135e90043470fd06f74858daa9}\label{persist_8h_a416359135e90043470fd06f74858daa9}} 
+\index{persist.h@{persist.h}!DB\_CHUNK\_SUB@{DB\_CHUNK\_SUB}}
+\index{DB\_CHUNK\_SUB@{DB\_CHUNK\_SUB}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{DB\_CHUNK\_SUB}{DB\_CHUNK\_SUB}}
+{\footnotesize\ttfamily \#define DB\+\_\+\+CHUNK\+\_\+\+SUB~5}
+
+\mbox{\Hypertarget{persist_8h_a1447016fd9d7c51220938f7a8b3e04c4}\label{persist_8h_a1447016fd9d7c51220938f7a8b3e04c4}} 
+\index{persist.h@{persist.h}!MOSQ\_DB\_VERSION@{MOSQ\_DB\_VERSION}}
+\index{MOSQ\_DB\_VERSION@{MOSQ\_DB\_VERSION}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{MOSQ\_DB\_VERSION}{MOSQ\_DB\_VERSION}}
+{\footnotesize\ttfamily \#define MOSQ\+\_\+\+DB\+\_\+\+VERSION~6}
+
+\mbox{\Hypertarget{persist_8h_a22c5e2855142e9320f51cfa0ca8191b8}\label{persist_8h_a22c5e2855142e9320f51cfa0ca8191b8}} 
+\index{persist.h@{persist.h}!read\_e@{read\_e}}
+\index{read\_e@{read\_e}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{read\_e}{read\_e}}
+{\footnotesize\ttfamily \#define read\+\_\+e(\begin{DoxyParamCaption}\item[{}]{f,  }\item[{}]{b,  }\item[{}]{c }\end{DoxyParamCaption})~if(fread(b, 1, c, f) != c)\{ goto error; \}}
+
+\mbox{\Hypertarget{persist_8h_a2eda266f936d2b84b984f1920a56b40d}\label{persist_8h_a2eda266f936d2b84b984f1920a56b40d}} 
+\index{persist.h@{persist.h}!write\_e@{write\_e}}
+\index{write\_e@{write\_e}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{write\_e}{write\_e}}
+{\footnotesize\ttfamily \#define write\+\_\+e(\begin{DoxyParamCaption}\item[{}]{f,  }\item[{}]{b,  }\item[{}]{c }\end{DoxyParamCaption})~if(fwrite(b, 1, c, f) != c)\{ goto error; \}}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{persist_8h_a0175ef6aecbd7895e8c0bb8dae1cc897}\label{persist_8h_a0175ef6aecbd7895e8c0bb8dae1cc897}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_cfg\_read\_v234@{persist\_\_chunk\_cfg\_read\_v234}}
+\index{persist\_\_chunk\_cfg\_read\_v234@{persist\_\_chunk\_cfg\_read\_v234}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_cfg\_read\_v234()}{persist\_\_chunk\_cfg\_read\_v234()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+cfg\+\_\+read\+\_\+v234 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structPF__cfg}{PF\+\_\+cfg}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a18888d9d8137331083385ba10db51cc2}\label{persist_8h_a18888d9d8137331083385ba10db51cc2}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_cfg\_read\_v56@{persist\_\_chunk\_cfg\_read\_v56}}
+\index{persist\_\_chunk\_cfg\_read\_v56@{persist\_\_chunk\_cfg\_read\_v56}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_cfg\_read\_v56()}{persist\_\_chunk\_cfg\_read\_v56()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+cfg\+\_\+read\+\_\+v56 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structPF__cfg}{PF\+\_\+cfg}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a8c5ee394d2e30a0b84a4e6bc81c96e14}\label{persist_8h_a8c5ee394d2e30a0b84a4e6bc81c96e14}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_cfg\_write\_v6@{persist\_\_chunk\_cfg\_write\_v6}}
+\index{persist\_\_chunk\_cfg\_write\_v6@{persist\_\_chunk\_cfg\_write\_v6}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_cfg\_write\_v6()}{persist\_\_chunk\_cfg\_write\_v6()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+cfg\+\_\+write\+\_\+v6 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structPF__cfg}{PF\+\_\+cfg}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a76e0ee6639afad6efc57075493b37a0e}\label{persist_8h_a76e0ee6639afad6efc57075493b37a0e}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_client\_msg\_read\_v234@{persist\_\_chunk\_client\_msg\_read\_v234}}
+\index{persist\_\_chunk\_client\_msg\_read\_v234@{persist\_\_chunk\_client\_msg\_read\_v234}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_client\_msg\_read\_v234()}{persist\_\_chunk\_client\_msg\_read\_v234()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+msg\+\_\+read\+\_\+v234 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__client__msg}{P\+\_\+client\+\_\+msg}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_aa26b505a5f54cab7dfd923cffae22037}\label{persist_8h_aa26b505a5f54cab7dfd923cffae22037}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_client\_msg\_read\_v56@{persist\_\_chunk\_client\_msg\_read\_v56}}
+\index{persist\_\_chunk\_client\_msg\_read\_v56@{persist\_\_chunk\_client\_msg\_read\_v56}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_client\_msg\_read\_v56()}{persist\_\_chunk\_client\_msg\_read\_v56()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+msg\+\_\+read\+\_\+v56 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__client__msg}{P\+\_\+client\+\_\+msg}} $\ast$}]{chunk,  }\item[{uint32\+\_\+t}]{length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a7501f41ab423f137e17ae44e067db3d6}\label{persist_8h_a7501f41ab423f137e17ae44e067db3d6}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_client\_msg\_write\_v6@{persist\_\_chunk\_client\_msg\_write\_v6}}
+\index{persist\_\_chunk\_client\_msg\_write\_v6@{persist\_\_chunk\_client\_msg\_write\_v6}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_client\_msg\_write\_v6()}{persist\_\_chunk\_client\_msg\_write\_v6()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+msg\+\_\+write\+\_\+v6 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__client__msg}{P\+\_\+client\+\_\+msg}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a9db68e75a54f213b0a24b01e841af43a}\label{persist_8h_a9db68e75a54f213b0a24b01e841af43a}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_client\_read\_v234@{persist\_\_chunk\_client\_read\_v234}}
+\index{persist\_\_chunk\_client\_read\_v234@{persist\_\_chunk\_client\_read\_v234}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_client\_read\_v234()}{persist\_\_chunk\_client\_read\_v234()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+read\+\_\+v234 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__client}{P\+\_\+client}} $\ast$}]{chunk,  }\item[{uint32\+\_\+t}]{db\+\_\+version }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a8e196341997192debfd4f21062704802}\label{persist_8h_a8e196341997192debfd4f21062704802}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_client\_read\_v56@{persist\_\_chunk\_client\_read\_v56}}
+\index{persist\_\_chunk\_client\_read\_v56@{persist\_\_chunk\_client\_read\_v56}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_client\_read\_v56()}{persist\_\_chunk\_client\_read\_v56()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+read\+\_\+v56 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__client}{P\+\_\+client}} $\ast$}]{chunk,  }\item[{uint32\+\_\+t}]{db\+\_\+version }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a95a14d55a4457367298f9c0505ea8836}\label{persist_8h_a95a14d55a4457367298f9c0505ea8836}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_client\_write\_v6@{persist\_\_chunk\_client\_write\_v6}}
+\index{persist\_\_chunk\_client\_write\_v6@{persist\_\_chunk\_client\_write\_v6}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_client\_write\_v6()}{persist\_\_chunk\_client\_write\_v6()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+client\+\_\+write\+\_\+v6 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__client}{P\+\_\+client}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_abb934a2778022242ec60aabefedcb287}\label{persist_8h_abb934a2778022242ec60aabefedcb287}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_header\_read@{persist\_\_chunk\_header\_read}}
+\index{persist\_\_chunk\_header\_read@{persist\_\_chunk\_header\_read}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_header\_read()}{persist\_\_chunk\_header\_read()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+header\+\_\+read (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{uint32\+\_\+t $\ast$}]{chunk,  }\item[{uint32\+\_\+t $\ast$}]{length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a00e7345124cfb081a865ea3643e02b41}\label{persist_8h_a00e7345124cfb081a865ea3643e02b41}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_header\_read\_v234@{persist\_\_chunk\_header\_read\_v234}}
+\index{persist\_\_chunk\_header\_read\_v234@{persist\_\_chunk\_header\_read\_v234}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_header\_read\_v234()}{persist\_\_chunk\_header\_read\_v234()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+header\+\_\+read\+\_\+v234 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{uint32\+\_\+t $\ast$}]{chunk,  }\item[{uint32\+\_\+t $\ast$}]{length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_aa4e7f90e79dae08c1f438d077a05058f}\label{persist_8h_aa4e7f90e79dae08c1f438d077a05058f}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_header\_read\_v56@{persist\_\_chunk\_header\_read\_v56}}
+\index{persist\_\_chunk\_header\_read\_v56@{persist\_\_chunk\_header\_read\_v56}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_header\_read\_v56()}{persist\_\_chunk\_header\_read\_v56()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+header\+\_\+read\+\_\+v56 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{uint32\+\_\+t $\ast$}]{chunk,  }\item[{uint32\+\_\+t $\ast$}]{length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_aad772b7f143003d37bfa08ab0a67448a}\label{persist_8h_aad772b7f143003d37bfa08ab0a67448a}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_message\_store\_write\_v6@{persist\_\_chunk\_message\_store\_write\_v6}}
+\index{persist\_\_chunk\_message\_store\_write\_v6@{persist\_\_chunk\_message\_store\_write\_v6}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_message\_store\_write\_v6()}{persist\_\_chunk\_message\_store\_write\_v6()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+message\+\_\+store\+\_\+write\+\_\+v6 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__msg__store}{P\+\_\+msg\+\_\+store}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_acaaff73e4759c37dae71ef705f87926f}\label{persist_8h_acaaff73e4759c37dae71ef705f87926f}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_msg\_store\_read\_v234@{persist\_\_chunk\_msg\_store\_read\_v234}}
+\index{persist\_\_chunk\_msg\_store\_read\_v234@{persist\_\_chunk\_msg\_store\_read\_v234}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_msg\_store\_read\_v234()}{persist\_\_chunk\_msg\_store\_read\_v234()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+msg\+\_\+store\+\_\+read\+\_\+v234 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__msg__store}{P\+\_\+msg\+\_\+store}} $\ast$}]{chunk,  }\item[{uint32\+\_\+t}]{db\+\_\+version }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a8df48ab0aa40cd577d1bac4d839a940e}\label{persist_8h_a8df48ab0aa40cd577d1bac4d839a940e}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_msg\_store\_read\_v56@{persist\_\_chunk\_msg\_store\_read\_v56}}
+\index{persist\_\_chunk\_msg\_store\_read\_v56@{persist\_\_chunk\_msg\_store\_read\_v56}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_msg\_store\_read\_v56()}{persist\_\_chunk\_msg\_store\_read\_v56()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+msg\+\_\+store\+\_\+read\+\_\+v56 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__msg__store}{P\+\_\+msg\+\_\+store}} $\ast$}]{chunk,  }\item[{uint32\+\_\+t}]{length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a4a54d0aff74ff8f15ff29fee9b978b53}\label{persist_8h_a4a54d0aff74ff8f15ff29fee9b978b53}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_retain\_read\_v234@{persist\_\_chunk\_retain\_read\_v234}}
+\index{persist\_\_chunk\_retain\_read\_v234@{persist\_\_chunk\_retain\_read\_v234}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_retain\_read\_v234()}{persist\_\_chunk\_retain\_read\_v234()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+retain\+\_\+read\+\_\+v234 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__retain}{P\+\_\+retain}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a31d156ee9df1a3a4790e8ccf101c60c1}\label{persist_8h_a31d156ee9df1a3a4790e8ccf101c60c1}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_retain\_read\_v56@{persist\_\_chunk\_retain\_read\_v56}}
+\index{persist\_\_chunk\_retain\_read\_v56@{persist\_\_chunk\_retain\_read\_v56}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_retain\_read\_v56()}{persist\_\_chunk\_retain\_read\_v56()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+retain\+\_\+read\+\_\+v56 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__retain}{P\+\_\+retain}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_acdfb74411d97c4bf766ac9c35e301a75}\label{persist_8h_acdfb74411d97c4bf766ac9c35e301a75}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_retain\_write\_v6@{persist\_\_chunk\_retain\_write\_v6}}
+\index{persist\_\_chunk\_retain\_write\_v6@{persist\_\_chunk\_retain\_write\_v6}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_retain\_write\_v6()}{persist\_\_chunk\_retain\_write\_v6()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+retain\+\_\+write\+\_\+v6 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__retain}{P\+\_\+retain}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a478b896cd170ec896cdad0116d73dccf}\label{persist_8h_a478b896cd170ec896cdad0116d73dccf}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_sub\_read\_v234@{persist\_\_chunk\_sub\_read\_v234}}
+\index{persist\_\_chunk\_sub\_read\_v234@{persist\_\_chunk\_sub\_read\_v234}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_sub\_read\_v234()}{persist\_\_chunk\_sub\_read\_v234()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+sub\+\_\+read\+\_\+v234 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__sub}{P\+\_\+sub}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_ac6c37888a6d32dddb9efb4e6963b1574}\label{persist_8h_ac6c37888a6d32dddb9efb4e6963b1574}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_sub\_read\_v56@{persist\_\_chunk\_sub\_read\_v56}}
+\index{persist\_\_chunk\_sub\_read\_v56@{persist\_\_chunk\_sub\_read\_v56}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_sub\_read\_v56()}{persist\_\_chunk\_sub\_read\_v56()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+sub\+\_\+read\+\_\+v56 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__sub}{P\+\_\+sub}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a21aa4b59887f0593aaa24d693095d6d9}\label{persist_8h_a21aa4b59887f0593aaa24d693095d6d9}} 
+\index{persist.h@{persist.h}!persist\_\_chunk\_sub\_write\_v6@{persist\_\_chunk\_sub\_write\_v6}}
+\index{persist\_\_chunk\_sub\_write\_v6@{persist\_\_chunk\_sub\_write\_v6}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_chunk\_sub\_write\_v6()}{persist\_\_chunk\_sub\_write\_v6()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+chunk\+\_\+sub\+\_\+write\+\_\+v6 (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{struct \mbox{\hyperlink{structP__sub}{P\+\_\+sub}} $\ast$}]{chunk }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_a154ad39db26a5b7402f18d54a0281772}\label{persist_8h_a154ad39db26a5b7402f18d54a0281772}} 
+\index{persist.h@{persist.h}!persist\_\_read\_string@{persist\_\_read\_string}}
+\index{persist\_\_read\_string@{persist\_\_read\_string}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_read\_string()}{persist\_\_read\_string()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+read\+\_\+string (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{char $\ast$$\ast$}]{str }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{persist_8h_aed08a467dec926706596098d1c33a113}\label{persist_8h_aed08a467dec926706596098d1c33a113}} 
+\index{persist.h@{persist.h}!persist\_\_read\_string\_len@{persist\_\_read\_string\_len}}
+\index{persist\_\_read\_string\_len@{persist\_\_read\_string\_len}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{persist\_\_read\_string\_len()}{persist\_\_read\_string\_len()}}
+{\footnotesize\ttfamily int persist\+\_\+\+\_\+read\+\_\+string\+\_\+len (\begin{DoxyParamCaption}\item[{FILE $\ast$}]{db\+\_\+fptr,  }\item[{char $\ast$$\ast$}]{str,  }\item[{uint16\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{persist_8h_ae4432ac25413e52d0496c4fd67bed777}\label{persist_8h_ae4432ac25413e52d0496c4fd67bed777}} 
+\index{persist.h@{persist.h}!magic@{magic}}
+\index{magic@{magic}!persist.h@{persist.h}}
+\doxysubsubsection{\texorpdfstring{magic}{magic}}
+{\footnotesize\ttfamily const unsigned char magic\mbox{[}15\mbox{]}\hspace{0.3cm}{\ttfamily [extern]}}
+

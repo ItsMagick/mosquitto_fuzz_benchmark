@@ -104,3 +104,10 @@ obj-*/
 
 # Others
 tmp/
+
+# IDEA generated files
+.idea/
+.idea_modules/
+*.iml
+*.iws
+*.ipr

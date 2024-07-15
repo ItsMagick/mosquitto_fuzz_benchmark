@@ -1,0 +1,179 @@
+\hypertarget{structmosquitto__msg__store}{}\doxysection{mosquitto\+\_\+msg\+\_\+store Struct Reference}
+\label{structmosquitto__msg__store}\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+
+
+{\ttfamily \#include $<$mosquitto\+\_\+broker\+\_\+internal.\+h$>$}
+
+
+
+Collaboration diagram for mosquitto\+\_\+msg\+\_\+store\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structmosquitto__msg__store__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$ \mbox{\hyperlink{structmosquitto__msg__store_adc0c2cef8a8fba862810c5f0acf70777}{next}}
+\item 
+struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$ \mbox{\hyperlink{structmosquitto__msg__store_afebce6488f474153ec48988055270e92}{prev}}
+\item 
+\mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\+\_\+t}} \mbox{\hyperlink{structmosquitto__msg__store_ac5b098725701e2c7018775e5cd9eb1cc}{db\+\_\+id}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto__msg__store_a63a59debb4a78b52c937c8e7129b214c}{source\+\_\+id}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto__msg__store_a59551481591cda2be0300b380ba5ddbb}{source\+\_\+username}}
+\item 
+struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}} $\ast$ \mbox{\hyperlink{structmosquitto__msg__store_aa84b35f1cd4d43fbc5e5cd4a4a0f5048}{source\+\_\+listener}}
+\item 
+char $\ast$$\ast$ \mbox{\hyperlink{structmosquitto__msg__store_a9a0bdf0801fb982110d423428a8701d9}{dest\+\_\+ids}}
+\item 
+int \mbox{\hyperlink{structmosquitto__msg__store_a1056110537a89222bc155371a223ae2d}{dest\+\_\+id\+\_\+count}}
+\item 
+int \mbox{\hyperlink{structmosquitto__msg__store_a693f049167450b7f65c23da58b4b0ff5}{ref\+\_\+count}}
+\item 
+char $\ast$ \mbox{\hyperlink{structmosquitto__msg__store_a9f27c2318268a2034571e2bbe91f69c6}{topic}}
+\item 
+mosquitto\+\_\+property $\ast$ \mbox{\hyperlink{structmosquitto__msg__store_abde7876068f0b7e8e639e6f5837485ac}{properties}}
+\item 
+void $\ast$ \mbox{\hyperlink{structmosquitto__msg__store_ad9f78d099469a4300ca282d895855f72}{payload}}
+\item 
+time\+\_\+t \mbox{\hyperlink{structmosquitto__msg__store_a92b43e538b51002a1d3f1329a1fe464c}{message\+\_\+expiry\+\_\+time}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structmosquitto__msg__store_a64d3652d6f85f1eb574f7b2c2df45306}{payloadlen}}
+\item 
+enum \mbox{\hyperlink{mosquitto__broker__internal_8h_a66f3ae83ec017eab76353877d44476ae}{mosquitto\+\_\+msg\+\_\+origin}} \mbox{\hyperlink{structmosquitto__msg__store_a9c1be8b07fc8da5ea2e4eab468c01cf8}{origin}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structmosquitto__msg__store_adb2bdfafa23f89fd177aadfd42e78a51}{source\+\_\+mid}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structmosquitto__msg__store_a5d510bbc415f3e83ad2ff640ea98e93b}{mid}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structmosquitto__msg__store_ad277fe117cd8e5f97fb043c00ca66964}{qos}}
+\item 
+bool \mbox{\hyperlink{structmosquitto__msg__store_a2c3e7f1461c037f0d38c88f3bb3073fb}{retain}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Field Documentation}
+\mbox{\Hypertarget{structmosquitto__msg__store_ac5b098725701e2c7018775e5cd9eb1cc}\label{structmosquitto__msg__store_ac5b098725701e2c7018775e5cd9eb1cc}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!db\_id@{db\_id}}
+\index{db\_id@{db\_id}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{db\_id}{db\_id}}
+{\footnotesize\ttfamily \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\+\_\+t}} mosquitto\+\_\+msg\+\_\+store\+::db\+\_\+id}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a1056110537a89222bc155371a223ae2d}\label{structmosquitto__msg__store_a1056110537a89222bc155371a223ae2d}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!dest\_id\_count@{dest\_id\_count}}
+\index{dest\_id\_count@{dest\_id\_count}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{dest\_id\_count}{dest\_id\_count}}
+{\footnotesize\ttfamily int mosquitto\+\_\+msg\+\_\+store\+::dest\+\_\+id\+\_\+count}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a9a0bdf0801fb982110d423428a8701d9}\label{structmosquitto__msg__store_a9a0bdf0801fb982110d423428a8701d9}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!dest\_ids@{dest\_ids}}
+\index{dest\_ids@{dest\_ids}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{dest\_ids}{dest\_ids}}
+{\footnotesize\ttfamily char$\ast$$\ast$ mosquitto\+\_\+msg\+\_\+store\+::dest\+\_\+ids}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a92b43e538b51002a1d3f1329a1fe464c}\label{structmosquitto__msg__store_a92b43e538b51002a1d3f1329a1fe464c}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!message\_expiry\_time@{message\_expiry\_time}}
+\index{message\_expiry\_time@{message\_expiry\_time}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{message\_expiry\_time}{message\_expiry\_time}}
+{\footnotesize\ttfamily time\+\_\+t mosquitto\+\_\+msg\+\_\+store\+::message\+\_\+expiry\+\_\+time}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a5d510bbc415f3e83ad2ff640ea98e93b}\label{structmosquitto__msg__store_a5d510bbc415f3e83ad2ff640ea98e93b}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!mid@{mid}}
+\index{mid@{mid}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{mid}{mid}}
+{\footnotesize\ttfamily uint16\+\_\+t mosquitto\+\_\+msg\+\_\+store\+::mid}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_adc0c2cef8a8fba862810c5f0acf70777}\label{structmosquitto__msg__store_adc0c2cef8a8fba862810c5f0acf70777}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!next@{next}}
+\index{next@{next}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{next}{next}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}}$\ast$ mosquitto\+\_\+msg\+\_\+store\+::next}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a9c1be8b07fc8da5ea2e4eab468c01cf8}\label{structmosquitto__msg__store_a9c1be8b07fc8da5ea2e4eab468c01cf8}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!origin@{origin}}
+\index{origin@{origin}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{origin}{origin}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{mosquitto__broker__internal_8h_a66f3ae83ec017eab76353877d44476ae}{mosquitto\+\_\+msg\+\_\+origin}} mosquitto\+\_\+msg\+\_\+store\+::origin}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_ad9f78d099469a4300ca282d895855f72}\label{structmosquitto__msg__store_ad9f78d099469a4300ca282d895855f72}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!payload@{payload}}
+\index{payload@{payload}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{payload}{payload}}
+{\footnotesize\ttfamily void$\ast$ mosquitto\+\_\+msg\+\_\+store\+::payload}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a64d3652d6f85f1eb574f7b2c2df45306}\label{structmosquitto__msg__store_a64d3652d6f85f1eb574f7b2c2df45306}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!payloadlen@{payloadlen}}
+\index{payloadlen@{payloadlen}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{payloadlen}{payloadlen}}
+{\footnotesize\ttfamily uint32\+\_\+t mosquitto\+\_\+msg\+\_\+store\+::payloadlen}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_afebce6488f474153ec48988055270e92}\label{structmosquitto__msg__store_afebce6488f474153ec48988055270e92}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!prev@{prev}}
+\index{prev@{prev}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{prev}{prev}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}}$\ast$ mosquitto\+\_\+msg\+\_\+store\+::prev}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_abde7876068f0b7e8e639e6f5837485ac}\label{structmosquitto__msg__store_abde7876068f0b7e8e639e6f5837485ac}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!properties@{properties}}
+\index{properties@{properties}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{properties}{properties}}
+{\footnotesize\ttfamily mosquitto\+\_\+property$\ast$ mosquitto\+\_\+msg\+\_\+store\+::properties}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_ad277fe117cd8e5f97fb043c00ca66964}\label{structmosquitto__msg__store_ad277fe117cd8e5f97fb043c00ca66964}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!qos@{qos}}
+\index{qos@{qos}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{qos}{qos}}
+{\footnotesize\ttfamily uint8\+\_\+t mosquitto\+\_\+msg\+\_\+store\+::qos}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a693f049167450b7f65c23da58b4b0ff5}\label{structmosquitto__msg__store_a693f049167450b7f65c23da58b4b0ff5}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!ref\_count@{ref\_count}}
+\index{ref\_count@{ref\_count}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{ref\_count}{ref\_count}}
+{\footnotesize\ttfamily int mosquitto\+\_\+msg\+\_\+store\+::ref\+\_\+count}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a2c3e7f1461c037f0d38c88f3bb3073fb}\label{structmosquitto__msg__store_a2c3e7f1461c037f0d38c88f3bb3073fb}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!retain@{retain}}
+\index{retain@{retain}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{retain}{retain}}
+{\footnotesize\ttfamily bool mosquitto\+\_\+msg\+\_\+store\+::retain}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a63a59debb4a78b52c937c8e7129b214c}\label{structmosquitto__msg__store_a63a59debb4a78b52c937c8e7129b214c}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!source\_id@{source\_id}}
+\index{source\_id@{source\_id}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{source\_id}{source\_id}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+msg\+\_\+store\+::source\+\_\+id}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_aa84b35f1cd4d43fbc5e5cd4a4a0f5048}\label{structmosquitto__msg__store_aa84b35f1cd4d43fbc5e5cd4a4a0f5048}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!source\_listener@{source\_listener}}
+\index{source\_listener@{source\_listener}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{source\_listener}{source\_listener}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structmosquitto____listener}{mosquitto\+\_\+\+\_\+listener}}$\ast$ mosquitto\+\_\+msg\+\_\+store\+::source\+\_\+listener}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_adb2bdfafa23f89fd177aadfd42e78a51}\label{structmosquitto__msg__store_adb2bdfafa23f89fd177aadfd42e78a51}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!source\_mid@{source\_mid}}
+\index{source\_mid@{source\_mid}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{source\_mid}{source\_mid}}
+{\footnotesize\ttfamily uint16\+\_\+t mosquitto\+\_\+msg\+\_\+store\+::source\+\_\+mid}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a59551481591cda2be0300b380ba5ddbb}\label{structmosquitto__msg__store_a59551481591cda2be0300b380ba5ddbb}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!source\_username@{source\_username}}
+\index{source\_username@{source\_username}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{source\_username}{source\_username}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+msg\+\_\+store\+::source\+\_\+username}
+
+\mbox{\Hypertarget{structmosquitto__msg__store_a9f27c2318268a2034571e2bbe91f69c6}\label{structmosquitto__msg__store_a9f27c2318268a2034571e2bbe91f69c6}} 
+\index{mosquitto\_msg\_store@{mosquitto\_msg\_store}!topic@{topic}}
+\index{topic@{topic}!mosquitto\_msg\_store@{mosquitto\_msg\_store}}
+\doxysubsubsection{\texorpdfstring{topic}{topic}}
+{\footnotesize\ttfamily char$\ast$ mosquitto\+\_\+msg\+\_\+store\+::topic}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{mosquitto__broker__internal_8h}{mosquitto\+\_\+broker\+\_\+internal.\+h}}\end{DoxyCompactItemize}

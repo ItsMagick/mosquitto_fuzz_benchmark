@@ -1,0 +1,502 @@
+\hypertarget{database_8c}{}\doxysection{database.\+c File Reference}
+\label{database_8c}\index{database.c@{database.c}}
+{\ttfamily \#include \char`\"{}config.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$utlist.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}mosquitto\+\_\+broker\+\_\+internal.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memory\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}send\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sys\+\_\+tree.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}time\+\_\+mosq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}util\+\_\+mosq.\+h\char`\"{}}\newline
+Include dependency graph for database.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{database_8c_ac03b712ad28109b088ebbb51523f7fe3}{db\+\_\+\+\_\+ready\+\_\+for\+\_\+flight}} (struct mosquitto $\ast$context, enum mosquitto\+\_\+msg\+\_\+direction dir, int qos)
+\item 
+bool \mbox{\hyperlink{database_8c_a56119c45e47972ba78b6aca8dc29c3c8}{db\+\_\+\+\_\+ready\+\_\+for\+\_\+queue}} (struct mosquitto $\ast$context, int qos, struct mosquitto\+\_\+msg\+\_\+data $\ast$msg\+\_\+data)
+\item 
+void \mbox{\hyperlink{database_8c_a6d63672fa37a93108edf4545e6cccd52}{db\+\_\+\+\_\+msg\+\_\+add\+\_\+to\+\_\+inflight\+\_\+stats}} (struct mosquitto\+\_\+msg\+\_\+data $\ast$msg\+\_\+data, struct \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\+\_\+client\+\_\+msg}} $\ast$msg)
+\item 
+void \mbox{\hyperlink{database_8c_abab52e14192657384d97de99f2f4921c}{db\+\_\+\+\_\+msg\+\_\+add\+\_\+to\+\_\+queued\+\_\+stats}} (struct mosquitto\+\_\+msg\+\_\+data $\ast$msg\+\_\+data, struct \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\+\_\+client\+\_\+msg}} $\ast$msg)
+\item 
+int \mbox{\hyperlink{database_8c_afd982e436d7ae9fbbddbacee40edb784}{db\+\_\+\+\_\+open}} (struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}} $\ast$config)
+\item 
+int \mbox{\hyperlink{database_8c_a806921a0a18c8155757d1761144abd11}{db\+\_\+\+\_\+close}} (void)
+\item 
+void \mbox{\hyperlink{database_8c_a941e290a450554c9b4bd60c29f593048}{db\+\_\+\+\_\+msg\+\_\+store\+\_\+add}} (struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$store)
+\item 
+void \mbox{\hyperlink{database_8c_ab58a039b20a5e919d0120b7d1553a965}{db\+\_\+\+\_\+msg\+\_\+store\+\_\+free}} (struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$store)
+\item 
+void \mbox{\hyperlink{database_8c_a79d64b7ae2ffec5baccc51a3aeb3d498}{db\+\_\+\+\_\+msg\+\_\+store\+\_\+remove}} (struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$store)
+\item 
+void \mbox{\hyperlink{database_8c_a6d27e2c9125af1d863bc9adc0a31d996}{db\+\_\+\+\_\+msg\+\_\+store\+\_\+clean}} (void)
+\item 
+void \mbox{\hyperlink{database_8c_adb07e3321cc494e256edbfbcc63f4389}{db\+\_\+\+\_\+msg\+\_\+store\+\_\+ref\+\_\+inc}} (struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$store)
+\item 
+void \mbox{\hyperlink{database_8c_a3a45878f82755958e42bb3117e358c71}{db\+\_\+\+\_\+msg\+\_\+store\+\_\+ref\+\_\+dec}} (struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$$\ast$store)
+\item 
+void \mbox{\hyperlink{database_8c_a0ea917185045812f186d6665272a7031}{db\+\_\+\+\_\+msg\+\_\+store\+\_\+compact}} (void)
+\item 
+void \mbox{\hyperlink{database_8c_a22c029e832d3b6ec8cf0336cd358b658}{db\+\_\+\+\_\+message\+\_\+dequeue\+\_\+first}} (struct mosquitto $\ast$context, struct mosquitto\+\_\+msg\+\_\+data $\ast$msg\+\_\+data)
+\item 
+int \mbox{\hyperlink{database_8c_a569a09aec637048e6ad118d9126cb709}{db\+\_\+\+\_\+message\+\_\+delete\+\_\+outgoing}} (struct mosquitto $\ast$context, uint16\+\_\+t mid, enum mosquitto\+\_\+msg\+\_\+state expect\+\_\+state, int qos)
+\item 
+int \mbox{\hyperlink{database_8c_a7241b3a255f4ab7717c6df5dce7f19ba}{db\+\_\+\+\_\+message\+\_\+insert}} (struct mosquitto $\ast$context, uint16\+\_\+t mid, enum mosquitto\+\_\+msg\+\_\+direction dir, uint8\+\_\+t qos, bool retain, struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$stored, mosquitto\+\_\+property $\ast$properties, bool update)
+\item 
+int \mbox{\hyperlink{database_8c_a8d3ac3acd47532c9a829144b0164153a}{db\+\_\+\+\_\+message\+\_\+update\+\_\+outgoing}} (struct mosquitto $\ast$context, uint16\+\_\+t mid, enum mosquitto\+\_\+msg\+\_\+state state, int qos)
+\item 
+int \mbox{\hyperlink{database_8c_a6865c472693cc50a3ddf358669d166b0}{db\+\_\+\+\_\+messages\+\_\+delete}} (struct mosquitto $\ast$context, bool force\+\_\+free)
+\item 
+int \mbox{\hyperlink{database_8c_ab120b99a2636e8c3861ef3ebe643b603}{db\+\_\+\+\_\+messages\+\_\+easy\+\_\+queue}} (struct mosquitto $\ast$context, const char $\ast$topic, uint8\+\_\+t qos, uint32\+\_\+t payloadlen, const void $\ast$payload, int retain, uint32\+\_\+t message\+\_\+expiry\+\_\+interval, mosquitto\+\_\+property $\ast$$\ast$properties)
+\item 
+int \mbox{\hyperlink{database_8c_a6c2c23ae04af4fcc5159944d0aea03cb}{db\+\_\+\+\_\+message\+\_\+store}} (const struct mosquitto $\ast$source, struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$stored, uint32\+\_\+t message\+\_\+expiry\+\_\+interval, \mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\+\_\+t}} store\+\_\+id, enum \mbox{\hyperlink{mosquitto__broker__internal_8h_a66f3ae83ec017eab76353877d44476ae}{mosquitto\+\_\+msg\+\_\+origin}} origin)
+\item 
+int \mbox{\hyperlink{database_8c_a600be4a0f8108802af9fd16d70534a0e}{db\+\_\+\+\_\+message\+\_\+store\+\_\+find}} (struct mosquitto $\ast$context, uint16\+\_\+t mid, struct \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\+\_\+client\+\_\+msg}} $\ast$$\ast$client\+\_\+msg)
+\item 
+int \mbox{\hyperlink{database_8c_aeb0e9392b9457432d0c1ceeadf5badcc}{db\+\_\+\+\_\+message\+\_\+reconnect\+\_\+reset}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{database_8c_aae15968596671733aa919d9bf10696dd}{db\+\_\+\+\_\+message\+\_\+remove\+\_\+incoming}} (struct mosquitto $\ast$context, uint16\+\_\+t mid)
+\item 
+int \mbox{\hyperlink{database_8c_a97a1d479248ba6a8677866fadd6b6f29}{db\+\_\+\+\_\+message\+\_\+release\+\_\+incoming}} (struct mosquitto $\ast$context, uint16\+\_\+t mid)
+\item 
+void \mbox{\hyperlink{database_8c_a3f1b92a1177dd21226eaa8b4b3e49e96}{db\+\_\+\+\_\+expire\+\_\+all\+\_\+messages}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{database_8c_a8a1a6154b691c0ab5bc547cb3c3d43bd}{db\+\_\+\+\_\+message\+\_\+write\+\_\+inflight\+\_\+out\+\_\+all}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{database_8c_ac7697ed8cfc046267006ce203337144a}{db\+\_\+\+\_\+message\+\_\+write\+\_\+inflight\+\_\+out\+\_\+latest}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{database_8c_a4cf2895355a7fe382dd1fecfd1497ad8}{db\+\_\+\+\_\+message\+\_\+write\+\_\+queued\+\_\+in}} (struct mosquitto $\ast$context)
+\item 
+int \mbox{\hyperlink{database_8c_a3c01cf8821046fc4fa15d41358ec5f57}{db\+\_\+\+\_\+message\+\_\+write\+\_\+queued\+\_\+out}} (struct mosquitto $\ast$context)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{database_8c_a806921a0a18c8155757d1761144abd11}\label{database_8c_a806921a0a18c8155757d1761144abd11}} 
+\index{database.c@{database.c}!db\_\_close@{db\_\_close}}
+\index{db\_\_close@{db\_\_close}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_close()}{db\_\_close()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+close (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a806921a0a18c8155757d1761144abd11_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{database_8c_a806921a0a18c8155757d1761144abd11_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a3f1b92a1177dd21226eaa8b4b3e49e96}\label{database_8c_a3f1b92a1177dd21226eaa8b4b3e49e96}} 
+\index{database.c@{database.c}!db\_\_expire\_all\_messages@{db\_\_expire\_all\_messages}}
+\index{db\_\_expire\_all\_messages@{db\_\_expire\_all\_messages}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_expire\_all\_messages()}{db\_\_expire\_all\_messages()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+expire\+\_\+all\+\_\+messages (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a3f1b92a1177dd21226eaa8b4b3e49e96_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a569a09aec637048e6ad118d9126cb709}\label{database_8c_a569a09aec637048e6ad118d9126cb709}} 
+\index{database.c@{database.c}!db\_\_message\_delete\_outgoing@{db\_\_message\_delete\_outgoing}}
+\index{db\_\_message\_delete\_outgoing@{db\_\_message\_delete\_outgoing}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_delete\_outgoing()}{db\_\_message\_delete\_outgoing()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+delete\+\_\+outgoing (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{uint16\+\_\+t}]{mid,  }\item[{enum mosquitto\+\_\+msg\+\_\+state}]{expect\+\_\+state,  }\item[{int}]{qos }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a569a09aec637048e6ad118d9126cb709_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a22c029e832d3b6ec8cf0336cd358b658}\label{database_8c_a22c029e832d3b6ec8cf0336cd358b658}} 
+\index{database.c@{database.c}!db\_\_message\_dequeue\_first@{db\_\_message\_dequeue\_first}}
+\index{db\_\_message\_dequeue\_first@{db\_\_message\_dequeue\_first}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_dequeue\_first()}{db\_\_message\_dequeue\_first()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+message\+\_\+dequeue\+\_\+first (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{struct mosquitto\+\_\+msg\+\_\+data $\ast$}]{msg\+\_\+data }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a22c029e832d3b6ec8cf0336cd358b658_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a7241b3a255f4ab7717c6df5dce7f19ba}\label{database_8c_a7241b3a255f4ab7717c6df5dce7f19ba}} 
+\index{database.c@{database.c}!db\_\_message\_insert@{db\_\_message\_insert}}
+\index{db\_\_message\_insert@{db\_\_message\_insert}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_insert()}{db\_\_message\_insert()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+insert (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{uint16\+\_\+t}]{mid,  }\item[{enum mosquitto\+\_\+msg\+\_\+direction}]{dir,  }\item[{uint8\+\_\+t}]{qos,  }\item[{bool}]{retain,  }\item[{struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$}]{stored,  }\item[{mosquitto\+\_\+property $\ast$}]{properties,  }\item[{bool}]{update }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a7241b3a255f4ab7717c6df5dce7f19ba_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_aeb0e9392b9457432d0c1ceeadf5badcc}\label{database_8c_aeb0e9392b9457432d0c1ceeadf5badcc}} 
+\index{database.c@{database.c}!db\_\_message\_reconnect\_reset@{db\_\_message\_reconnect\_reset}}
+\index{db\_\_message\_reconnect\_reset@{db\_\_message\_reconnect\_reset}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_reconnect\_reset()}{db\_\_message\_reconnect\_reset()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+reconnect\+\_\+reset (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_aeb0e9392b9457432d0c1ceeadf5badcc_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a97a1d479248ba6a8677866fadd6b6f29}\label{database_8c_a97a1d479248ba6a8677866fadd6b6f29}} 
+\index{database.c@{database.c}!db\_\_message\_release\_incoming@{db\_\_message\_release\_incoming}}
+\index{db\_\_message\_release\_incoming@{db\_\_message\_release\_incoming}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_release\_incoming()}{db\_\_message\_release\_incoming()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+release\+\_\+incoming (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{uint16\+\_\+t}]{mid }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{database_8c_aae15968596671733aa919d9bf10696dd}\label{database_8c_aae15968596671733aa919d9bf10696dd}} 
+\index{database.c@{database.c}!db\_\_message\_remove\_incoming@{db\_\_message\_remove\_incoming}}
+\index{db\_\_message\_remove\_incoming@{db\_\_message\_remove\_incoming}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_remove\_incoming()}{db\_\_message\_remove\_incoming()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+remove\+\_\+incoming (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{uint16\+\_\+t}]{mid }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{database_8c_a6c2c23ae04af4fcc5159944d0aea03cb}\label{database_8c_a6c2c23ae04af4fcc5159944d0aea03cb}} 
+\index{database.c@{database.c}!db\_\_message\_store@{db\_\_message\_store}}
+\index{db\_\_message\_store@{db\_\_message\_store}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_store()}{db\_\_message\_store()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+store (\begin{DoxyParamCaption}\item[{const struct mosquitto $\ast$}]{source,  }\item[{struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$}]{stored,  }\item[{uint32\+\_\+t}]{message\+\_\+expiry\+\_\+interval,  }\item[{\mbox{\hyperlink{mosquitto__broker__internal_8h_ac559238ed1772ef8840999d66b48b9c4}{dbid\+\_\+t}}}]{store\+\_\+id,  }\item[{enum \mbox{\hyperlink{mosquitto__broker__internal_8h_a66f3ae83ec017eab76353877d44476ae}{mosquitto\+\_\+msg\+\_\+origin}}}]{origin }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{database_8c_a6c2c23ae04af4fcc5159944d0aea03cb_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a600be4a0f8108802af9fd16d70534a0e}\label{database_8c_a600be4a0f8108802af9fd16d70534a0e}} 
+\index{database.c@{database.c}!db\_\_message\_store\_find@{db\_\_message\_store\_find}}
+\index{db\_\_message\_store\_find@{db\_\_message\_store\_find}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_store\_find()}{db\_\_message\_store\_find()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+store\+\_\+find (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{uint16\+\_\+t}]{mid,  }\item[{struct \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\+\_\+client\+\_\+msg}} $\ast$$\ast$}]{client\+\_\+msg }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{database_8c_a8d3ac3acd47532c9a829144b0164153a}\label{database_8c_a8d3ac3acd47532c9a829144b0164153a}} 
+\index{database.c@{database.c}!db\_\_message\_update\_outgoing@{db\_\_message\_update\_outgoing}}
+\index{db\_\_message\_update\_outgoing@{db\_\_message\_update\_outgoing}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_update\_outgoing()}{db\_\_message\_update\_outgoing()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+update\+\_\+outgoing (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{uint16\+\_\+t}]{mid,  }\item[{enum mosquitto\+\_\+msg\+\_\+state}]{state,  }\item[{int}]{qos }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{database_8c_a8a1a6154b691c0ab5bc547cb3c3d43bd}\label{database_8c_a8a1a6154b691c0ab5bc547cb3c3d43bd}} 
+\index{database.c@{database.c}!db\_\_message\_write\_inflight\_out\_all@{db\_\_message\_write\_inflight\_out\_all}}
+\index{db\_\_message\_write\_inflight\_out\_all@{db\_\_message\_write\_inflight\_out\_all}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_write\_inflight\_out\_all()}{db\_\_message\_write\_inflight\_out\_all()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+write\+\_\+inflight\+\_\+out\+\_\+all (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a8a1a6154b691c0ab5bc547cb3c3d43bd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_ac7697ed8cfc046267006ce203337144a}\label{database_8c_ac7697ed8cfc046267006ce203337144a}} 
+\index{database.c@{database.c}!db\_\_message\_write\_inflight\_out\_latest@{db\_\_message\_write\_inflight\_out\_latest}}
+\index{db\_\_message\_write\_inflight\_out\_latest@{db\_\_message\_write\_inflight\_out\_latest}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_write\_inflight\_out\_latest()}{db\_\_message\_write\_inflight\_out\_latest()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+write\+\_\+inflight\+\_\+out\+\_\+latest (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_ac7697ed8cfc046267006ce203337144a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a4cf2895355a7fe382dd1fecfd1497ad8}\label{database_8c_a4cf2895355a7fe382dd1fecfd1497ad8}} 
+\index{database.c@{database.c}!db\_\_message\_write\_queued\_in@{db\_\_message\_write\_queued\_in}}
+\index{db\_\_message\_write\_queued\_in@{db\_\_message\_write\_queued\_in}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_write\_queued\_in()}{db\_\_message\_write\_queued\_in()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+write\+\_\+queued\+\_\+in (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a4cf2895355a7fe382dd1fecfd1497ad8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a3c01cf8821046fc4fa15d41358ec5f57}\label{database_8c_a3c01cf8821046fc4fa15d41358ec5f57}} 
+\index{database.c@{database.c}!db\_\_message\_write\_queued\_out@{db\_\_message\_write\_queued\_out}}
+\index{db\_\_message\_write\_queued\_out@{db\_\_message\_write\_queued\_out}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_message\_write\_queued\_out()}{db\_\_message\_write\_queued\_out()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+message\+\_\+write\+\_\+queued\+\_\+out (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a3c01cf8821046fc4fa15d41358ec5f57_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a6865c472693cc50a3ddf358669d166b0}\label{database_8c_a6865c472693cc50a3ddf358669d166b0}} 
+\index{database.c@{database.c}!db\_\_messages\_delete@{db\_\_messages\_delete}}
+\index{db\_\_messages\_delete@{db\_\_messages\_delete}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_messages\_delete()}{db\_\_messages\_delete()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+messages\+\_\+delete (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{bool}]{force\+\_\+free }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a6865c472693cc50a3ddf358669d166b0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_ab120b99a2636e8c3861ef3ebe643b603}\label{database_8c_ab120b99a2636e8c3861ef3ebe643b603}} 
+\index{database.c@{database.c}!db\_\_messages\_easy\_queue@{db\_\_messages\_easy\_queue}}
+\index{db\_\_messages\_easy\_queue@{db\_\_messages\_easy\_queue}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_messages\_easy\_queue()}{db\_\_messages\_easy\_queue()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+messages\+\_\+easy\+\_\+queue (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{const char $\ast$}]{topic,  }\item[{uint8\+\_\+t}]{qos,  }\item[{uint32\+\_\+t}]{payloadlen,  }\item[{const void $\ast$}]{payload,  }\item[{int}]{retain,  }\item[{uint32\+\_\+t}]{message\+\_\+expiry\+\_\+interval,  }\item[{mosquitto\+\_\+property $\ast$$\ast$}]{properties }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_ab120b99a2636e8c3861ef3ebe643b603_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a6d63672fa37a93108edf4545e6cccd52}\label{database_8c_a6d63672fa37a93108edf4545e6cccd52}} 
+\index{database.c@{database.c}!db\_\_msg\_add\_to\_inflight\_stats@{db\_\_msg\_add\_to\_inflight\_stats}}
+\index{db\_\_msg\_add\_to\_inflight\_stats@{db\_\_msg\_add\_to\_inflight\_stats}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_msg\_add\_to\_inflight\_stats()}{db\_\_msg\_add\_to\_inflight\_stats()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+msg\+\_\+add\+\_\+to\+\_\+inflight\+\_\+stats (\begin{DoxyParamCaption}\item[{struct mosquitto\+\_\+msg\+\_\+data $\ast$}]{msg\+\_\+data,  }\item[{struct \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\+\_\+client\+\_\+msg}} $\ast$}]{msg }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a6d63672fa37a93108edf4545e6cccd52_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_abab52e14192657384d97de99f2f4921c}\label{database_8c_abab52e14192657384d97de99f2f4921c}} 
+\index{database.c@{database.c}!db\_\_msg\_add\_to\_queued\_stats@{db\_\_msg\_add\_to\_queued\_stats}}
+\index{db\_\_msg\_add\_to\_queued\_stats@{db\_\_msg\_add\_to\_queued\_stats}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_msg\_add\_to\_queued\_stats()}{db\_\_msg\_add\_to\_queued\_stats()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+msg\+\_\+add\+\_\+to\+\_\+queued\+\_\+stats (\begin{DoxyParamCaption}\item[{struct mosquitto\+\_\+msg\+\_\+data $\ast$}]{msg\+\_\+data,  }\item[{struct \mbox{\hyperlink{structmosquitto__client__msg}{mosquitto\+\_\+client\+\_\+msg}} $\ast$}]{msg }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_abab52e14192657384d97de99f2f4921c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a941e290a450554c9b4bd60c29f593048}\label{database_8c_a941e290a450554c9b4bd60c29f593048}} 
+\index{database.c@{database.c}!db\_\_msg\_store\_add@{db\_\_msg\_store\_add}}
+\index{db\_\_msg\_store\_add@{db\_\_msg\_store\_add}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_msg\_store\_add()}{db\_\_msg\_store\_add()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+msg\+\_\+store\+\_\+add (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$}]{store }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{database_8c_a941e290a450554c9b4bd60c29f593048_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a6d27e2c9125af1d863bc9adc0a31d996}\label{database_8c_a6d27e2c9125af1d863bc9adc0a31d996}} 
+\index{database.c@{database.c}!db\_\_msg\_store\_clean@{db\_\_msg\_store\_clean}}
+\index{db\_\_msg\_store\_clean@{db\_\_msg\_store\_clean}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_msg\_store\_clean()}{db\_\_msg\_store\_clean()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+msg\+\_\+store\+\_\+clean (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a6d27e2c9125af1d863bc9adc0a31d996_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a6d27e2c9125af1d863bc9adc0a31d996_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a0ea917185045812f186d6665272a7031}\label{database_8c_a0ea917185045812f186d6665272a7031}} 
+\index{database.c@{database.c}!db\_\_msg\_store\_compact@{db\_\_msg\_store\_compact}}
+\index{db\_\_msg\_store\_compact@{db\_\_msg\_store\_compact}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_msg\_store\_compact()}{db\_\_msg\_store\_compact()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+msg\+\_\+store\+\_\+compact (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a0ea917185045812f186d6665272a7031_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_ab58a039b20a5e919d0120b7d1553a965}\label{database_8c_ab58a039b20a5e919d0120b7d1553a965}} 
+\index{database.c@{database.c}!db\_\_msg\_store\_free@{db\_\_msg\_store\_free}}
+\index{db\_\_msg\_store\_free@{db\_\_msg\_store\_free}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_msg\_store\_free()}{db\_\_msg\_store\_free()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+msg\+\_\+store\+\_\+free (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$}]{store }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_ab58a039b20a5e919d0120b7d1553a965_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a3a45878f82755958e42bb3117e358c71}\label{database_8c_a3a45878f82755958e42bb3117e358c71}} 
+\index{database.c@{database.c}!db\_\_msg\_store\_ref\_dec@{db\_\_msg\_store\_ref\_dec}}
+\index{db\_\_msg\_store\_ref\_dec@{db\_\_msg\_store\_ref\_dec}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_msg\_store\_ref\_dec()}{db\_\_msg\_store\_ref\_dec()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+msg\+\_\+store\+\_\+ref\+\_\+dec (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$$\ast$}]{store }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a3a45878f82755958e42bb3117e358c71_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a3a45878f82755958e42bb3117e358c71_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_adb07e3321cc494e256edbfbcc63f4389}\label{database_8c_adb07e3321cc494e256edbfbcc63f4389}} 
+\index{database.c@{database.c}!db\_\_msg\_store\_ref\_inc@{db\_\_msg\_store\_ref\_inc}}
+\index{db\_\_msg\_store\_ref\_inc@{db\_\_msg\_store\_ref\_inc}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_msg\_store\_ref\_inc()}{db\_\_msg\_store\_ref\_inc()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+msg\+\_\+store\+\_\+ref\+\_\+inc (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$}]{store }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_adb07e3321cc494e256edbfbcc63f4389_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_a79d64b7ae2ffec5baccc51a3aeb3d498}\label{database_8c_a79d64b7ae2ffec5baccc51a3aeb3d498}} 
+\index{database.c@{database.c}!db\_\_msg\_store\_remove@{db\_\_msg\_store\_remove}}
+\index{db\_\_msg\_store\_remove@{db\_\_msg\_store\_remove}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_msg\_store\_remove()}{db\_\_msg\_store\_remove()}}
+{\footnotesize\ttfamily void db\+\_\+\+\_\+msg\+\_\+store\+\_\+remove (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto__msg__store}{mosquitto\+\_\+msg\+\_\+store}} $\ast$}]{store }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a79d64b7ae2ffec5baccc51a3aeb3d498_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{database_8c_a79d64b7ae2ffec5baccc51a3aeb3d498_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_afd982e436d7ae9fbbddbacee40edb784}\label{database_8c_afd982e436d7ae9fbbddbacee40edb784}} 
+\index{database.c@{database.c}!db\_\_open@{db\_\_open}}
+\index{db\_\_open@{db\_\_open}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_open()}{db\_\_open()}}
+{\footnotesize\ttfamily int db\+\_\+\+\_\+open (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structmosquitto____config}{mosquitto\+\_\+\+\_\+config}} $\ast$}]{config }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=250pt]{database_8c_afd982e436d7ae9fbbddbacee40edb784_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{database_8c_afd982e436d7ae9fbbddbacee40edb784_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{database_8c_ac03b712ad28109b088ebbb51523f7fe3}\label{database_8c_ac03b712ad28109b088ebbb51523f7fe3}} 
+\index{database.c@{database.c}!db\_\_ready\_for\_flight@{db\_\_ready\_for\_flight}}
+\index{db\_\_ready\_for\_flight@{db\_\_ready\_for\_flight}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_ready\_for\_flight()}{db\_\_ready\_for\_flight()}}
+{\footnotesize\ttfamily bool db\+\_\+\+\_\+ready\+\_\+for\+\_\+flight (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{enum mosquitto\+\_\+msg\+\_\+direction}]{dir,  }\item[{int}]{qos }\end{DoxyParamCaption})}
+
+Is this context ready to take more in flight messages right now? 
+\begin{DoxyParams}{Parameters}
+{\em context} & the client context of interest \\
+\hline
+{\em qos} & qos for the packet of interest \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if more in flight are allowed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{database_8c_a56119c45e47972ba78b6aca8dc29c3c8}\label{database_8c_a56119c45e47972ba78b6aca8dc29c3c8}} 
+\index{database.c@{database.c}!db\_\_ready\_for\_queue@{db\_\_ready\_for\_queue}}
+\index{db\_\_ready\_for\_queue@{db\_\_ready\_for\_queue}!database.c@{database.c}}
+\doxysubsubsection{\texorpdfstring{db\_\_ready\_for\_queue()}{db\_\_ready\_for\_queue()}}
+{\footnotesize\ttfamily bool db\+\_\+\+\_\+ready\+\_\+for\+\_\+queue (\begin{DoxyParamCaption}\item[{struct mosquitto $\ast$}]{context,  }\item[{int}]{qos,  }\item[{struct mosquitto\+\_\+msg\+\_\+data $\ast$}]{msg\+\_\+data }\end{DoxyParamCaption})}
+
+For a given client context, are more messages allowed to be queued? It is assumed that inflight checks and queue\+\_\+qos0 checks have already been made. 
+\begin{DoxyParams}{Parameters}
+{\em context} & client of interest \\
+\hline
+{\em qos} & destination qos for the packet of interest \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if queuing is allowed, false if should be dropped 
+\end{DoxyReturn}

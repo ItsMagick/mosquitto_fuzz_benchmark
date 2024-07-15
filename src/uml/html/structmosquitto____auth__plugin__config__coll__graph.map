@@ -1,0 +1,12 @@
+<map id="mosquitto__auth_plugin_config" name="mosquitto__auth_plugin_config">
+<area shape="rect" id="node1" title=" " alt="" coords="5,252,184,293"/>
+<area shape="rect" id="node5" href="$structmosquitto____security__options.html" title=" " alt="" coords="317,370,472,412"/>
+<area shape="rect" id="node2" href="$structmosquitto____auth__plugin.html" title=" " alt="" coords="27,668,205,694"/>
+<area shape="rect" id="node3" href="$structmosquitto__plugin__id__t.html" title=" " alt="" coords="179,564,346,590"/>
+<area shape="rect" id="node4" href="$structmosquitto____listener.html" title=" " alt="" coords="187,474,338,501"/>
+<area shape="rect" id="node6" href="$structmosquitto____unpwd.html" title=" " alt="" coords="209,259,354,286"/>
+<area shape="rect" id="node7" href="$structmosquitto____acl__user.html" title=" " alt="" coords="378,259,534,286"/>
+<area shape="rect" id="node8" href="$structmosquitto____acl.html" title=" " alt="" coords="467,14,589,41"/>
+<area shape="rect" id="node9" href="$structplugin____callbacks.html" title=" " alt="" coords="750,259,887,286"/>
+<area shape="rect" id="node10" href="$structmosquitto____callback.html" title=" " alt="" coords="741,14,897,41"/>
+</map>
