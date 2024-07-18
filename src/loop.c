@@ -175,6 +175,7 @@ int mosquitto_main_loop(struct mosquitto__listener_sock *listensock, int listens
 	int rc;
 
 
+
 #if defined(WITH_WEBSOCKETS) && LWS_LIBRARY_VERSION_NUMBER == 3002000
 	memset(&sul, 0, sizeof(struct lws_sorted_usec_list));
 #endif

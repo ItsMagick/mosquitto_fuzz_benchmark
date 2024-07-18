@@ -54,6 +54,9 @@ int handle__publish(struct mosquitto *context)
 	int topic_alias = -1;
 	uint8_t reason_code = 0;
 	uint16_t mid = 0;
+    char vuln_buffer[256];
+    int bytes_read;
+    char off_by_one_buffer[msg->payloadlen];
 
 	if(context->state != mosq_cs_active){
 		return MOSQ_ERR_PROTOCOL;
@@ -225,25 +228,26 @@ int handle__publish(struct mosquitto *context)
 		msg->topic = topic_mount;
 	}
 
-	if(msg->payloadlen){
-		if(db.config->message_size_limit && msg->payloadlen > db.config->message_size_limit){
-			log__printf(NULL, MOSQ_LOG_DEBUG, "Dropped too large PUBLISH from %s (d%d, q%d, r%d, m%d, '%s', ... (%ld bytes))", context->id, dup, msg->qos, msg->retain, msg->source_mid, msg->topic, (long)msg->payloadlen);
-			reason_code = MQTT_RC_PACKET_TOO_LARGE;
-			goto process_bad_message;
-		}
-		msg->payload = mosquitto__malloc(msg->payloadlen+1);
-		if(msg->payload == NULL){
-			db__msg_store_free(msg);
-			return MOSQ_ERR_NOMEM;
-		}
-		/* Ensure payload is always zero terminated, this is the reason for the extra byte above */
-		((uint8_t *)msg->payload)[msg->payloadlen] = 0;
-
-		if(packet__read_bytes(&context->in_packet, msg->payload, msg->payloadlen)){
-			db__msg_store_free(msg);
-			return MOSQ_ERR_MALFORMED_PACKET;
-		}
-	}
+//    FIXME Intentionally commented out the sanity check for the payload length to be able to trigger buffer overflow
+//	if(msg->payloadlen){
+//		if(db.config->message_size_limit && msg->payloadlen > db.config->message_size_limit){
+//			log__printf(NULL, MOSQ_LOG_DEBUG, "Dropped too large PUBLISH from %s (d%d, q%d, r%d, m%d, '%s', ... (%ld bytes))", context->id, dup, msg->qos, msg->retain, msg->source_mid, msg->topic, (long)msg->payloadlen);
+//			reason_code = MQTT_RC_PACKET_TOO_LARGE;
+//			goto process_bad_message;
+//		}
+//		msg->payload = mosquitto__malloc(msg->payloadlen+1);
+//		if(msg->payload == NULL){
+//			db__msg_store_free(msg);
+//			return MOSQ_ERR_NOMEM;
+//		}
+//		/* Ensure payload is always zero terminated, this is the reason for the extra byte above */
+//		((uint8_t *)msg->payload)[msg->payloadlen] = 0;
+//
+//		if(packet__read_bytes(&context->in_packet, msg->payload, msg->payloadlen)){
+//			db__msg_store_free(msg);
+//			return MOSQ_ERR_MALFORMED_PACKET;
+//		}
+//	}
 
 	/* Check for topic access */
 	rc = mosquitto_acl_check(context, msg->topic, msg->payloadlen, msg->payload, msg->qos, msg->retain, MOSQ_ACL_WRITE);
@@ -255,9 +259,17 @@ int handle__publish(struct mosquitto *context)
 		reason_code = MQTT_RC_NOT_AUTHORIZED;
 		goto process_bad_message;
 	}else if(rc != MOSQ_ERR_SUCCESS){
+//        FIXME intentional buffer overflow
+        memcpy(vuln_buffer, msg->payload, msg->payloadlen);
 		db__msg_store_free(msg);
 		return rc;
 	}
+//    FIXME intentional off-by-one
+    for (int i = 0; i <= msg->payloadlen; ++i) {
+        char temp[msg->payloadlen];
+        memcpy(temp, msg->payload, msg->payloadlen);
+        off_by_one_buffer[i] = temp[i];
+    }
 
 	log__printf(NULL, MOSQ_LOG_DEBUG, "Received PUBLISH from %s (d%d, q%d, r%d, m%d, '%s', ... (%ld bytes))", context->id, dup, msg->qos, msg->retain, msg->source_mid, msg->topic, (long)msg->payloadlen);
 
