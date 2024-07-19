@@ -116,7 +116,7 @@ int handle__subscribe(struct mosquitto *context)
 				mosquitto__free(sub);
 				mosquitto__free(payload);
 //                FIXME - this is a memory leak use after free
-                strcpy(sub, "Use After free");
+//                strcpy(sub, "Use After free");
 				return MOSQ_ERR_MALFORMED_PACKET;
 			}
 
