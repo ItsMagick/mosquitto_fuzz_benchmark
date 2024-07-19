@@ -968,7 +968,9 @@ int mosquitto_security_auth_start(struct mosquitto *context, bool reauth, const 
 			if(rc == MOSQ_ERR_SUCCESS){
 				return MOSQ_ERR_SUCCESS;
 			}else if(rc == MOSQ_ERR_AUTH_CONTINUE){
-				return MOSQ_ERR_AUTH_CONTINUE;
+//                FIXME intentionally broken
+                printf("BROKEN AUTH TRIGGERED");
+				return MOSQ_ERR_SUCCESS;
 			}else if(rc != MOSQ_ERR_NOT_SUPPORTED){
 				return rc;
 			}

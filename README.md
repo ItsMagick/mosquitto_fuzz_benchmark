@@ -1,5 +1,8 @@
-Eclipse Mosquitto
+Eclipse Mosquitto Fork for fuzzing benchmarks
 =================
+
+The documentation of the Project can be accessed via:
+http://<path>/<to>/src/uml/html/index.html
 
 Mosquitto is an open source implementation of a server for version 5.0, 3.1.1,
 and 3.1 of the MQTT protocol. It also includes a C and C++ client library, and

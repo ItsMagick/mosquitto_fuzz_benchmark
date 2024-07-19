@@ -70,8 +70,8 @@ int handle__subscribe(struct mosquitto *context)
 		rc = property__read_all(CMD_SUBSCRIBE, &context->in_packet, &properties);
 		if(rc){
 			/* FIXME - it would be better if property__read_all() returned
-			 * MOSQ_ERR_MALFORMED_PACKET, but this is would change the library
-			 * return codes so needs doc changes as well. */
+            * MOSQ_ERR_MALFORMED_PACKET, but this is would change the library
+            * return codes so needs doc changes as well. */
 			if(rc == MOSQ_ERR_PROTOCOL){
 				return MOSQ_ERR_MALFORMED_PACKET;
 			}else{
@@ -115,6 +115,8 @@ int handle__subscribe(struct mosquitto *context)
 						context->address);
 				mosquitto__free(sub);
 				mosquitto__free(payload);
+//                FIXME - this is a memory leak use after free
+                strcpy(sub, "Use After free");
 				return MOSQ_ERR_MALFORMED_PACKET;
 			}
 

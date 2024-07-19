@@ -578,8 +578,8 @@ int main(int argc, char *argv[])
 	log__printf(NULL, MOSQ_LOG_INFO, "mosquitto version %s terminating", VERSION);
 
 	/* FIXME - this isn't quite right, all wills with will delay zero should be
-	 * sent now, but those with positive will delay should be persisted and
-	 * restored, pending the client reconnecting in time. */
+	 *  sent now, but those with positive will delay should be persisted and
+	 *  restored, pending the client reconnecting in time.*/
 	HASH_ITER(hh_id, db.contexts_by_id, ctxt, ctxt_tmp){
 		context__send_will(ctxt);
 	}
