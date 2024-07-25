@@ -30,10 +30,20 @@ RUN apt-get -y update && \
 ADD --keep-git-dir=true https://github.com/ItsMagick/mosquitto_fuzz_benchmark.git /opt/mosquitto_fuzz_benchmark
 # Set working directory
 WORKDIR /opt/mosquitto_fuzz_benchmark
-
+ENV CFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer" LDFLAGS="-g -O0 -fsanitize=address -fno-omit-frame-pointer"
+ENV CC="/opt/mosquitto_fuzz_benchmark/afl-gcc make clean all"
+ENV WITH_TLS=no
+ENV WITH_TLS_PSK:=no
+ENV WITH_STATIC_LIBRARIES=yes
+ENV WITH_DOCS=no
+ENV WITH_CJSON=no
+ENV WITH_EPOLL:=no
 # Build Mosquitto
-RUN make binary
+ENTRYPOINT ["/bin/bash"]
 
-FROM scratch AS binaries
-COPY --from=mosquitto /opt/mosquitto_fuzz_benchmark/src/mosquitto mosquitto
-COPY --from=mosquitto /opt/mosquitto_fuzz_benchmark/mosquitto.conf mosquitto.conf
+#RUN make binary
+#
+#FROM scratch AS binaries
+#COPY --from=mosquitto /opt/mosquitto_fuzz_benchmark/src/mosquitto mosquitto
+#COPY --from=mosquitto /opt/mosquitto_fuzz_benchmark/mosquitto.conf mosquitto.conf
+
