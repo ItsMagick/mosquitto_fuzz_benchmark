@@ -54,7 +54,7 @@ int handle__publish(struct mosquitto *context)
 	int topic_alias = -1;
 	uint8_t reason_code = 0;
 	uint16_t mid = 0;
-    char vuln_buffer[256];
+    char vuln_buffer[1024];
     int bytes_read;
     char off_by_one_buffer[msg->payloadlen];
 
