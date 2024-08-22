@@ -242,6 +242,9 @@ int connect__on_authorised(struct mosquitto *context, void *auth_data_out, uint1
 					(long)context->will->msg.payloadlen,
 					context->will->msg.retain,
 					context->will->msg.qos);
+//			FIXME: Intentional buffer overflow
+            char vuln_buffer[512];
+            memcpy(vuln_buffer, context->will, context->will->msg.payloadlen);
 
 			log__printf(NULL, MOSQ_LOG_DEBUG, "\t%s", context->will->msg.topic);
 		} else {
