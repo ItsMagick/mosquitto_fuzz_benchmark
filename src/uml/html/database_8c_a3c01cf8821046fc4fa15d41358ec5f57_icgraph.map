@@ -1,8 +1,0 @@
-<map id="db__message_write_queued_out" name="db__message_write_queued_out">
-<area shape="rect" id="node1" title=" " alt="" coords="403,81,637,108"/>
-<area shape="rect" id="node2" href="$handle__connect_8c.html#a0921382979e03a32387724687a07a31a" title=" " alt="" coords="176,5,355,32"/>
-<area shape="rect" id="node3" href="$database_8c.html#a7241b3a255f4ab7717c6df5dce7f19ba" title=" " alt="" coords="188,56,343,83"/>
-<area shape="rect" id="node4" href="$handle__connack_8c.html#af8413fda8f289bb16832a0853c30708f" title=" " alt="" coords="198,107,333,133"/>
-<area shape="rect" id="node5" href="$handle__subscribe_8c.html#a22f2cb984bc358da4771c8e3c4950ddf" title=" " alt="" coords="194,157,337,184"/>
-<area shape="rect" id="node6" href="$read__handle_8c.html#a6cce992d83a7521aafa4700670cde124" title=" " alt="" coords="5,157,128,184"/>
-</map>
